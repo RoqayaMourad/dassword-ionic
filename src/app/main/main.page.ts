@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPage implements OnInit {
 
+  isList: number;
+  isMenu: boolean = false;
+  isMenuBtn() {
+    this.isMenu = !this.isMenu;
+  }
+  isSearch: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }
+ 
+
