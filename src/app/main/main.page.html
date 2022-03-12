@@ -4,11 +4,12 @@
         <!-- Sidebar starts -->
         <div class="relative h-screen shadow-dark-4 shadow-md  bg-grey-500 md:h-screen ">
             <div class="flex flex-col sm:flex-row sm:justify-around">
-                <div class="w-80 h-screen px-6">
-                    <a class="flex items-center py-2 mb-6 justify-start" href="#">
-                        <img src="../../assets/icon/dassword-logo-final.svg" class="mt-4 w-full" alt="">
-                    </a>
+                <div class="w-80 h-screen pb-4 px-6 flex flex-col justify-between ">
                     <div>
+                        <a class="py-2 mb-6 justify-start" href="#">
+                            <img src="../../assets/icon/dassword-logo-final.svg" class="mt-4 w-full" alt="">
+                        </a>
+
                         <div>
                             <a class="hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 mt-4 transition-colors duration-200 justify-start" href="#">
                                 <span class="text-left">
@@ -155,18 +156,33 @@
 
                         </div>
                     </div>
-                    <div class="mt-auto fixed bottom-2">
-                        <a class="hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 transition-colors duration-200 justify-start" href="#">
+                    <div class="">
+                        <div id="dropdown-cta" class="p-4 mt-6 bg-error-4 rounded-lg " role="alert">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-error-1 text-error-4 text-sm font-bold mr-2 px-2.5 py-0.5 rounded">Beta</span>
+                            </div>
+                            <p class="mb-3 text-sm text-blue-900 dark:text-blue-400">
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa adipisci a vitae sunt velit eos.
+                            </p>
+                            <a class="text-sm text- underline hover:text- " href="#">Read More About This</a>
+                        </div>
+                        <a class="mt-8 hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 transition-colors duration-200 justify-start" href="#">
                             <span class="text-left">
-                                <svg width="20" height="20" fill="#9A9A9A" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/></svg>
+                <svg width="20" height="20" fill="#9A9A9A" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                  <path
+                    d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                  </svg>
               </span>
                             <span class="ml-3 text-base font-normal text-light-grey-300 hover:text-gray-500 cursor-pointer">
-               New Folder
+                New Folder
               </span>
                         </a>
                     </div>
                 </div>
             </div>
+            <!-- <div class="mt-auto fixed bottom-2">
+              
+            </div> -->
         </div>
 
         <!-- <div class="h-screen w-96 absolute sm:relative shadow-dark-4 shadow-md  bg-grey-500 md:h-screen flex-col justify-between flex">

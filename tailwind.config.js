@@ -20,7 +20,14 @@ module.exports = {
                 2: '#4ECCA3'
             },
             'light-text': '#EEEEEE',
-            'error': '#CF6679',
+            'error': {
+                1: '#EBC1C8',
+                2: '#E5AEB8',
+                3: '#E2A5B0',
+                4: '#CF6679',
+                5: '#E2A2AE',
+
+            },
             'dark': {
                 1: '#69727B',
                 2: '#393E46',

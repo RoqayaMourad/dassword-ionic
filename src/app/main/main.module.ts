@@ -9,6 +9,9 @@ import { MainPageRoutingModule } from './main-routing.module';
 import { MainPage } from './main.page';
 import { ItemsListComponent } from '../items-list/items-list.component';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule} from '@angular/material/icon';
 
 
 
@@ -18,7 +21,7 @@ import { ItemDetailsComponent } from '../item-details/item-details.component';
     FormsModule,
     IonicModule,
     MainPageRoutingModule,
-
+    MatInputModule ,MatFormFieldModule , MatIconModule
   ],
   declarations: [MainPage ,  ItemsListComponent , ItemDetailsComponent]
 })
