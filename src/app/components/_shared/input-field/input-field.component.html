@@ -1,0 +1,9 @@
+<label *ngIf="label" for="name" class="block mb-2 text-sm font-medium text-cyan-2">{{label}}</label>
+
+<!-- If input -->
+<input *ngIf="type != 'textarea'" [type]="type" id="name" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5" [placeholder]="placeholder">
+
+<!-- If Textarea -->
+<textarea *ngIf="type == 'textarea'" [rows]="rows" id="name" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5" [placeholder]="placeholder"></textarea>
+
+<div *ngIf="subtext" class="mt-1 text-xs text-light-grey-400" id="user_avatar_help">{{subtext}}</div>

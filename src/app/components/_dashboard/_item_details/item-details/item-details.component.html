@@ -1,7 +1,9 @@
 <div class="p-4">
-    <div class="bg-grey-400 rounded-md p-4 mt-2">
-        <div class="flex items-center py-3 text-base pl-0  pr-4 ">
-            <svg class="h-10" viewBox="0 0 40 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="bg-grey-400 rounded-md p-4 mt-2">
+
+    <!-- Details Header -->
+    <div class="flex items-center py-3 text-base pl-0  pr-4 ">
+      <svg class="h-10" viewBox="0 0 40 38" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M39.0728 0L21.9092 12.6999L25.1009 5.21543L39.0728 0Z" fill="#E17726" />
         <path d="M0.966797 0.0151367L14.9013 5.21656L17.932 12.7992L0.966797 0.0151367Z" fill="#E27625" />
         <path d="M32.1656 27.0093L39.7516 27.1537L37.1004 36.1603L27.8438 33.6116L32.1656 27.0093Z" fill="#E27625" />
@@ -56,72 +58,71 @@
           d="M25.5283 5.17383L23.0847 11.7736L22.5661 20.6894L22.3677 23.4839L22.352 30.6225H17.6471L17.6318 23.4973L17.4327 20.6869L16.9139 11.7736L14.4707 5.17383H25.5283Z"
           fill="#F5841F" />
       </svg>
-            <div class="flex flex-col pl-4">
-                <span class="flex-1 whitespace-nowrap text-light-grey-50 font-semibold">Website Name</span>
-            </div>
+      <div class="flex flex-col pl-4">
+        <span class="flex-1 whitespace-nowrap text-light-grey-50 font-semibold">Website Name</span>
+      </div>
+    </div>
+
+
+    <form class="">
+
+      <div class="mb-6">
+        <app-input-field label="Name" placeholder="Name" type="text"></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="Email" placeholder="Email" type="email"></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="Link" placeholder="https://example.com" type="url"></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="Password" placeholder="" type="password"></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="Description" placeholder="write any notes here" type="textarea"></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="Notes" placeholder="Leave a comment..." type="textarea"></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit."></app-input-field>
+      </div>
+
+
+
+      <div class="flex">
+        <div class="justify-end flex w-full">
+
+          <button type="button" class="py-1.5 px-6 flex justify-center items-center text-cyan-2 border border-cyan-2 transition ease-in duration-200 text-center text-base font-normal focus:outline-none hover:border-transparent hover:bg-grey-500 hover:text-light-text rounded-lg ">
+            <svg class="mr-2 w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                clip-rule="evenodd"></path>
+            </svg>
+            Edit
+          </button>
+
         </div>
-        <form class="">
-            <div class="mb-6">
-                <label for="name" class="block mb-2 text-sm font-medium text-cyan-2">Name</label>
-                <input type="text" id="name" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5">
-            </div>
-            <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-cyan-2">Email</label>
-                <input type="email" id="email" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5 placeholder:text-light-grey-200 " placeholder="name@flowbite.com">
-            </div>
-            <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-cyan-2">Link</label>
-                <input type="email" id="email" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5 placeholder:text-light-grey-200 " placeholder="https://www.google.com">
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-medium text-cyan-2">Password</label>
-                <input type="password" id="password" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5 ">
-            </div>
-            <div class="mb-6">
-                <label for="name" class="block mb-2 text-sm font-medium text-cyan-2">Description</label>
-                <input type="text" id="name" class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5">
-            </div>
-            <div class="mb-6">
-                <label for="message" class="block mb-2 text-sm font-medium text-cyan-2">Notes</label>
-                <textarea id="message" rows="4" class="block p-2.5 w-full text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 placeholder:text-light-grey-200" placeholder="Leave a comment..."></textarea>
-            </div>
-            <div class="mb-6">
-                <label class="block mb-2 text-sm font-medium text-cyan-2" for="user_avatar">Upload file</label>
-                <input class=" px-2 py-1.5 block w-full text-sm text-light-grey-200 rounded-lg border border-grey-300 cursor-pointer focus:outline-none bg-grey-500 focus:border-transparent" aria-describedby="user_avatar_help" id="user_avatar" type="file">
-                <div class="mt-1 text-xs text-light-grey-400" id="user_avatar_help">Lorem ipsum dolor sit amet, consectetur elit.
-                </div>
-            </div>
-
-
-
-            <div class="flex">
-                <div class="justify-end flex w-full">
-                    <!-- <button class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-600 border-light-grey-600 border-2">Edit</button> -->
-
-                    <button type="button" class="py-1.5 px-6 flex justify-center items-center text-cyan-2 border border-cyan-2 transition ease-in duration-200 text-center text-base font-normal focus:outline-none hover:border-transparent hover:bg-grey-500 hover:text-light-text rounded-lg ">
-                      <svg class="mr-2 w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                        clip-rule="evenodd"></path>
-                    </svg>
-  Edit
-</button>
-
-                </div>
-                <!-- <div>
+        <!-- <div>
                     <button class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Cancel</button>
                 </div>
                 <div>
                     <button class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Save</button>
                 </div> -->
 
-            </div>
-            <div class="my-4 spliter border-b-2 border-grey-300 m-auto">
-            </div>
+      </div>
 
-            <div class="flex rounded-md shadow-sm justify-end ml-auto" role="group">
-                <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-l-lg border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200 ">
+      <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+
+      <div class="flex rounded-md shadow-sm justify-end ml-auto" role="group">
+        <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-l-lg border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200 ">
           <svg class="mr-2 w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -130,7 +131,7 @@
           </svg>
           History
         </button>
-                <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent border-b border-t border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
+        <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent border-b border-t border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
           <svg class="mr-2 w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path
@@ -139,7 +140,7 @@
           </svg>
           Share
         </button>
-                <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-r-md border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
+        <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-r-md border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
           <svg class="mr-2 w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -148,9 +149,9 @@
           </svg>
           Generate Link
         </button>
-            </div>
+      </div>
 
 
-        </form>
-    </div>
+    </form>
+  </div>
 </div>
