@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormControlName, FormGroup, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-input-field',
@@ -13,10 +14,27 @@ export class InputFieldComponent implements OnInit {
   @Input() placeholder: string = "";
   @Input() rows: number = 4;
 
-  constructor() { }
+  valueFormGroup?: FormGroup;
+  valueFormControl?: FormControl;
 
-  ngOnInit() { }
+  constructor(
+    private formGroupDirective: FormGroupDirective,
+    private formControlNameDirective: FormControlName
+  ) { }
+
+  ngOnInit() {
+    this.valueFormGroup = this.formGroupDirective.form;
+    this.valueFormControl = this.formGroupDirective.getControl(this.formControlNameDirective);
+  }
+
+  get controlName() {
+    return this.formControlNameDirective.name;
+  }
+
+  get enabled() {
+    return this.valueFormControl?.enabled
+  }
 
 }
 
-export type InputFieldType  = "text" | "email" | "url" | "password" | "file" | "number" | "textarea";
+export type InputFieldType = "text" | "email" | "url" | "password" | "file" | "number" | "textarea";

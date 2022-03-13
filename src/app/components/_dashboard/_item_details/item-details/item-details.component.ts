@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-item-details',
@@ -7,8 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
 
-  ngOnInit() {}
+  }
+
+  DetailsForm:FormGroup
+
+  ngOnInit() {
+    this.DetailsForm = this.fb.group({
+      name: [''],
+      email: [''],
+      url:[''],
+      password:[''],
+      description:[''],
+      notes:[''],
+      file:['']
+    });
+
+  }
 
 }

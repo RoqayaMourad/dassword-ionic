@@ -64,34 +64,34 @@
     </div>
 
 
-    <form class="">
+    <form class="" [formGroup]="DetailsForm">
 
       <div class="mb-6">
-        <app-input-field label="Name" placeholder="Name" type="text"></app-input-field>
+        <app-input-field label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
       </div>
 
       <div class="mb-6">
-        <app-input-field label="Email" placeholder="Email" type="email"></app-input-field>
+        <app-input-field label="Email" placeholder="Email" type="email" formControlName="email" ngDefaultControl></app-input-field>
       </div>
 
       <div class="mb-6">
-        <app-input-field label="Link" placeholder="https://example.com" type="url"></app-input-field>
+        <app-input-field label="Link" placeholder="https://example.com" type="url" formControlName="url" ngDefaultControl></app-input-field>
       </div>
 
       <div class="mb-6">
-        <app-input-field label="Password" placeholder="" type="password"></app-input-field>
+        <app-input-field label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl></app-input-field>
       </div>
 
       <div class="mb-6">
-        <app-input-field label="Description" placeholder="write any notes here" type="textarea"></app-input-field>
+        <app-input-field label="Description" placeholder="write any notes here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
       </div>
 
       <div class="mb-6">
-        <app-input-field label="Notes" placeholder="Leave a comment..." type="textarea"></app-input-field>
+        <app-input-field label="Notes" placeholder="Leave a comment..." type="textarea" formControlName="notes" ngDefaultControl></app-input-field>
       </div>
 
       <div class="mb-6">
-        <app-input-field label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit."></app-input-field>
+        <app-input-field label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit." formControlName="file" ngDefaultControl></app-input-field>
       </div>
 
 

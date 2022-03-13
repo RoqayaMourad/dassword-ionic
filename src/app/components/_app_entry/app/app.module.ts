@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormControlName, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 
@@ -29,6 +29,19 @@ import { InputFieldComponent } from '../../_shared/input-field/input-field.compo
 
 @NgModule({
 
+    imports: [
+      BrowserModule,
+      IonicModule.forRoot(),
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      FormsModule,
+      ReactiveFormsModule,
+      CommonModule,
+      MatInputModule,
+      MatFormFieldModule,
+      MatIconModule,
+    ],
+
   declarations: [
     AppComponent,
     MainPage,
@@ -45,20 +58,9 @@ import { InputFieldComponent } from '../../_shared/input-field/input-field.compo
   entryComponents: [
   ],
 
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    CommonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-  ],
-
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FormControlName,
   ],
 
   bootstrap: [AppComponent],
