@@ -1,3 +1,4 @@
+import { DataService } from './../../../services/data/data.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { LoginRegisterComponent } from '../../_intro/login-register/login-register.component';
@@ -16,10 +17,13 @@ export class MainPage implements OnInit {
   }
   isSearch: boolean = false;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private data:DataService) { }
 
   ngOnInit() {
     this.presentLogin()
+    // Create item object TODO: Remove this after login is completed
+    this.data.initDb();
+
   }
 
   presentLogin() {

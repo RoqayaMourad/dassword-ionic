@@ -9,6 +9,6 @@ export class CryptographyService {
 
 
   generateSecureAuthObject(email,password){
-    return {email,security_hash:password}
+    return {email,securityToken:password}
   }
 }

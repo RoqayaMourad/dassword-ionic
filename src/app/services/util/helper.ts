@@ -32,12 +32,18 @@ export class HelperService {
   }
 
   static getIcon(url: string) {
-    url = HelperService.withHttp(url)
+    url = HelperService.withHttps(url)
     return `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=256`
   }
 
-  static withHttp(url: string) {
-    return url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `http://${nonSchemmaUrl}`)
+  static getHostName(url: string) {
+    url = HelperService.withHttps(url);
+    return new URL(url).hostname;
+
+  }
+
+  static withHttps(url: string) {
+    return url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `https://${nonSchemmaUrl}`)
   }
 
   static copyToClipboard(txt) {

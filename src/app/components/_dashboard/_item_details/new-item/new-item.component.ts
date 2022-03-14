@@ -43,20 +43,16 @@ export class NewItemComponent implements OnInit {
 
   async onSubmit() {
 
-    // Create item object
-    this.data.initDb();
     let item = new Item();
-    item.update(this.DetailsForm.value);
-    this.data.mainDb.addItem(item);
-    this.data.refresh();
+    item.update(this.DetailsForm.value); // update item records
+    this.updateIcon(); // update current icon
+    item.setIcon(this.iconUrl); // set item icon
+    item.setName(); // set name from url if not already set
+    this.data.mainDb.addItem(item); // add item to the main db
+    this.data.refresh(); // emit change to all listener to the db object
     console.log(this.data.mainDb);
 
-
-    // Add item object to the current DB
-
-    // Update current DB
-
-    // await this.dismiss();
+    await this.dismiss();
   }
 
   async dismiss() {

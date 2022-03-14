@@ -46,6 +46,10 @@ export class Item implements IItem {
 
 
   setName(name: string = "") {
+    // try to set name from url of found
+    if (!name && this.url) {
+      name = HelperService.getHostName(this.url)
+    }
     this.name = name || ""
   }
 
@@ -71,6 +75,9 @@ export class Item implements IItem {
   }
 
   setUrl(url: string = "") {
+    if (url) {
+      url = HelperService.withHttps(url);
+    }
     this.url = url || ""
   }
 

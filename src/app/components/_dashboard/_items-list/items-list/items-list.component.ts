@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-items-list',
@@ -7,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(fb: FormBuilder, public data: DataService) { }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+  }
 }
