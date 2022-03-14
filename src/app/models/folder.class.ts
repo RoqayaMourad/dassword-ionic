@@ -1,5 +1,5 @@
 import { HelperService } from "../services/util/helper";
-import { IFolder } from "./interfaces";
+import { IFolder } from "../interfaces/interfaces";
 
 
 export class Folder implements IFolder {

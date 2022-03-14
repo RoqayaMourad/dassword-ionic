@@ -1,25 +1,27 @@
-import { HelperService } from '../services/util/helper';
-import { IItem, ItemType } from './interfaces';
+import { HelperService } from 'src/app/services/util/helper';
+import { IItem, ItemType } from '../interfaces/interfaces';
 
 export class Item implements IItem {
   constructor(item:Item = null) {
-    this.setName(item.name);
-    this.setEmail(item.email);
-    this.setPassword(item.password);
-    this.setDescription(item.description);
-    this.setNote(item.note);
-    this.setIcon(item.icon);
-    this.setUrl(item.url);
+    if (item && typeof item === "object") {
+      this.setName(item.name);
+      this.setEmail(item.email);
+      this.setPassword(item.password);
+      this.setDescription(item.description);
+      this.setNote(item.note);
+      this.setIcon(item.icon);
+      this.setUrl(item.url);
 
-    this.setFileName(item.fileName);
-    this.setFileCid(item.fileCid);
+      this.setFileName(item.fileName);
+      this.setFileCid(item.fileCid);
 
-    this.setItemId(item.itemId);
-    this.setType(item.type);
-    this.setFolderId(item.folderId);
+      this.setItemId(item.itemId);
+      this.setType(item.type);
+      this.setFolderId(item.folderId);
 
-    this.setCreatedAt(item.createdAt);
-    this.setModifiedAt(item.modifiedAt);
+      this.setCreatedAt(item.createdAt);
+      this.setModifiedAt(item.modifiedAt);
+    }
   }
   // item data
   name?: string = "";
@@ -136,4 +138,9 @@ export class Item implements IItem {
     (includeNote && this.note.indexOf(word))
   }
 
+  getIcon(url:string = ""){
+    url = url || this.url
+    let link = HelperService.getIcon(url);
+    return link;
+  }
 }

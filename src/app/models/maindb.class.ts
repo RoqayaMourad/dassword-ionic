@@ -1,7 +1,8 @@
+import { Security } from './security.class';
 import { HelperService } from 'src/app/services/util/helper';
 import { Folder } from './folder.class';
 import { Item } from 'src/app/models/item.class';
-import { IMainDB } from "./interfaces";
+import { IMainDB } from "../interfaces/interfaces";
 
 
 export class MainDB implements IMainDB {
@@ -10,10 +11,10 @@ export class MainDB implements IMainDB {
 
   userId?: string = HelperService.makeid(); // current user's id
   email?: string = ""; // current user's login email
-  secureObject?: any; // login object
-  objectVersionId?: string;
-  items?: Item[];
-  folders?: Folder[];
+  secureObject?: Security = {}; // login object
+  objectVersionId?: string = "";
+  items?: Item[] = [];
+  folders?: Folder[] = [];
 
   setUserId(userId: string) {
     this.userId = userId;
@@ -33,7 +34,7 @@ export class MainDB implements IMainDB {
 
   // Items functions
   addItem(item: Item) {
-    this.items.push(item)
+    this.items.push(item);
   }
 
   getItem(itemId: string) {
