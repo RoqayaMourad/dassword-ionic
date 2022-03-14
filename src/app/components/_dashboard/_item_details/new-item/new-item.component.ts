@@ -1,9 +1,12 @@
 import { DataService } from './../../../../services/data/data.service';
-import { IItem, ItemType } from './../../../../models/interfaces';
+import { IItem, ItemType } from '../../../../interfaces/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Item } from 'src/app/models/item.class';
+import { HelperService } from 'src/app/services/util/helper';
+import { throttleTime } from 'rxjs/operators';
+import { asyncScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-new-item',
@@ -12,7 +15,7 @@ import { Item } from 'src/app/models/item.class';
 })
 export class NewItemComponent implements OnInit {
 
-  constructor(fb: FormBuilder, private modalController: ModalController, private data:DataService) {
+  constructor(fb: FormBuilder, private modalController: ModalController, private data: DataService) {
     this.DetailsForm = fb.group({
       name: [''],
       email: [''],
@@ -29,23 +32,46 @@ export class NewItemComponent implements OnInit {
 
 
   ngOnInit() {
+    this.DetailsForm.get("url").valueChanges.pipe(
+      throttleTime(3000, asyncScheduler, { leading: false, trailing: true })
+    ).subscribe((url) => {
+      if (url.indexOf(".") != -1) {
+        this.updateIcon();
+      }
+    })
   }
 
   async onSubmit() {
 
     // Create item object
-    let item = new Item();
     this.data.initDb();
+    let item = new Item();
+    item.update(this.DetailsForm.value);
+    this.data.mainDb.addItem(item);
+    this.data.refresh();
+    console.log(this.data.mainDb);
+
+
     // Add item object to the current DB
 
     // Update current DB
 
-    await this.dismiss();
+    // await this.dismiss();
   }
 
-  async dismiss(){
+  async dismiss() {
     await this.modalController.dismiss();
   }
+
+  //#region Handle Icon update
+  iconUrl = "";
+  updateIcon() {
+    let url = this.DetailsForm.get("url").value;
+    console.log(url);
+
+    this.iconUrl = HelperService.getIcon(url);
+  }
+  //#endregion
 
 
   //#region  Type options menu handlers
@@ -67,25 +93,25 @@ export class NewItemComponent implements OnInit {
   }
   //#endregion
 
-  get showName(){
+  get showName() {
     return true
   }
-  get showEmail(){
+  get showEmail() {
     return this.type == 'Password'
   }
-  get showPassword(){
+  get showPassword() {
     return this.type == 'Password'
   }
-  get showUrl(){
+  get showUrl() {
     return this.type == 'Password'
   }
-  get showDescription(){
+  get showDescription() {
     return this.type == 'Password' || this.type == 'Bank Account' || this.type == 'Card' || this.type == 'Document'
   }
-  get showNote(){
+  get showNote() {
     return this.type == 'Note'
   }
-  get showDocument(){
+  get showDocument() {
     return this.type == 'Document'
   }
 }

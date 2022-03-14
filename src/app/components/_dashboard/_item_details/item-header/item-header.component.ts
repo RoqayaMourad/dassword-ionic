@@ -11,7 +11,7 @@ export class ItemHeaderComponent implements OnInit {
 
   @Input() title;
   @Input() subTitle;
-  @Input() iucon;
+  @Input() iconUrl;
   ngOnInit() {}
 
 }

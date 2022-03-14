@@ -26,7 +26,7 @@ export class LoginRegisterComponent implements OnInit {
       return;
     }
     let secure_auth_object = this.crypto.generateSecureAuthObject(this.login_form.value.email,this.login_form.value.password);
-    this.login.register(secure_auth_object)
+    this.login.register(this.login_form.get("email").value, secure_auth_object)
   }
 
 }
