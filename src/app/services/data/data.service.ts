@@ -5,7 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { IMainDB } from 'src/app/models/interfaces';
+import { IMainDB } from 'src/app/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'

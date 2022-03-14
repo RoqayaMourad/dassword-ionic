@@ -20,7 +20,7 @@ export class HelperService {
   }
 
 
-  static makeid(length=15) {
+  static makeid(length = 15) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
@@ -31,13 +31,21 @@ export class HelperService {
     return result;
   }
 
+  static getIcon(url: string) {
+    url = HelperService.withHttp(url)
+    return `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=256`
+  }
+
+  static withHttp(url: string) {
+    return url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `http://${nonSchemmaUrl}`)
+  }
 
   static copyToClipboard(txt) {
     var m = document;
     txt = m.createTextNode(txt);
     var w = window as any;
     var b = m.body as any;
-    b.appendChild(txt) ;
+    b.appendChild(txt);
     if (b.createTextRange) {
       var d = b.createTextRange();
       d.moveToElementText(txt);
