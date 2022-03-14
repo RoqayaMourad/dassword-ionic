@@ -34,6 +34,8 @@ import { HelperService } from 'src/app/services/util/helper';
 import { NewItemComponent } from '../../_dashboard/_item_details/new-item/new-item.component';
 import { LoginRegisterComponent } from '../../_intro/login-register/login-register.component';
 import { CryptographyService } from 'src/app/services/cryptography/cryptography.service';
+import {NgClickOutsideModule} from 'ng-click-outside2';
+import { ItemHeaderComponent } from '../../_dashboard/_item_details/item-header/item-header.component';
 
 @NgModule({
 
@@ -53,6 +55,7 @@ import { CryptographyService } from 'src/app/services/cryptography/cryptography.
         name: '__mydb',
         driverOrder: [Drivers.SecureStorage, Drivers.IndexedDB, Drivers.LocalStorage]
       }),
+      NgClickOutsideModule
     ],
 
   declarations: [
@@ -68,6 +71,7 @@ import { CryptographyService } from 'src/app/services/cryptography/cryptography.
     InputFieldComponent,
     NewItemComponent,
     LoginRegisterComponent,
+    ItemHeaderComponent,
   ],
 
   entryComponents: [

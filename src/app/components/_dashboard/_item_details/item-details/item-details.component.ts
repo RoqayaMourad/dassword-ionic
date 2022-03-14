@@ -23,7 +23,6 @@ export class ItemDetailsComponent implements OnInit {
   DetailsForm:FormGroup
 
   ngOnInit() {
-    setInterval(()=>{console.log(this.DetailsForm)},5000)
   }
 
   editItem(){
