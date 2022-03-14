@@ -1,5 +1,3 @@
-import { FormGroup } from "@angular/forms";
-
 export class HelperService {
 
   static generate_otp() {
@@ -13,12 +11,16 @@ export class HelperService {
   }
 
 
-  formate_name(s: string) {
+  static timestamp() {
+    return parseInt((Date.now() / 1000) as any);
+  }
+
+  static formate_name(s: string) {
     return s ? s.replace(/_/g, " ") : s;
   }
 
 
-  makeid(length=15) {
+  static makeid(length=15) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
@@ -30,7 +32,7 @@ export class HelperService {
   }
 
 
-  copyToClipboard(txt) {
+  static copyToClipboard(txt) {
     var m = document;
     txt = m.createTextNode(txt);
     var w = window as any;
