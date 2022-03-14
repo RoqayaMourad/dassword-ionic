@@ -35,7 +35,7 @@ export class NewItemComponent implements OnInit {
 
     // Create item object
     let item = new Item();
-    this.data.PassDb$
+    this.data.initDb();
     // Add item object to the current DB
 
     // Update current DB

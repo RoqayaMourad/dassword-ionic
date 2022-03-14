@@ -1,10 +1,11 @@
+import { MainDB } from './../../models/maindb.class';
 import { HelperService } from './../util/helper';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { PasswordDBObject } from 'src/app/models/interfaces';
+import { IMainDB } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +17,33 @@ export class DataService {
   /**
    * The main Db Observable used across the app
    *
-   * @type {BehaviorSubject<PasswordDBObject>}
+   * @type {BehaviorSubject<MainDB>}
    * @memberof DataService
    */
-  PassDb$:BehaviorSubject<PasswordDBObject> = new BehaviorSubject({});
+  mainDb:MainDB = new MainDB();
+  mainDb$:BehaviorSubject<MainDB> = new BehaviorSubject(this.mainDb);
 
 
-  async createNewDb(user_id){
-    let db:PasswordDBObject={
-      user_id:HelperService.makeid(),
-      object_version_id:HelperService.makeid(),
-      folders:[],
-      items:[],
-      email:"",
-      secure_object:"",
-    }
-    return db;
+  async initDb(userId=""){
+    let db:MainDB=new MainDB()
+    db.setUserId(userId);
+    this.setDb(db);
   }
 
+  /**
+   * Sets the Main db and updates all subscribers to to observable
+   *
+   * @param {MainDB} mainDb
+   * @memberof DataService
+   */
+  setDb(mainDb:MainDB){
+    this.mainDb = mainDb
+    this.mainDb$.next(this.mainDb);
+  }
+
+  refresh(){
+    this.mainDb$.next(this.mainDb);
+  }
 
 
   // ====== Alerts

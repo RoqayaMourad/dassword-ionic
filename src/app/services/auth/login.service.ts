@@ -14,8 +14,8 @@ export class LoginService {
    * when user registers an account he sends his email and an encrypted password to the server to register a new account
    */
 
-  register(secure_object) {
-    this.api.post('create-db-user', secure_object).subscribe(r => {
+  register(secureObject) {
+    this.api.post('create-db-user', secureObject).subscribe(r => {
       console.log(r);
       this.d.alert("Account created:"+JSON.stringify(r,null,1))
     })

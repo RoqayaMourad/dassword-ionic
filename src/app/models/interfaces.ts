@@ -2,15 +2,15 @@
 /**
  * the interface for the structure for the decrypted json object
  */
-export interface PasswordDBObject{
-  user_id?:string; // current user's id
+export interface IMainDB{
+  userId?:string; // current user's id
   email?:string; // current user's login email
-  secure_object?:any; // login object
+  secureObject?:any; // login object
 
-  object_version_id?:string;
+  objectVersionId?:string;
 
   items?:IItem[];
-  folders?:Folders[];
+  folders?:IFolder[];
 
 }
 
@@ -38,10 +38,10 @@ export interface IItem{
 
 }
 
-export interface Folders{
+export interface IFolder{
   folderId?:string;
   /** ids of all the items listed in this folder */
-  item_ids?:string[];
+  itemIds?:string[];
   icon?:string;
 }
 
