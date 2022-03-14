@@ -2,7 +2,25 @@ import { HelperService } from '../services/util/helper';
 import { IItem, ItemType } from './interfaces';
 
 export class Item implements IItem {
-  constructor() {}
+  constructor(item:Item = null) {
+    this.setName(item.name);
+    this.setEmail(item.email);
+    this.setPassword(item.password);
+    this.setDescription(item.description);
+    this.setNote(item.note);
+    this.setIcon(item.icon);
+    this.setUrl(item.url);
+
+    this.setFileName(item.fileName);
+    this.setFileCid(item.fileCid);
+
+    this.setItemId(item.itemId);
+    this.setType(item.type);
+    this.setFolderId(item.folderId);
+
+    this.setCreatedAt(item.createdAt);
+    this.setModifiedAt(item.modifiedAt);
+  }
   // item data
   name?: string = "";
   email?: string = "";
@@ -17,7 +35,6 @@ export class Item implements IItem {
 
   // item metadata
   itemId?:string = "";
-  fileId?: string = "";
   type?: ItemType = "Password";
   folderId?: string = "";
   /** timestamp in seconds */
@@ -26,33 +43,33 @@ export class Item implements IItem {
   modifiedAt?: number = HelperService.timestamp();
 
 
-  public setName(name: string) {
-    this.name = name
+  setName(name: string = "") {
+    this.name = name || ""
   }
 
-  setEmail(email: string) {
-    this.email = email
+  setEmail(email: string = "") {
+    this.email = email || ""
   }
 
-  setPassword(password) {
+  setPassword(password = "") {
     // TODO: verify password
-    this.password = password
+    this.password = password || ""
   }
 
   setDescription(description: string = "") {
-    this.description = description
+    this.description = description || ""
   }
 
   setNote(note: string = "") {
-    this.note = note
+    this.note = note || ""
   }
 
   setIcon(icon: string = "") {
-    this.icon = icon
+    this.icon = icon || ""
   }
 
   setUrl(url: string = "") {
-    this.url = url
+    this.url = url || ""
   }
 
   // file
@@ -60,16 +77,17 @@ export class Item implements IItem {
     this.fileName = fileName || HelperService.makeid();
   }
 
-  setFileCid(fileCid: string) {
+  setFileCid(fileCid: string = "") {
     this.fileCid = fileCid || HelperService.makeid();
   }
 
-  setType(type: ItemType) {
-    this.type = type
+  // item metadata
+  setType(type: ItemType = "Password") {
+    this.type = type || "Password"
   }
 
-  setFolderId(folderId: string) {
-    this.folderId = folderId
+  setFolderId(folderId: string = "") {
+    this.folderId = folderId || ""
   }
 
   setItemId(itemId: string = null) {
@@ -84,6 +102,26 @@ export class Item implements IItem {
     if (modifiedAt) {
       this.modifiedAt = HelperService.timestamp()
     }
+  }
+
+  update(item:Item){
+    this.setName(item.name);
+    this.setEmail(item.email);
+    this.setPassword(item.password);
+    this.setDescription(item.description);
+    this.setNote(item.note);
+    this.setIcon(item.icon);
+    this.setUrl(item.url);
+
+    this.setFileName(item.fileName);
+    this.setFileCid(item.fileCid);
+
+    this.setItemId(item.itemId);
+    this.setType(item.type);
+    this.setFolderId(item.folderId);
+
+    this.setCreatedAt(item.createdAt);
+    this.setModifiedAt(item.modifiedAt);
   }
 
   hasWord(word:string, includeNote = true){
