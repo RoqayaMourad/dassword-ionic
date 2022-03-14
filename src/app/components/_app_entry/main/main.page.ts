@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { LoginRegisterComponent } from '../../_intro/login-register/login-register.component';
 
 @Component({
   selector: 'app-main',
@@ -14,10 +16,18 @@ export class MainPage implements OnInit {
   }
   isSearch: boolean = false;
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {
+    this.presentLogin()
+  }
+
+  presentLogin() {
+    this.modalController.create({
+      component: LoginRegisterComponent,
+    }).then((m) => { m.present() })
+
   }
 }
- 
+
 

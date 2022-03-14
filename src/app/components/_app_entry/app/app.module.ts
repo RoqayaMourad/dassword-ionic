@@ -26,6 +26,14 @@ import { SidebarListComponent } from '../../_dashboard/_sidebar/sidebar-list/sid
 import { SingleMenuItemComponent } from '../../_dashboard/_sidebar/single-menu-item/single-menu-item.component';
 import { SidebarNoticeComponent } from '../../_dashboard/_sidebar/sidebar-notice/sidebar-notice.component';
 import { InputFieldComponent } from '../../_shared/input-field/input-field.component';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { Drivers } from '@ionic/storage';
+import { HttpClientModule } from '@angular/common/http';
+import { StorageService } from 'src/app/services/data/storage.service';
+import { HelperService } from 'src/app/services/util/helper';
+import { NewItemComponent } from '../../_dashboard/_item_details/new-item/new-item.component';
+import { LoginRegisterComponent } from '../../_intro/login-register/login-register.component';
+import { CryptographyService } from 'src/app/services/cryptography/cryptography.service';
 
 @NgModule({
 
@@ -40,6 +48,11 @@ import { InputFieldComponent } from '../../_shared/input-field/input-field.compo
       MatInputModule,
       MatFormFieldModule,
       MatIconModule,
+      HttpClientModule,
+      IonicStorageModule.forRoot({
+        name: '__mydb',
+        driverOrder: [Drivers.SecureStorage, Drivers.IndexedDB, Drivers.LocalStorage]
+      }),
     ],
 
   declarations: [
@@ -53,6 +66,8 @@ import { InputFieldComponent } from '../../_shared/input-field/input-field.compo
     SingleMenuItemComponent,
     SidebarNoticeComponent,
     InputFieldComponent,
+    NewItemComponent,
+    LoginRegisterComponent,
   ],
 
   entryComponents: [
@@ -61,6 +76,9 @@ import { InputFieldComponent } from '../../_shared/input-field/input-field.compo
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormControlName,
+    StorageService,
+    HelperService,
+    CryptographyService,
   ],
 
   bootstrap: [AppComponent],

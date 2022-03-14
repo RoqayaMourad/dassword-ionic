@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-single-list-item',
@@ -9,6 +9,7 @@ export class SingleListItemComponent implements OnInit {
 
   constructor() { }
 
+  @Input() name:string = "";
   ngOnInit() {}
 
 }

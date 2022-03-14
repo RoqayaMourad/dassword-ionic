@@ -8,14 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ItemDetailsComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) {
-
-  }
-
-  DetailsForm:FormGroup
-
-  ngOnInit() {
-    this.DetailsForm = this.fb.group({
+  constructor(fb: FormBuilder) {
+    this.DetailsForm = fb.group({
       name: [''],
       email: [''],
       url:[''],
@@ -24,6 +18,15 @@ export class ItemDetailsComponent implements OnInit {
       notes:[''],
       file:['']
     });
+  }
+
+  DetailsForm:FormGroup
+
+  ngOnInit() {
+    setInterval(()=>{console.log(this.DetailsForm)},5000)
+  }
+
+  editItem(){
 
   }
 

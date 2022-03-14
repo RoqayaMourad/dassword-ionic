@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "single-menu-item.component.scss"
+    ],
+    "names": [],
+    "file": "single-menu-item.component.css"
+}
