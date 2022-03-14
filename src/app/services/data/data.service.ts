@@ -10,7 +10,7 @@ import { PasswordDBObject } from 'src/app/models/interfaces';
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController, private h:HelperService) {
+  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController) {
   }
 
   /**
@@ -24,8 +24,8 @@ export class DataService {
 
   async createNewDb(user_id){
     let db:PasswordDBObject={
-      user_id:this.h.makeid(),
-      object_version_id:this.h.makeid(),
+      user_id:HelperService.makeid(),
+      object_version_id:HelperService.makeid(),
       folders:[],
       items:[],
       email:"",

@@ -9,36 +9,37 @@ export interface PasswordDBObject{
 
   object_version_id?:string;
 
-  items?:Item[];
+  items?:IItem[];
   folders?:Folders[];
 
 }
 
-export interface Item{
+export interface IItem{
   // item data
   name?:string;
   email?:string;
   password?:string;
   description?:string;
+  url?:string;
   note?:string;
   icon?:string;
 
-  file_name?:string;
-  file_cid?:string;
+  fileName?:string;
+  fileCid?:string;
 
   // item metadata
-  item_id?:string;
+  itemId?:string;
   type?:ItemType;
-  folder_id?:string;
+  folderId?:string;
   /** timestamp in seconds */
-  created_at?:number;
+  createdAt?:number;
   /** timestamp in seconds */
-  modified_at?:number;
+  modifiedAt?:number;
 
 }
 
 export interface Folders{
-  folder_id?:string;
+  folderId?:string;
   /** ids of all the items listed in this folder */
   item_ids?:string[];
   icon?:string;
@@ -46,4 +47,4 @@ export interface Folders{
 
 
 
-export type ItemType = "password" | "card" | "bank_account" | "document" | "note"
+export type ItemType = "Password" | "Card" | "Bank Account" | "Document" | "Note"
