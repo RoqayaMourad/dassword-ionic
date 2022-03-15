@@ -92,6 +92,18 @@
     margin: auto;
   }
 }
+.loginRegisterModal{
+  &::part(backdrop) {
+    background-color: #121212;
+    --backdrop-opacity: 0.8;
+  }
+
+  &::part(content){
+    width: 70%;
+    height: 80%;
+    margin: auto;
+  }
+}
 .newItemForm {
   label{
     @apply text-base
