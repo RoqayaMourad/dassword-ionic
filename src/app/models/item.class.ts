@@ -2,7 +2,7 @@ import { HelperService } from 'src/app/services/util/helper';
 import { IItem, ItemType } from '../interfaces/interfaces';
 
 export class Item implements IItem {
-  constructor(item:Item = null) {
+  constructor(item:Item | IItem = null) {
     if (item && typeof item === "object") {
       this.setName(item.name);
       this.setEmail(item.email);
