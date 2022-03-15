@@ -51,3 +51,19 @@
     height: 18px;
   }
 }
+.revealDiv , .copyDiv{
+  svg {
+    position: absolute;
+    right: 3%;
+    top:18%;
+    stroke: #ABABAB;
+    &:hover{
+       @apply stroke-cyan-2;
+    }
+  }
+}
+.revealDiv{
+  svg {
+    right:10%;
+  }
+}

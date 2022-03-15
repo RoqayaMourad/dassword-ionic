@@ -43,6 +43,18 @@
         <app-input-field label="password" placeholder="" type="password" formControlName="password" ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
       </div>
 
+      <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-cyan-2">password</label>
+        <div class="relative"> 
+          <input class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5" type="password" placeholder="Password"> 
+         <a href="">
+           <div class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
+         </a> 
+         <a href="">
+          <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
+         </a>
+         </div>
+      </div>
 
       <div class="flex">
         <div>
