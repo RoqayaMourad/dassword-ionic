@@ -1,5 +1,5 @@
 
 export interface ISecurity {
-  email: string;
-  secure_hash: string;
+  email?: string;
+  secure_hash?: string;
 }

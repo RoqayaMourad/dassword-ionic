@@ -20,7 +20,7 @@ export class HelperService {
   }
 
 
-  static makeid(length = 15) {
+  static makeid(length = 16) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;

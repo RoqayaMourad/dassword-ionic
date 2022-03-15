@@ -60,7 +60,7 @@ export class NewItemComponent implements OnInit {
     this.data.mainDb.addItem(item);
 
     // emit change to all listener to the db object
-    this.data.refresh();
+    this.data.refreshDb();
     console.log(this.data.mainDb);
 
     await this.dismiss();
