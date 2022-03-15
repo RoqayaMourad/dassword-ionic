@@ -2,60 +2,67 @@
   <div class="flex flex-col sm:flex-row sm:justify-around">
     <div class="w-80 h-screen pb-4 px-6 flex flex-col justify-between ">
       <div>
-
         <!-- Logo -->
         <a class="py-2 mb-6 justify-start" href="#">
-          <img src="../../assets/icon/dassword-logo-final.svg" class="mt-4 w-full" alt="">
+          <img src="../../assets/brand/logo.svg" class="mt-4 w-full" alt="">
         </a>
 
         <!-- General -->
-        <div class="pt-5">
-          <p class="text-light-grey-500 ml-2 w-full pb-2 text-md font-normal">
+        <div class="pt-5 pb-1">
+          <!-- <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             General
-          </p>
-          <app-single-menu-item [name]="'All Items'"></app-single-menu-item>
+          </p> -->
+          <app-single-menu-item [name]="'All Items'" [icon]="'/assets/icon/all.svg'"></app-single-menu-item>
         </div>
 
 
         <!-- Types -->
-        <div class="pt-2">
-          <p class="text-light-grey-500 ml-2 w-full pb-2 text-md font-normal">
+        <div class="py-1">
+          <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             Types
           </p>
-          <app-single-menu-item [name]="'Passwords'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Cards'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Bank Accounts'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Documents'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Note'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Passwords'" [icon]="'/assets/icon/password.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Cards'" [icon]="'/assets/icon/card.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Bank Accounts'" [icon]="'/assets/icon/bank.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Documents'" [icon]="'/assets/icon/document.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Note'" [icon]="'/assets/icon/note.svg'"></app-single-menu-item>
         </div>
 
-        <!-- IFolder -->
-        <div class="pt-2">
-          <p class="text-light-grey-500 ml-2 w-full pb-2 text-md font-normal">
-            IFolder
+        <!-- Folder -->
+        <div class="py-1">
+          <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
+           Folder
           </p>
 
-          <app-single-menu-item [name]="'Work'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Social Media'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Work'" [icon]="'/assets/icon/folder.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Social Media'" [icon]="'/assets/icon/folder.svg'"></app-single-menu-item>
+          
 
-          <a class="mt-8 hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 transition-colors duration-200 justify-start" href="#">
+          <a class="hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 mt-2 transition-colors duration-200 justify-start" href="#">
             <span class="text-left">
-              <svg width="20" height="20" fill="#9A9A9A" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path
-                  d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-              </svg>
+              <div class="plusIconDiv" [inlineSVG]="'/assets/icon/plus.svg'" ></div>
             </span>
             <span class="ml-3 text-base font-normal text-light-grey-300 hover:text-gray-500 cursor-pointer">
               New Folder
             </span>
           </a>
         </div>
-
       </div>
 
-      <!-- Notice -->
-      <app-sidebar-notice></app-sidebar-notice>
 
+      <div class="">
+         <!-- Tools -->
+         <div class="py-1">
+          <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
+           Tools
+           </p>
+
+          <app-single-menu-item [name]="'Generate Password'" [icon]="'/assets/icon/refresh.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Settings'" [icon]="'/assets/icon/settings.svg'"></app-single-menu-item>
+        </div>
+      </div>
+      <!-- Notice
+      <app-sidebar-notice></app-sidebar-notice> -->
     </div>
   </div>
 </div>

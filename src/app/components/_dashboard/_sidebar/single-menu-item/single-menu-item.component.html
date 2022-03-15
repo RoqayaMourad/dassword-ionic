@@ -1,15 +1,7 @@
 <div>
-  <a class="hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 mt-4 transition-colors duration-200 justify-start" href="#">
+  <a class="hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 mt-2 transition-colors duration-200 justify-start" href="#">
     <span class="text-left">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-grid" width="20"
-        height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4ECCA3" fill="none"
-        stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z"></path>
-        <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-        <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-        <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-        <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-      </svg>
+    <div class="sidebarSvgDiv" [inlineSVG]="icon"></div>
     </span>
     <span class="ml-3 text-base font-normal text-gray-300 hover:text-gray-500 cursor-pointer">
       {{name}}
