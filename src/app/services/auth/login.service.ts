@@ -25,14 +25,19 @@ export class LoginService {
     // TODO: Encrypt secure object with the recieved public key
 
     // Send the encrypted secure object to the server
-    this.api.post<IUser>('login', { encrypted_data: secureAuthObject }).subscribe(r => {
+    this.api.post<IUser>('login', { encrypted_data: secureAuthObject }).subscribe(async (r) => {
       if (r.success && r.data.user_id) {
         let db: MainDB = new MainDB()
         db.setuser_id(r.data.user_id);
-        this.d.setDb(db);
+        await this.d.setDb(db);
 
-        this.d.alert("Logged in successfully, fetching DB")
+        this.d.alert("Logged in successfully, setting user ....")
         console.log(r);
+
+        // set global user
+        await  this.d.setUser(r.data)
+        this.d.alert("User set and Upaded in the storage, fetching DB")
+        console.log(this.d.user);
 
         // TODO: if authentication is successful get the db from local storage or from IPFS
 
@@ -50,13 +55,17 @@ export class LoginService {
 
     // TODO: Encrypt secure object with the recieved public key
 
-    this.api.post<IUser>('register', { encrypted_data: secureAuthObject }).subscribe(r => {
+    this.api.post<IUser>('register', { encrypted_data: secureAuthObject }).subscribe(async (r) => {
       if (r.success && r.data.user_id) {
         let db: MainDB = new MainDB()
         db.setuser_id(r.data.user_id);
-        this.d.setDb(db)
-        this.d.alert("Account created")
+        await this.d.setDb(db)
+        this.d.alert("Account created, setting user")
         console.log(r);
+        await this.d.setUser(r.data)
+        this.d.alert("User set and Upaded in the storage, fetching DB")
+        console.log(this.d.user);
+
       } else {
         this.d.alert("Wrong Email or Password")
       }

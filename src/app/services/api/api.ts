@@ -47,7 +47,7 @@ export class Api {
     return this.http.post<IAPIServerResponse<T>>(url, body);
   }
 
-  uploadFile<T>(endpoint: string, file: File, form_name:string = "encrypteddb") {
+  uploadFile<T>(endpoint: string, file: File, body = null, form_name: string = "encrypteddb") {
 
     let url = this.url + '/' + endpoint;
     if (endpoint.indexOf('http') == 0) {
@@ -57,6 +57,11 @@ export class Api {
     let formData = new FormData();
     formData.append(form_name, file);
 
+    if (body) {
+      for (let k in body) {
+        formData.append(k, body[k]);
+      }
+    }
     let params = new HttpParams();
 
     const options = {

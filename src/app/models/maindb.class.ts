@@ -2,12 +2,12 @@ import { Security } from './security.class';
 import { HelperService } from 'src/app/services/util/helper';
 import { Folder } from './folder.class';
 import { Item } from 'src/app/models/item.class';
-import { IMainDB } from "../interfaces/interfaces";
+import { IFolder, IItem, IMainDB } from "../interfaces/interfaces";
 
 
 export class MainDB implements IMainDB {
 
-  constructor(mainDb?:MainDB) {
+  constructor(mainDb?: MainDB | IMainDB) {
     if (mainDb) {
       this.setuser_id(mainDb.user_id);
       this.setEmail(mainDb.email);
@@ -33,16 +33,19 @@ export class MainDB implements IMainDB {
     this.email = email || "";
   }
 
-  setSecureObject(secureObject:Security) {
+  setSecureObject(secureObject: Security) {
     this.secureObject = secureObject || null
   }
 
-  setObjectVersionId(objectVersionId:string) {
+  setObjectVersionId(objectVersionId: string) {
     this.objectVersionId = objectVersionId || ""
   }
 
-  setItems(items: Item[]) {
-    this.items = items || []
+  setItems(items: Item[] | IItem[] = []) {
+    for (let i = 0; i < items.length; i++) {
+      items[i] = new Item(items[i]);
+    }
+    this.items = (items || []) as any
   }
 
   // Items functions
@@ -60,14 +63,17 @@ export class MainDB implements IMainDB {
     }), 1);
   }
 
-  updateItem(item: Item){
+  updateItem(item: Item) {
     var item = this.items.find((i) => i.itemId == item.itemId);
     item.update(item)
   }
 
 
-  setFolders(folders: Folder[]) {
-    this.folders = folders || []
+  setFolders(folders: Folder[] | IFolder[] = []) {
+    for (let i = 0; i < folders.length; i++) {
+      folders[i] = new Folder(folders[i]);
+    }
+    this.folders = (folders || []) as any
   }
 
 

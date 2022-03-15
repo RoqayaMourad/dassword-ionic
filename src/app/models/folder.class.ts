@@ -3,7 +3,12 @@ import { IFolder } from "../interfaces/interfaces";
 
 
 export class Folder implements IFolder {
-  constructor() {}
+  constructor(folder:Folder | IFolder) {
+    this.setFolderId(folder.folderId);
+    this.setFolderName(folder.folderName);
+    this.setIcon(folder.icon);
+    this.setItemIds(folder.itemIds);
+  }
 
   folderId?:string;
   folderName?:string;
@@ -25,6 +30,9 @@ export class Folder implements IFolder {
 
   // TODO:items handling
 
+  setItemIds(itemIds:string[]){
+    this.itemIds = itemIds || []
+  }
   addItem(itemId:string){
 
   }

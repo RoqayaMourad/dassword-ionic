@@ -40,6 +40,7 @@ export interface IItem{
 
 export interface IFolder{
   folderId?:string;
+  folderName?:string;
   /** ids of all the items listed in this folder */
   itemIds?:string[];
   icon?:string;
@@ -48,3 +49,8 @@ export interface IFolder{
 
 
 export type ItemType = "Password" | "Card" | "Bank Account" | "Document" | "Note"
+
+export interface IEnctyptedDBObject{
+  /** The encrypted DB stringfied object */
+  data:string;
+}
