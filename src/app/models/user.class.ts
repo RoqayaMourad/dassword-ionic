@@ -4,12 +4,14 @@ import { IUser } from "../interfaces/user.interface";
 
 export class User implements IUser {
   constructor(_user?: User | IUser) {
-    this.setUserId(_user.user_id);
-    this.setEmail(_user.email);
-    this.setDbCid(_user.db_cid);
-    this.setDbVersion(_user.db_version);
-    this.setSecureHash(_user.secure_hash);
-    this.setMeta(_user.meta);
+    if (_user && typeof _user === "object") {
+      this.setUserId(_user.user_id);
+      this.setEmail(_user.email);
+      this.setDbCid(_user.db_cid);
+      this.setDbVersion(_user.db_version);
+      this.setSecureHash(_user.secure_hash);
+      this.setMeta(_user.meta);
+    }
   }
 
   user_id?: string = "";

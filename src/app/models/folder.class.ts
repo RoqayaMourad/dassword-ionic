@@ -3,11 +3,13 @@ import { IFolder } from "../interfaces/interfaces";
 
 
 export class Folder implements IFolder {
-  constructor(folder:Folder | IFolder) {
-    this.setFolderId(folder.folderId);
-    this.setFolderName(folder.folderName);
-    this.setIcon(folder.icon);
-    this.setItemIds(folder.itemIds);
+  constructor(folder?:Folder | IFolder) {
+    if (folder && typeof folder === "object") {
+      this.setFolderId(folder.folderId);
+      this.setFolderName(folder.folderName);
+      this.setIcon(folder.icon);
+      this.setItemIds(folder.itemIds);
+    }
   }
 
   folderId?:string;

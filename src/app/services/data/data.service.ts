@@ -1,3 +1,4 @@
+import { Security } from 'src/app/models/security.class';
 import { HelperService } from 'src/app/services/util/helper';
 import { User } from './../../models/user.class';
 import { IPFSService } from './ipfs.service';
@@ -19,6 +20,7 @@ export class DataService {
   }
 
   user: User = new User();
+  private MASTER_PASSWORD:string;
   /**
    * The main Db Observable used across the app
    *
@@ -44,12 +46,12 @@ export class DataService {
     else {
       db = new MainDB()
       this.setDb(db);
+      // Test Upload File
+      setTimeout(() => {
+        this.uploadDbToIPFS()
+      }, 5000);
     }
 
-    // Test Upload File
-    setTimeout(() => {
-      // this.uploadDbToIPFS()
-    }, 5000);
   }
 
   /**
@@ -74,6 +76,7 @@ export class DataService {
     this.mainDb$.next(this.mainDb);
     if (updateStorage) {
       await this.setDbToStorage();
+      return this.mainDb
     }
   }
 
@@ -129,7 +132,8 @@ export class DataService {
      * @memberof DataService
      */
   async setUser(user_obj: User | IUser, updateStorage = true) {
-    let user = new User(user_obj)
+    let user = new User(user_obj);
+    delete user.secure_hash // make sure the secure hash is not saved
     this.user = user;
     if (updateStorage) {
       await this.setUserToStorage(this.user)
@@ -171,6 +175,15 @@ export class DataService {
       }, delay);
     })
   }
+
+  /**
+   * Set the master password used for db encryption and generating trusted hashes
+   *
+   * @memberof DataService
+   */
+  setMasterPassword(password){
+    this.MASTER_PASSWORD = password;
+  }
   //#endregion
 
 
@@ -202,7 +215,9 @@ export class DataService {
       var file = new File([blob], HelperService.makeid(), { type: "text/plain" });
 
       // upload file
-      await this.ipfs.uploadFileToIPFS("db",file,this.user.secure_hash);
+      const sec = new Security();
+      const secure_hash = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
+      await this.ipfs.uploadFileToIPFS("db",file,secure_hash);
     } catch (error) {
       console.error(error)
       throw new Error(error);
@@ -216,7 +231,9 @@ export class DataService {
   async getDbFromIPFS() {
     try {
       // upload file
-      this.ipfs.getDbFromIPFS(this.user.secure_hash).subscribe(r=>{
+      const sec = new Security();
+      const secure_hash = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
+      this.ipfs.getDbFromIPFS(secure_hash).subscribe(r=>{
         if (r.success && r.data) {
           let enctyptedDBObject:IEnctyptedDBObject = r.data
 

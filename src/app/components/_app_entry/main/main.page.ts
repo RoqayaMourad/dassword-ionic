@@ -21,9 +21,6 @@ export class MainPage implements OnInit {
 
   ngOnInit() {
     this.presentLogin()
-    // Create item object TODO: Remove this after login is completed
-    this.data.initDb();
-
   }
 
   presentLogin() {

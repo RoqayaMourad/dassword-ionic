@@ -8,7 +8,7 @@ import { IFolder, IItem, IMainDB } from "../interfaces/interfaces";
 export class MainDB implements IMainDB {
 
   constructor(mainDb?: MainDB | IMainDB) {
-    if (mainDb) {
+    if (mainDb && typeof mainDb === "object") {
       this.setuser_id(mainDb.user_id);
       this.setEmail(mainDb.email);
       this.setSecureObject(mainDb.secureObject);
