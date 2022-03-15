@@ -2,16 +2,15 @@ import { MainDB } from './../../models/maindb.class';
 import { HelperService } from './../util/helper';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { IMainDB } from 'src/app/interfaces/interfaces';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController) {
+  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController, private storage: StorageService) {
   }
 
   /**
@@ -20,16 +19,23 @@ export class DataService {
    * @type {BehaviorSubject<MainDB>}
    * @memberof DataService
    */
-  mainDb:MainDB = new MainDB();
-  mainDb$:BehaviorSubject<MainDB> = new BehaviorSubject(this.mainDb);
+  mainDb: MainDB = new MainDB();
+  mainDb$: BehaviorSubject<MainDB> = new BehaviorSubject(this.mainDb);
 
 
-  async initDb(user_id=""){
-    let db:MainDB=new MainDB()
-    db.setuser_id(user_id);
-    this.setDb(db);
-    console.log("DatabaseSet successfuly",db);
-
+  async initDb() {
+    let db: MainDB;
+    // Get db from local storage
+    db = await this.getDbFromStorage();
+    if (db) {
+      this.setDb(db)
+    }
+    else {
+      // if no db is NOT found init a new db
+      db = new MainDB()
+      this.setDb(db);
+      console.log("DatabaseSet successfuly", db);
+    }
   }
 
   /**
@@ -38,13 +44,39 @@ export class DataService {
    * @param {MainDB} mainDb
    * @memberof DataService
    */
-  setDb(mainDb:MainDB){
-    this.mainDb = mainDb
-    this.mainDb$.next(this.mainDb);
+  setDb(_mainDb_obj: MainDB) {
+    let maindb = new MainDB(_mainDb_obj)
+    this.mainDb = maindb;
+    this.refresh();
   }
 
-  refresh(){
+  async refresh(updateStorage = true) {
     this.mainDb$.next(this.mainDb);
+    await this.setDbToStorage();
+  }
+
+  async setDbToStorage(mainDb?: MainDB, timeout = 100) {
+    mainDb = mainDb || this.mainDb;
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.storage.set("maindb", mainDb).then((db) => {
+          console.log("Db saved in storage 📄 -> 📦");
+          resolve(db)
+        })
+      }, timeout);
+    })
+  }
+
+  async getDbFromStorage(timeout = 100) {
+    return new Promise<MainDB>((resolve, reject) => {
+      setTimeout(() => {
+        this.storage.get("maindb").then((db) => {
+          console.log("Db loaded from storage 📦 -> 📄  ");
+          console.log(db);
+          resolve(db)
+        }).catch(reject)
+      }, timeout);
+    })
   }
 
 
@@ -90,7 +122,7 @@ export class DataService {
 
   }
 
-  loading_present:any;
+  loading_present: any;
   async show_loading(max_duartion = 20000) {
     this.loading_present = await this.loadingController.create({
       cssClass: 'loading-class',
@@ -101,7 +133,7 @@ export class DataService {
     await this.loading_present.present();
   }
 
-  async dismiss_loading(){
+  async dismiss_loading() {
     await this.loading_present?.dismiss();
   }
 
