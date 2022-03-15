@@ -47,7 +47,7 @@ export class NewItemComponent implements OnInit {
     item.update(this.DetailsForm.value); // update item records
     this.updateIcon(); // update current icon
     item.setIcon(this.iconUrl); // set item icon
-    item.setName(); // set name from url if not already set
+    item.setName(this.DetailsForm.value.name); // set name from url if not already set
     this.data.mainDb.addItem(item); // add item to the main db
     this.data.refresh(); // emit change to all listener to the db object
     console.log(this.data.mainDb);

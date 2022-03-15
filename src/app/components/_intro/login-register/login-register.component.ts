@@ -17,6 +17,10 @@ export class LoginRegisterComponent implements OnInit {
       email: ['',Validators.required],
       password:['',Validators.required],
     });
+    this.login_form = fb.group({
+      email: ['',Validators.required],
+      password:['',Validators.required],
+    });
   }
 
   ngOnInit() {}
