@@ -1,5 +1,5 @@
 
 export interface ISecurity {
-    login?: any;
-    [key: string]: any;
+  email: string;
+  secure_hash: string;
 }
