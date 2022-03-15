@@ -1,62 +1,65 @@
 <ion-content>
-  <div class="bg-grey-400 rounded-md p-4">
+  <div class="bg-grey-400 rounded-md p-4 h-full">
+    <form class="newItemForm" [formGroup]="DetailsForm" (ngSubmit)="onSubmit()">
 
-
-
-    <form class="" [formGroup]="DetailsForm" (ngSubmit)="onSubmit()">
-
-      <!-- Name Field -->
-      <div class="mb-6">
-        <app-input-field *ngIf="showName" label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
+      <div class="flex">
+        <div class="justify-center w-full">
+          <img src="/assets/brand/logo.svg" width="40%" class="mx-auto" alt="" srcset="">
+        </div>
       </div>
 
-      <!-- App header -->
-      <app-item-header [iconUrl]="iconUrl" title="Website Name"></app-item-header>
-
-      <!-- Type Field-->
-      <!-- ================= Select Type -->
-      <div class="max-w-md mx-auto mb-6">
-
-        <h5>Select Type</h5>
+     <!-- ================= Select Type -->
+      <div class="mx-auto mb-6">
+        <label class="block mb-2 text-lg font-medium text-cyan-2">Select Type</label>   
         <!-- component -->
-        <div class="relative w-[30rem]" (clickOutside)="closeSelect()">
-
+        <div class="relative w-full" (clickOutside)="closeSelect()">
           <!-- trigger button -->
           <button
             type="button"
             (click)="toggleSelect()"
-            class="flex w-full items-center justify-between rounded bg-black p-2 ring-1 ring-gray-600"
-            [ngClass]="typeSelectOpen?'':'ring-blue-600'">
-
+            class="flex w-full items-center justify-between shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 p-2.5"
+            [ngClass]="typeSelectOpen?'':'ring-gray-300'">
             <span>{{type}}</span>
-
             <!-- X icon svg -->
             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
-
           </button>
-
           <!-- list items -->
-          <ul class="z-2 absolute mt-2 w-full rounded bg-gray-900 ring-1 ring-gray-900" *ngIf="typeSelectOpen">
-            <li class="cursor-pointer select-none p-2 hover:bg-gray-900" (click)="setType('Password')">
+          <ul class="z-2 absolute w-full rounded bg-grey-500" *ngIf="typeSelectOpen">
+            <li class="cursor-pointer select-none p-2 text-light-grey-100 hover:bg-grey-100" (click)="setType('Password')">
               Password
             </li>
-            <li class="cursor-pointer select-none p-2 hover:bg-gray-900" (click)="setType('Card')">
+            <li class="cursor-pointer select-none p-2 text-light-grey-100 hover:bg-grey-100" (click)="setType('Card')">
               Card
             </li>
-            <li class="cursor-pointer select-none p-2 hover:bg-gray-900" (click)="setType('Note')">
+            <li class="cursor-pointer select-none p-2 text-light-grey-100 hover:bg-grey-100" (click)="setType('Bank Account')">
+              Bank Account
+            </li>
+            <li class="cursor-pointer select-none p-2 text-light-grey-100 hover:bg-grey-100" (click)="setType('Note')">
               Note
             </li>
-            <li class="cursor-pointer select-none p-2 hover:bg-gray-900" (click)="setType('Document')">
+            <li class="cursor-pointer select-none p-2 text-light-grey-100 hover:bg-grey-100" (click)="setType('Document')">
               Document/File
             </li>
           </ul>
         </div>
       </div>
-      <!-- Select Type ================= -->
+      <!-- Select Type ================= -->  <!-- Name Field -->
 
-      <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+      
+<!-- spliter -->
+ <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+
+
+<!-- App header
+<app-item-header [iconUrl]="iconUrl" title="Website Name"></app-item-header>
+-->
+
+      <!-- Name Field -->
+      <div class="mb-6">
+        <app-input-field *ngIf="showName" label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
+      </div>
 
       <!-- Url Field-->
       <div class="mb-6">
@@ -75,25 +78,25 @@
 
       <!-- Description Field-->
       <div class="mb-6">
-        <app-input-field *ngIf="showDescription" label="Description" placeholder="write any notes here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
+        <app-input-field *ngIf="showDescription" label="Description" placeholder="Write Your Description Here ..." type="textarea" formControlName="description" ngDefaultControl></app-input-field>
       </div>
 
       <!-- Note Field-->
       <div class="mb-6">
-        <app-input-field *ngIf="showNote" label="Note" placeholder="Leave a comment..." type="textarea" formControlName="notes" ngDefaultControl></app-input-field>
+        <app-input-field *ngIf="showNote" label="Note" placeholder="Write Your Note Here ..." type="textarea" formControlName="notes" ngDefaultControl></app-input-field>
       </div>
 
       <!-- Document Field-->
       <div class="mb-6">
-        <app-input-field *ngIf="showDocument" label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit." formControlName="file" ngDefaultControl></app-input-field>
+        <app-input-field *ngIf="showDocument" label="Upload file" type="file" subtext="Your Personal Files Will be Safe Here" formControlName="file" ngDefaultControl></app-input-field>
       </div>
 
       <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
 
 
       <div class="flex justify-end">
-        <button type="reset" class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-white" (click)="dismiss()">Cancel</button>
-        <button type="submit" class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-white bg-cyan-2 p-2.5">Create</button>
+        <button type="reset" class="rounded-lg px-10 py-2 mr-6 font-medium text-base bg-transparent border border-gray-200 text-gray-200 hover:bg-light-grey-600 " (click)="dismiss()">Cancel</button>
+        <button type="submit" class="rounded-lg px-8 py-2 font-medium text-base bg-transparent text-dark-4 bg-cyan-2 border border-cyan-2  p-2.5 hover:bg-transparent hover:text-cyan-2 transition-all duration-75 ease-in-out">Create</button>
 
       </div>
 

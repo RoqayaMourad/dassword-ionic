@@ -18,8 +18,8 @@ export class ItemsListSearchComponent implements OnInit {
     const modal = await this.modalController.create({
       component: NewItemComponent,
       backdropDismiss:true,
-
-
+      cssClass: 'createItemModal',
+    
     });
     await modal.present();
   }

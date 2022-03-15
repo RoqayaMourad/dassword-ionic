@@ -80,3 +80,20 @@
     }
   }
 }
+.createItemModal {
+  &::part(backdrop) {
+    background-color: #121212;
+    --backdrop-opacity: 0.8;
+  }
+
+  &::part(content){
+    width: 50%;
+    height: 85%;
+    margin: auto;
+  }
+}
+.newItemForm {
+  label{
+    @apply text-base
+  }
+}
