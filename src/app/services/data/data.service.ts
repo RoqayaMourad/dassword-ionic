@@ -40,7 +40,7 @@ export class DataService {
 
     // Test Upload File
     setTimeout(() => {
-      this.uploadDbToIPFS()
+      // this.uploadDbToIPFS()
     }, 5000);
   }
 
