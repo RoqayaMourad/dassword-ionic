@@ -1,10 +1,10 @@
-<div href="#" class="flex items-center p-3 text-lg bg-grey-400 rounded-lg hover:bg-cyan-2 hover:shadow-lg  px-4 ">
-  <img [src]="item.icon" alt="" srcset="">
-  <div class="flex flex-col pl-4">
-    <span class="flex-1 whitespace-nowrap text-light-text font-bold">{{item.name}}</span>
-    <span class="flex-1 whitespace-nowrap text-light-grey-400 text-sm font-light ">{{item.url}}</span>
-    <span class="text-lg text-light-grey-500">{{item.email}}</span>
+<div href="#" class="flex items-center p-3 text-lg bg-grey-400 rounded-lg hover:bg-cyan-2 hover:shadow-lg  px-4 mb-4 singleListItem">
+  <div class="itemIconDiv w-16 h-16">
+    <img [src]="item.icon" alt="" srcset="">    
   </div>
-
-
+  <div class="flex flex-col pl-4">
+    <span class="flex-1 whitespace-nowrap text-light-text text-lg capitalize font-bold itemName">{{item.name}}</span>
+    <span class="flex-1 whitespace-nowrap text-light-grey-200 text-sm font-normal itemUrl ">{{item.url}}</span>
+    <span class="text-lg text-light-grey-400 itemEmail">{{item.email}}</span>
+  </div>
 </div>
