@@ -1,6 +1,6 @@
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { IAPIServerResponse } from 'src/app/interfaces/api.interface';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class Api {
 
   constructor(public http: HttpClient) {
     if (environment.production) {
-      this.url='https://api.viafusion.net';
+      this.url = 'https://api.viafusion.net';
     }
   }
 
@@ -45,6 +45,27 @@ export class Api {
       url = endpoint;
     }
     return this.http.post<IAPIServerResponse<T>>(url, body);
+  }
+
+  uploadFile<T>(endpoint: string, file: File, form_name:string = "encrypteddb") {
+
+    let url = this.url + '/' + endpoint;
+    if (endpoint.indexOf('http') == 0) {
+      url = endpoint;
+    }
+
+    let formData = new FormData();
+    formData.append(form_name, file);
+
+    let params = new HttpParams();
+
+    const options = {
+      params: params,
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+    return this.http.request<IAPIServerResponse<T>>(req);
   }
 
   put(endpoint: string, body: any, reqOpts?: any) {
