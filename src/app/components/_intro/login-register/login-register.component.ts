@@ -13,7 +13,7 @@ export class LoginRegisterComponent implements OnInit {
 
   login_form:FormGroup
   register_form:FormGroup
-
+  shown_form:"login"|"register" = "login";
   constructor(fb: FormBuilder, private loginSrv:LoginService, private data:DataService) {
     this.register_form = fb.group({
       email: ['',Validators.required],

@@ -1,71 +1,212 @@
 <ion-content>
+  <div class="bg-grey-400 h-full overflow-hidden">
+      <div class="flex flex-wrap h-full">
+        <div class="lg:w-2/5 w-full flex flex-col shadow-lg pr-8 bg-dark-4">
+            <img class="w-2/4" src="/assets/brand/logo.svg">
+            <div class="text-light-grey-100">
+              <p class="">Lorem ipsum dolor sit edihtue midhe</p>
+              <p>amet consectetur adipisicing elit</p>
+              <p>
+                id expedita blanditiis
+              </p>
+              <p>
+                id expedita blanditiis consectetur adipisicing
+              </p>
+            </div>
 
-  <!-- Register Fields -->
-  <div class="p-12">
-    <h2>Login</h2>
+        </div>
+        <div class="lg:w-3/5 w-full flex flex-col items-center">
 
-    <form class="" [formGroup]="login_form" (ngSubmit)="login()">
+          <ul class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tab"
+          role="tablist">
+          <li class="nav-item" role="presentation">
+            <button (click)="shown_form = 'login'" class="
+              nav-link
+              block
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              border-x-0 border-t-0 border-b-2 border-transparent
+              px-6
+              py-3
+              my-2
+              hover:border-transparent hover:bg-gray-100
+              focus:border-transparent
+              active
+            " id="tabs-login-tab" data-bs-toggle="pill" data-bs-target="#tabs-login" role="tab" aria-controls="tabs-login"
+              aria-selected="true">Login</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button (click)="shown_form = 'register'" href="#tabs-register" class="
+              nav-link
+              block
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              border-x-0 border-t-0 border-b-2 border-transparent
+              px-6
+              py-3
+              my-2
+              hover:border-transparent hover:bg-gray-100
+              focus:border-transparent
+            " id="tabs-register-tab" data-bs-toggle="pill" data-bs-target="#tabs-register" role="tab"
+              aria-controls="tabs-register" aria-selected="false">Register</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="tabs-tabContent">
 
-      <div class="mb-6">
-        <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email" ngDefaultControl></app-input-field>
-      </div>
+          <!-- Login Tab -->
+          <div *ngIf="shown_form == 'login'" class="tab-pane fade show active" id="tabs-login" role="tabpanel" aria-labelledby="tabs-login-tab">
+            <div class="text-left">
+              <span>Hello!</span>
+              <span>Login</span> 
+            </div>
+          <form class="flex flex-col"  [formGroup]="login_form" (ngSubmit)="login()">
+            <div class="mb-6">
+              <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email"
+                ngDefaultControl></app-input-field>
+            </div>
 
-      <div class="mb-6">
-        <app-input-field label="password" placeholder="" type="password" formControlName="password" ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
-      </div>
+            <div class="mb-6">
+              <app-input-field label="password" placeholder="" type="password" formControlName="password"
+                ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
+            </div>
 
 
-      <div class="flex">
-        <div>
-          <button type="submit" class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Login</button>
+            <div class="flex">
+              <div>
+                <button type="submit"
+                  class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Login</button>
+              </div>
+            </div>
+          
+          </form>
+          </div>
+
+          <!-- Register Form -->
+          <div *ngIf="shown_form == 'register'" class="tab-pane fade" id="tabs-register" role="tabpanel" aria-labelledby="tabs-register-tab">
+            <div class="text-left">
+              <span>Hello!</span>
+             <span>Register</span> 
+            </div>
+
+            <form class="" [formGroup]="register_form" (ngSubmit)="register()">
+
+              <div class="mb-6">
+                <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email"
+                  ngDefaultControl></app-input-field>
+              </div>
+
+              <div class="mb-6">
+                <app-input-field label="password" placeholder="" type="password" formControlName="password"
+                  ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
+              </div>
+
+              <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-cyan-2">password</label>
+                <div class="relative">
+                  <input
+                    class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
+                    type="password" placeholder="Password">
+                  <a href="">
+                    <div class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
+                  </a>
+                  <a href="">
+                    <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="flex">
+                <div>
+                  <button type="submit"
+                    class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Register</button>
+                </div>
+              </div>
+
+
+            </form>
+            
+          </div>
+        </div> 
+
+
         </div>
       </div>
-
-
-    </form>
-  </div>
-
-
-  <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
-
-  <h5>If you don't have an account you can register</h5>
-  <!-- Register Fields -->
-  <div class="p-12">
-    <h2>Register</h2>
-
-    <form class="" [formGroup]="register_form" (ngSubmit)="register()">
-
-      <div class="mb-6">
-        <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="password" placeholder="" type="password" formControlName="password" ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <label class="block mb-2 text-sm font-medium text-cyan-2">password</label>
-        <div class="relative"> 
-          <input class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5" type="password" placeholder="Password"> 
-         <a href="">
-           <div class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
-         </a> 
-         <a href="">
-          <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
-         </a>
-         </div>
-      </div>
-
-      <div class="flex">
-        <div>
-          <button type="submit" class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Register</button>
-        </div>
-      </div>
-
-
-    </form>
-  </div>
-
-
-
+    </div>
 </ion-content>
+
+
+          <!-- old form -->
+          <!-- Register Fields 
+          <div class="p-12">
+            <h2>Login</h2>
+            <form class="" [formGroup]="login_form" (ngSubmit)="login()">
+
+              <div class="mb-6">
+                <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email"
+                  ngDefaultControl></app-input-field>
+              </div>
+
+              <div class="mb-6">
+                <app-input-field label="password" placeholder="" type="password" formControlName="password"
+                  ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
+              </div>
+
+
+              <div class="flex">
+                <div>
+                  <button type="submit"
+                    class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Login</button>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+          <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+          <h5>If you don't have an account you can register</h5>
+          Register Fields 
+          <div class="p-12">
+            <h2>Register</h2>
+
+            <form class="" [formGroup]="register_form" (ngSubmit)="register()">
+
+              <div class="mb-6">
+                <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email"
+                  ngDefaultControl></app-input-field>
+              </div>
+
+              <div class="mb-6">
+                <app-input-field label="password" placeholder="" type="password" formControlName="password"
+                  ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
+              </div>
+
+              <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-cyan-2">password</label>
+                <div class="relative">
+                  <input
+                    class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
+                    type="password" placeholder="Password">
+                  <a href="">
+                    <div class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
+                  </a>
+                  <a href="">
+                    <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="flex">
+                <div>
+                  <button type="submit"
+                    class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Register</button>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+          old form end -->

@@ -2,21 +2,21 @@
   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 120">
   <defs>
     <style>
-      :root{
-        --color:#4ECCA3;
-        --secondary-color:#eeeeee;
-      }
+     <!-- :root{ -->
+        <!-- color:#4ECCA3;
+        secondary-color:#eeeeee;
+      }  -->
       .dassword-logo-main path, .dassword-logo-main rect{
-        fill: var(--color);
-        stroke: var(--color);
+        fill:#4ECCA3;
+        stroke:#4ECCA3;
       }
       .d-letter , .star {
-        fill:var(--secondary-color) !important;
-        stroke:var(--secondary-color) !important;
+        fill:#eeeeee !important;
+        stroke:#eeeeee !important;
       }
       .dassword-logo-main rect{
         fill: note;
-        stroke: var(--color);
+        stroke:#4ECCA3;
       }
 
       .w-letter, .lock-rect {

@@ -26,6 +26,7 @@ export class MainPage implements OnInit {
   presentLogin() {
     this.modalController.create({
       component: LoginRegisterComponent,
+      cssClass: "loginRegisterModal",
     }).then((m) => { m.present() })
 
   }
