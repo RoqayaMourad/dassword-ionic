@@ -1,3 +1,4 @@
+import { IPFSService } from './ipfs.service';
 import { MainDB } from './../../models/maindb.class';
 import { HelperService } from './../util/helper';
 import { Injectable } from '@angular/core';
@@ -5,12 +6,13 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { StorageService } from './storage.service';
+import { Base64 } from 'js-base64';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController, private storage: StorageService) {
+  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController, private storage: StorageService, private ipfs: IPFSService) {
   }
 
   /**
@@ -25,17 +27,21 @@ export class DataService {
 
   async initDb() {
     let db: MainDB;
-    // Get db from local storage
+    // try to get db from local storage
     db = await this.getDbFromStorage();
     if (db) {
       this.setDb(db)
     }
+    // else init a new db
     else {
-      // if no db is NOT found init a new db
       db = new MainDB()
       this.setDb(db);
-      console.log("DatabaseSet successfuly", db);
     }
+
+    // Test Upload File
+    setTimeout(() => {
+      this.uploadDbToIPFS()
+    }, 5000);
   }
 
   /**
@@ -50,35 +56,80 @@ export class DataService {
     this.refresh();
   }
 
+  /**
+   *  Emit change to all listener to the db object and update the local storage
+   *
+   * @param {boolean} [updateStorage=true] Whether or not to update the local storage
+   * @memberof DataService
+   */
   async refresh(updateStorage = true) {
     this.mainDb$.next(this.mainDb);
-    await this.setDbToStorage();
+    if (updateStorage) {
+      await this.setDbToStorage();
+    }
   }
 
-  async setDbToStorage(mainDb?: MainDB, timeout = 100) {
+  /**
+   * Store the db to the local storage
+   *
+   * @param {MainDB} [mainDb] Db object to set to the db
+   * @param {number} [timeout=100] object fetch from storage delay
+   * @memberof DataService
+   */
+  async setDbToStorage(mainDb?: MainDB, delay = 100) {
     mainDb = mainDb || this.mainDb;
     new Promise((resolve, reject) => {
       setTimeout(() => {
         this.storage.set("maindb", mainDb).then((db) => {
           console.log("Db saved in storage 📄 -> 📦");
           resolve(db)
-        })
-      }, timeout);
+        }).catch(reject)
+      }, delay);
     })
   }
 
-  async getDbFromStorage(timeout = 100) {
+  /**
+   * Get the db from the local storage
+   *
+   * @param {MainDB} [mainDb] Db object to set to the db
+   * @param {number} [timeout=100] object fetch from storage delay
+   * @memberof DataService
+   */
+  async getDbFromStorage(delay = 100) {
     return new Promise<MainDB>((resolve, reject) => {
       setTimeout(() => {
-        this.storage.get("maindb").then((db) => {
+        this.storage.get("maindb").then((db_json) => {
           console.log("Db loaded from storage 📦 -> 📄  ");
-          console.log(db);
-          resolve(db)
+          let maindb = new MainDB(db_json)
+          resolve(maindb)
         }).catch(reject)
-      }, timeout);
+      }, delay);
     })
   }
 
+  /**
+   * Upload the current db to the IPFS network
+   * @memberof DataService
+   */
+  async uploadDbToIPFS() {
+    // TODO: run check before update such as user is logged in and db is encrypted
+    try {
+      // Convert the current db to string
+      let str = JSON.stringify(this.mainDb);
+      // encode the string to base64
+      let strBase64 = Base64.encode(str)
+
+      // convert the base64 string to file formate
+      var blob = new Blob([strBase64], { type: 'text/plain' });
+      var file = new File([blob], HelperService.makeid(), {type: "text/plain"});
+
+      // upload file
+      await this.ipfs.uploadFileToIPFS(file);
+    } catch (error) {
+      console.error(error)
+      throw new Error(error);
+    }
+  }
 
   // ====== Alerts
   async alert(message = "Okay") {

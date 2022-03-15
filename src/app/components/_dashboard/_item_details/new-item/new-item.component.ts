@@ -43,13 +43,24 @@ export class NewItemComponent implements OnInit {
 
   async onSubmit() {
 
+    // update item records
     let item = new Item();
-    item.update(this.DetailsForm.value); // update item records
-    this.updateIcon(); // update current icon
-    item.setIcon(this.iconUrl); // set item icon
-    item.setName(this.DetailsForm.value.name); // set name from url if not already set
-    this.data.mainDb.addItem(item); // add item to the main db
-    this.data.refresh(); // emit change to all listener to the db object
+    item.update(this.DetailsForm.value);
+
+    // force update current icon
+    this.updateIcon();
+
+    // set item icon
+    item.setIcon(this.iconUrl);
+
+    // set name from url if not already set
+    item.setName(this.DetailsForm.value.name);
+
+    // add item to the main db
+    this.data.mainDb.addItem(item);
+
+    // emit change to all listener to the db object
+    this.data.refresh();
     console.log(this.data.mainDb);
 
     await this.dismiss();

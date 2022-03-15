@@ -29,7 +29,8 @@ export class LoginService {
       if (r.success && r.data.user_id) {
         let db: MainDB = new MainDB()
         db.setuser_id(r.data.user_id);
-        this.d.setDb(db)
+        this.d.setDb(db);
+
         this.d.alert("Logged in successfully, fetching DB")
         console.log(r);
 

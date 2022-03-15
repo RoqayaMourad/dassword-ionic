@@ -14,11 +14,10 @@ export class StorageService {
   async init() {
     // If using, define drivers here: await this.storage.defineDriver(/*...*/);
     const storage = await this.storage.create();
-    console.log("storage created 📦")
+    console.log("Storage created 📦")
     setTimeout(() => {
-      console.log("Storage driver 💾 is", this.storage.driver)
-
-    }, 500);
+      console.log("Storage's driver 💾 is", this.storage.driver)
+    }, 100);
     console.log(storage)
     this._storage = storage;
   }
