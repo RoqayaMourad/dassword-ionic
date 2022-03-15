@@ -1,7 +1,8 @@
+import { DataService } from 'src/app/services/data/data.service';
 import { LoginService } from './../../../services/auth/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CryptographyService } from 'src/app/services/cryptography/cryptography.service';
+import { Security } from 'src/app/models/security.class';
 
 @Component({
   selector: 'app-login-register',
@@ -11,9 +12,10 @@ import { CryptographyService } from 'src/app/services/cryptography/cryptography.
 export class LoginRegisterComponent implements OnInit {
 
   login_form:FormGroup
+  register_form:FormGroup
 
-  constructor(fb: FormBuilder, private login:LoginService, private crypto:CryptographyService) {
-    this.login_form = fb.group({
+  constructor(fb: FormBuilder, private loginSrv:LoginService, private data:DataService) {
+    this.register_form = fb.group({
       email: ['',Validators.required],
       password:['',Validators.required],
     });
@@ -25,12 +27,19 @@ export class LoginRegisterComponent implements OnInit {
 
   ngOnInit() {}
 
-  register(){
+  login(){
     if (this.login_form.invalid) {
+      this.data.toastError("Invalid login fields")
       return;
     }
-    let secure_auth_object = this.crypto.generateSecureAuthObject(this.login_form.value.email,this.login_form.value.password);
-    this.login.register(this.login_form.get("email").value, secure_auth_object)
+    this.loginSrv.login(this.register_form.value.email,this.register_form.value.password)
+  }
+
+  register(){
+    if (this.register_form.invalid) {
+      return;
+    }
+    this.loginSrv.register(this.register_form.value.email,this.register_form.value.password)
   }
 
 }

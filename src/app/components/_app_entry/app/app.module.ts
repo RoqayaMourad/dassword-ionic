@@ -33,7 +33,6 @@ import { StorageService } from 'src/app/services/data/storage.service';
 import { HelperService } from 'src/app/services/util/helper';
 import { NewItemComponent } from '../../_dashboard/_item_details/new-item/new-item.component';
 import { LoginRegisterComponent } from '../../_intro/login-register/login-register.component';
-import { CryptographyService } from 'src/app/services/cryptography/cryptography.service';
 import {NgClickOutsideModule} from 'ng-click-outside2';
 import { ItemHeaderComponent } from '../../_dashboard/_item_details/item-header/item-header.component';
 import { InlineSVGModule } from 'ng-inline-svg-2';
@@ -84,7 +83,6 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
     FormControlName,
     StorageService,
     HelperService,
-    CryptographyService,
   ],
 
   bootstrap: [AppComponent],

@@ -9,15 +9,15 @@ export class MainDB implements IMainDB {
 
   constructor() { }
 
-  userId?: string = HelperService.makeid(); // current user's id
+  user_id?: string = HelperService.makeid(); // current user's id
   email?: string = ""; // current user's login email
-  secureObject?: Security = {}; // login object
+  secureObject?: Security = null; // login object
   objectVersionId?: string = "";
   items?: Item[] = [];
   folders?: Folder[] = [];
 
-  setUserId(userId: string) {
-    this.userId = userId;
+  setuser_id(user_id: string) {
+    this.user_id = user_id;
   }
 
   setEmail(email: string) {

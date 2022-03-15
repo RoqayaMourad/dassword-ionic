@@ -3,7 +3,7 @@
  * the interface for the structure for the decrypted json object
  */
 export interface IMainDB{
-  userId?:string; // current user's id
+  user_id?:string; // current user's id
   email?:string; // current user's login email
   secureObject?:any; // login object
 

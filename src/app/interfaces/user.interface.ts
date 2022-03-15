@@ -1,10 +1,10 @@
 import { ISecurity } from "./isecurity";
 
 export interface IUser {
-    userId?: string;
+    user_id?: string;
     email?: string;
-    dbCid?: string;
-    dbVersion?: string;
-    securityToken?: ISecurity;
+    db_cid?: string;
+    db_version?: string;
+    secure_hash?: ISecurity;
     meta?: object;
 }

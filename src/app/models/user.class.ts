@@ -7,10 +7,10 @@ export class User implements IUser {
 
   }
 
-  userId?: string = HelperService.makeid();
+  user_id?: string = HelperService.makeid();
   email?: string = "";
-  dbCid?: string = "";
-  dbVersion?: string = "";
-  securityToken?: ISecurity = {};
+  db_cid?: string = "";
+  db_version?: string = "";
+  secure_hash?: ISecurity = {};
   meta?: object;
 }

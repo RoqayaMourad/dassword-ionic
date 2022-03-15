@@ -24,10 +24,12 @@ export class DataService {
   mainDb$:BehaviorSubject<MainDB> = new BehaviorSubject(this.mainDb);
 
 
-  async initDb(userId=""){
+  async initDb(user_id=""){
     let db:MainDB=new MainDB()
-    db.setUserId(userId);
+    db.setuser_id(user_id);
     this.setDb(db);
+    console.log("DatabaseSet successfuly",db);
+
   }
 
   /**

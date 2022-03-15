@@ -1,10 +1,39 @@
 <ion-content>
 
-  <!-- Login Fields -->
+  <!-- Register Fields -->
+  <div class="p-12">
+    <h2>Login</h2>
+
+    <form class="" [formGroup]="login_form" (ngSubmit)="login()">
+
+      <div class="mb-6">
+        <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email" ngDefaultControl></app-input-field>
+      </div>
+
+      <div class="mb-6">
+        <app-input-field label="password" placeholder="" type="password" formControlName="password" ngDefaultControl subtext="Must be 15 char length with special characters"></app-input-field>
+      </div>
+
+
+      <div class="flex">
+        <div>
+          <button type="submit" class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">Login</button>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+
+  <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+
+  <h5>If you don't have an account you can register</h5>
+  <!-- Register Fields -->
   <div class="p-12">
     <h2>Register</h2>
 
-    <form class="" [formGroup]="login_form" (ngSubmit)="register()">
+    <form class="" [formGroup]="register_form" (ngSubmit)="register()">
 
       <div class="mb-6">
         <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email" ngDefaultControl></app-input-field>
@@ -25,7 +54,6 @@
     </form>
   </div>
 
-  <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
 
 
 </ion-content>
