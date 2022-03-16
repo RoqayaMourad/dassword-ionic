@@ -10,7 +10,7 @@
 
      <!-- ================= Select Type -->
       <div class="mx-auto mb-6">
-        <label class="block mb-2 text-lg font-medium text-cyan-2">Select Type</label>   
+        <label class="block mb-2 text-lg font-medium text-cyan-2">Select Type</label>
         <!-- component -->
         <div class="relative w-full" (clickOutside)="closeSelect()">
           <!-- trigger button -->
@@ -47,7 +47,7 @@
       </div>
       <!-- Select Type ================= -->  <!-- Name Field -->
 
-      
+
 <!-- spliter -->
  <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
 
@@ -73,7 +73,7 @@
 
       <!-- Password Field-->
       <div class="mb-6">
-        <app-input-field *ngIf="showPassword" label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl></app-input-field>
+        <app-input-field *ngIf="showPassword" label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl [showReveal]="true" [showCopy]="true"></app-input-field>
       </div>
 
       <!-- Description Field-->

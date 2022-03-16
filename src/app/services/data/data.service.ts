@@ -303,11 +303,23 @@ export class DataService {
   //#endregion
 
   async resetStorage(){
-    this.mainDb = new MainDB();
+    await this.setDb(new MainDB());
+    await this.setUser(new User());
+    this.MASTER_PASSWORD = "";
     await this.storage.remove("maindb");
     await this.storage.remove("user");
     console.log("Storage Rest 🔁")
   }
+
+  // ==========================================================================================
+  // #region ============================== Messaging
+  // ==========================================================================================
+  showItem$:BehaviorSubject<string> = new BehaviorSubject<string>(null)
+  showItem(itemId:string){
+    this.showItem$.next(itemId);
+  }
+  // #endregion
+
 
   // ==========================================================================================
   // #region ============================== Alerts

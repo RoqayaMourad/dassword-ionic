@@ -22,16 +22,23 @@ export class ItemDetailsComponent implements OnInit {
       url: [''],
       password: [''],
       description: [''],
-      notes: [''],
+      note: [''],
       file: [''],
       type: ['']
     });
   }
 
-  DetailsForm: FormGroup
-
-
+  DetailsForm: FormGroup;
+  currentItem:Item = new Item;
+  formMode: "edit" | "display" = "display"
   ngOnInit() {
+    this.data.showItem$.subscribe((itemId)=>{
+      if (itemId) {
+        this.currentItem = this.data.mainDb.getItem(itemId);
+        this.updateFields();
+      }
+    })
+    this.DetailsForm.disable();
     this.DetailsForm.get("url").valueChanges.pipe(
       throttleTime(3000, asyncScheduler, { leading: false, trailing: true })
     ).subscribe((url) => {
@@ -41,7 +48,25 @@ export class ItemDetailsComponent implements OnInit {
     })
   }
 
-  async editItem() {
+  editMode(){
+    this.DetailsForm.enable();
+    this.formMode = "edit";
+  }
+
+
+
+  updateFields(){
+    this.DetailsForm.get("name").setValue(this.currentItem.name);
+    this.DetailsForm.get("email").setValue(this.currentItem.email);
+    this.DetailsForm.get("url").setValue(this.currentItem.url);
+    this.DetailsForm.get("password").setValue(this.currentItem.password);
+    this.DetailsForm.get("description").setValue(this.currentItem.description);
+    this.DetailsForm.get("type").setValue(this.currentItem.type);
+  }
+
+  async submitEditItem() {
+
+    console.log("Edit submitted");
     // update item records
     let item = new Item();
     item.update(this.DetailsForm.value);
@@ -55,9 +80,12 @@ export class ItemDetailsComponent implements OnInit {
     // set name from url if not already set
     item.setName(this.DetailsForm.value.name);
 
-    // add item to the main db
-    this.data.mainDb.addItem(item);
+    item.setItemId(this.currentItem.itemId);
 
+    // add item to the main db
+    this.data.mainDb.updateItem(item);
+
+    this.data.toast("Item Updated")
     // emit change to all listener to the db object
     this.data.refreshDb();
     console.log(this.data.mainDb);

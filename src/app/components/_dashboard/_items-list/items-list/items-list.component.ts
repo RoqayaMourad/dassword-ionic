@@ -13,4 +13,9 @@ export class ItemsListComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  showItem(itemId:string){
+    this.data.showItem(itemId);
+  }
+
 }
