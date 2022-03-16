@@ -18,6 +18,7 @@ export class LoginRegisterComponent implements OnInit {
     this.register_form = fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
+      password_confirm: ['', Validators.required],
     });
     this.login_form = fb.group({
       email: ['', Validators.required],
@@ -37,7 +38,7 @@ export class LoginRegisterComponent implements OnInit {
 
   async login() {
     if (this.login_form.invalid) {
-      this.data.toastError("Invalid login fields")
+      this.data.alert("Invalid login fields")
       return;
     }
     try {
@@ -54,8 +55,12 @@ export class LoginRegisterComponent implements OnInit {
 
   async register() {
     if (this.register_form.invalid) {
-      this.data.toastError("Invalid fields")
+      this.data.alert("Invalid fields")
       return;
+    }
+    if (this.register_form.value.password_confirm !== this.register_form.value.password) {
+      this.data.alert("Confirm pasword field doesn't match password")
+      return ;
     }
     try {
       this.data.show_loading();

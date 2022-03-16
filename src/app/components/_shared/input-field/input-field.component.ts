@@ -52,10 +52,14 @@ export class InputFieldComponent implements OnInit {
   flip = false
   revealPass(){
     if (this.flip) {
+      this.flip = !this.flip
       this.type = "password";
+      return;
     }
     if (!this.flip) {
       this.type = "text"
+      this.flip = !this.flip
+      return;
     }
   }
 

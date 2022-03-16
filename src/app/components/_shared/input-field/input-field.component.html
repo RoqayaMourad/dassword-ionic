@@ -22,12 +22,12 @@
     [placeholder]="placeholder">
   </textarea>
 
-          
+
   <button type="button" *ngIf="showReveal == true" (click)="revealPass()">
-    <div *ngIf="type === 'text'" class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
-    <div *ngIf="type === 'password'" class='revealDiv' [inlineSVG]="'/assets/icon/eye-off.svg'"></div>
+    <div *ngIf="type === 'password'" class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
+    <div *ngIf="type === 'text'" class='revealDiv' [inlineSVG]="'/assets/icon/eye-off.svg'"></div>
   </button>
-  
+
   <button type="button" *ngIf="showCopy == true" (click)="copyToCLipboard()">
     <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
   </button>

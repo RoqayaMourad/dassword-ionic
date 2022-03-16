@@ -353,6 +353,10 @@ export class DataService {
       return;
     }
     console.error(message);
+    if (typeof message === "string") {
+      this.toast(message, "Error")
+      return;
+    }
     if (typeof message === "object") {
       if (typeof message.message === "string") {
         this.toast(message.message, "Error")
