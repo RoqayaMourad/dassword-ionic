@@ -77,6 +77,7 @@
     right:15%;
   }
 }
+
 .singleListItem {
   &:hover {
     .itemName {
@@ -118,14 +119,24 @@
     margin: auto;
   }
 }
-.genpasswordModal{
+.genpassModal{
   &::part(backdrop){
     --backdrop-opacity:0.4;
   }
   &::part(content){
     width: 30%;
-    height: 10%;
+    height: 17%;
     margin: auto;
+  }
+}
+.genpassDiv {
+  label {
+    margin-bottom: 0.5rem
+  }
+  .revealDiv{
+    svg {
+      right:13%;
+    }
   }
 }
 .newItemForm {
