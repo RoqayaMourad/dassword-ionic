@@ -1,97 +1,102 @@
 <ion-content>
   <div class="p-4">
-  <div class="bg-grey-400 rounded-md p-4 mt-2">
+    <div class="bg-grey-400 rounded-md p-4 mt-2">
 
-    <app-item-header title="Website Name"></app-item-header>
-
-
-
-    <form class=""  [formGroup]="DetailsForm" (ngSubmit)="editItem()">
-
-      <div class="mb-6">
-        <app-input-field label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="Email" placeholder="Email" type="email" formControlName="email" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="Link" placeholder="https://example.com" type="url" formControlName="url" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="Description" placeholder="write any note here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="Note" placeholder="Leave a comment..." type="textarea" formControlName="note" ngDefaultControl></app-input-field>
-      </div>
-
-      <div class="mb-6">
-        <app-input-field label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit." formControlName="file" ngDefaultControl></app-input-field>
-      </div>
+      <app-item-header title="Website Name"></app-item-header>
 
 
 
-      <div class="flex">
-        <div class="justify-end flex w-full">
+      <form class="" [formGroup]="DetailsForm" >
 
-          <button type="button" class="py-1.5 px-6 flex justify-center items-center text-cyan-2 border border-cyan-2 transition ease-in duration-200 text-center text-base font-normal focus:outline-none hover:border-transparent hover:bg-grey-500 hover:text-light-text rounded-lg ">
-            <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/edit.svg'"></div>
-            <div>
+        <div class="mb-6">
+          <app-input-field label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
+        </div>
+
+        <div class="mb-6">
+          <app-input-field label="Email" placeholder="Email" type="email" formControlName="email" ngDefaultControl></app-input-field>
+        </div>
+
+        <div class="mb-6">
+          <app-input-field label="Link" placeholder="https://example.com" type="url" formControlName="url" ngDefaultControl></app-input-field>
+        </div>
+
+        <div class="mb-6">
+          <app-input-field label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl></app-input-field>
+        </div>
+
+        <div class="mb-6">
+          <app-input-field label="Description" placeholder="write any note here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
+        </div>
+
+        <div class="mb-6">
+          <app-input-field label="Note" placeholder="Leave a comment..." type="textarea" formControlName="note" ngDefaultControl></app-input-field>
+        </div>
+
+        <div class="mb-6">
+          <app-input-field label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit." formControlName="file" ngDefaultControl></app-input-field>
+        </div>
+
+
+
+        <div class="flex">
+          <div *ngIf="formMode === 'display'" class="justify-end flex w-full">
+
+            <button (click)="editMode()" class="py-1.5 px-6 flex justify-center items-center text-cyan-2 border border-cyan-2 transition ease-in duration-200 text-center text-base font-normal focus:outline-none hover:border-transparent hover:bg-grey-500 hover:text-light-text rounded-lg ">
+              <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/edit.svg'"></div>
+              <div>
                 Edit
+              </div>
+            </button>
+          </div>
+
+
+          <div *ngIf="formMode === 'edit'" class="justify-end flex w-full">
+
+            <div>
+              <button type="button" (click)="submitEditItem()"
+                class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">
+                <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/save.svg'"></div>
+                <div>
+                  Save
+                </div>
+              </button>
+
             </div>
+
+            <div>
+              <button type="cancel" (click)="updateFields()"
+                class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">
+                <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/cancel.svg'"></div>
+                <div>
+                  Cancel
+                </div>
+              </button>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+
+        <div class="flex rounded-md shadow-sm justify-end ml-auto" role="group">
+          <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-l-lg border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200 ">
+            <div class="mr-2 itemDetailsBtnsIcon" [inlineSVG]="'/assets/icon/item-details/history.svg'"></div>
+            History
+          </button>
+          <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent border-b border-t border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
+            <div class="mr-2 itemDetailsBtnsIcon" [inlineSVG]="'/assets/icon/item-details/share.svg'"></div>
+            Share
+          </button>
+          <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-r-md border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
+            <div class="mr-2 itemDetailsBtnsIcon" [inlineSVG]="'/assets/icon/item-details/link.svg'"></div>
+            Generate Link
           </button>
         </div>
 
-          <!-- <div>
-            <button type="button"
-              class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">
-              <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/save.svg'"></div>
-              <div>
-                Save
-              </div>
-            </button>
 
-          </div>
-
-          <div>
-            <button type="button"
-              class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">
-              <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/cancel.svg'"></div>
-              <div>
-                Cancel
-              </div>
-            </button>
-          </div> -->
-
-
-      </div>
-
-      <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
-
-      <div class="flex rounded-md shadow-sm justify-end ml-auto" role="group">
-        <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-l-lg border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200 ">
-          <div class="mr-2 itemDetailsBtnsIcon" [inlineSVG]="'/assets/icon/item-details/history.svg'"></div>
-          History
-        </button>
-        <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent border-b border-t border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
-          <div class="mr-2 itemDetailsBtnsIcon" [inlineSVG]="'/assets/icon/item-details/share.svg'"></div>
-          Share
-        </button>
-        <button type="button" class="inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent rounded-r-md border border-light-grey-100 hover:bg-cyan-2 hover:text-light-text hover:border-transparent focus:bg-cyan-2 focus:text-light-text focus:outline-none transition ease-in duration-200">
-          <div class="mr-2 itemDetailsBtnsIcon" [inlineSVG]="'/assets/icon/item-details/link.svg'"></div>
-          Generate Link
-        </button>
-      </div>
-
-
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </ion-content>

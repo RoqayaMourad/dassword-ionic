@@ -30,6 +30,7 @@ export class ItemDetailsComponent implements OnInit {
 
   DetailsForm: FormGroup;
   currentItem:Item = new Item;
+  formMode: "edit" | "display" = "display"
   ngOnInit() {
     this.data.showItem$.subscribe((itemId)=>{
       if (itemId) {
@@ -37,7 +38,7 @@ export class ItemDetailsComponent implements OnInit {
         this.updateFields();
       }
     })
-    this.disableFields();
+    this.DetailsForm.disable();
     this.DetailsForm.get("url").valueChanges.pipe(
       throttleTime(3000, asyncScheduler, { leading: false, trailing: true })
     ).subscribe((url) => {
@@ -47,28 +48,12 @@ export class ItemDetailsComponent implements OnInit {
     })
   }
 
-  disableFields(){
-    this.DetailsForm.get("name").disable()
-    this.DetailsForm.get("email").disable()
-    this.DetailsForm.get("url").disable()
-    this.DetailsForm.get("password").disable()
-    this.DetailsForm.get("description").disable()
-    this.DetailsForm.get("type").disable()
-    this.DetailsForm.get("note").disable()
-    this.DetailsForm.get("file").disable()
+  editMode(){
+    this.DetailsForm.enable();
+    this.formMode = "edit";
   }
 
-  enableFields(){
-    this.DetailsForm.get("name").enable()
-    this.DetailsForm.get("email").enable()
-    this.DetailsForm.get("url").enable()
-    this.DetailsForm.get("password").enable()
-    this.DetailsForm.get("description").enable()
-    this.DetailsForm.get("type").enable()
-    this.DetailsForm.get("note").enable()
-    this.DetailsForm.get("file").enable()
 
-  }
 
   updateFields(){
     this.DetailsForm.get("name").setValue(this.currentItem.name);
@@ -79,7 +64,9 @@ export class ItemDetailsComponent implements OnInit {
     this.DetailsForm.get("type").setValue(this.currentItem.type);
   }
 
-  async editItem() {
+  async submitEditItem() {
+
+    console.log("Edit submitted");
     // update item records
     let item = new Item();
     item.update(this.DetailsForm.value);
@@ -93,9 +80,12 @@ export class ItemDetailsComponent implements OnInit {
     // set name from url if not already set
     item.setName(this.DetailsForm.value.name);
 
+    item.setItemId(this.currentItem.itemId);
+
     // add item to the main db
     this.data.mainDb.updateItem(item);
 
+    this.data.toast("Item Updated")
     // emit change to all listener to the db object
     this.data.refreshDb();
     console.log(this.data.mainDb);

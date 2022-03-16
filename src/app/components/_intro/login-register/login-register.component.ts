@@ -44,7 +44,6 @@ export class LoginRegisterComponent implements OnInit {
     try {
       this.data.show_loading();
       await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password);
-      await this.data.toast("Logged in")
       await this.dissmiss();
       this.data.dismiss_loading();
     } catch (error) {
@@ -66,7 +65,6 @@ export class LoginRegisterComponent implements OnInit {
     try {
       this.data.show_loading();
       await this.loginSrv.register(this.register_form.value.email, this.register_form.value.password);
-      await this.data.toast("Account created")
       await this.dissmiss();
       this.data.dismiss_loading();
     } catch (error) {
