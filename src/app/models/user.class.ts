@@ -17,7 +17,7 @@ export class User implements IUser {
   user_id?: string = "";
   email?: string = "";
   db_cid?: string = "";
-  db_version?: string = "";
+  db_version?: number = 0;
   secure_hash?: ISecurity = {};
   meta?: object;
 

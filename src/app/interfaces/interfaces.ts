@@ -7,7 +7,7 @@ export interface IMainDB{
   email?:string; // current user's login email
   secureObject?:any; // login object
 
-  objectVersionId?:string;
+  objectVersionId?:number;
 
   items?:IItem[];
   folders?:IFolder[];
