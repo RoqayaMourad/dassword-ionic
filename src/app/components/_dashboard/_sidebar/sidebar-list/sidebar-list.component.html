@@ -57,8 +57,8 @@
            Tools
            </p>
 
-          <app-single-menu-item [name]="'Generate Password'" [icon]="'/assets/icon/sidebar/refresh.svg'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Settings'" [icon]="'/assets/icon/sidebar/settings.svg'"></app-single-menu-item>
+          <app-single-menu-item (click)="openGenpassModal()" [name]="'Generate Password'" [icon]="'/assets/icon/sidebar/refresh.svg'"></app-single-menu-item>
+          <app-single-menu-item (click)="openSettingsModal()" [name]="'Settings'" [icon]="'/assets/icon/sidebar/settings.svg'"></app-single-menu-item>
         </div>
       </div>
       <!-- Notice

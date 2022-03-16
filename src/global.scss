@@ -80,12 +80,13 @@
     }
   }
 }
-.createItemModal {
+.createItemModal , .loginRegisterModal , .settingsModal , .genpasswordModal {
   &::part(backdrop) {
     background-color: #121212;
     --backdrop-opacity: 0.8;
   }
-
+}
+.createItemModal {
   &::part(content){
     width: 50%;
     height: 85%;
@@ -93,14 +94,27 @@
   }
 }
 .loginRegisterModal{
-  &::part(backdrop) {
-    background-color: #121212;
-    --backdrop-opacity: 0.8;
-  }
-
   &::part(content){
     width: 60%;
     height: 80%;
+    margin: auto;
+  }
+}
+
+.settingsModal {
+  &::part(content){
+    width: 60%;
+    height: 80%;
+    margin: auto;
+  }
+}
+.genpasswordModal{
+  &::part(backdrop){
+    --backdrop-opacity:0.4;
+  }
+  &::part(content){
+    width: 30%;
+    height: 10%;
     margin: auto;
   }
 }

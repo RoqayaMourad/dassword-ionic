@@ -36,6 +36,8 @@ import { LoginRegisterComponent } from '../../_intro/login-register/login-regist
 import {NgClickOutsideModule} from 'ng-click-outside2';
 import { ItemHeaderComponent } from '../../_dashboard/_item_details/item-header/item-header.component';
 import { InlineSVGModule } from 'ng-inline-svg-2';
+import { SettingsModalComponent } from '../../_dashboard/_sidebar/settings-modal/settings-modal.component';
+import { GenpasswordModalComponent } from '../../_dashboard/_sidebar/genpassword-modal/genpassword-modal.component';
 
 @NgModule({
 
@@ -73,6 +75,8 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
     NewItemComponent,
     LoginRegisterComponent,
     ItemHeaderComponent,
+    SettingsModalComponent,
+    GenpasswordModalComponent,
   ],
 
   entryComponents: [

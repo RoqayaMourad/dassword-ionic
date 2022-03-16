@@ -31,6 +31,17 @@ export class HelperService {
     return result;
   }
 
+  static makePass(length = 18) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(){}[]';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+
   static object_equals(x, y) {
     if (x === y) return true;
     // if both x and y are null or undefined and exactly the same
