@@ -55,7 +55,7 @@
   svg {
     position: absolute;
     right: 3%;
-    top:18%;
+    bottom: 32%;
     stroke: #ABABAB;
     &:hover{
        @apply stroke-cyan-2;
@@ -64,7 +64,7 @@
 }
 .revealDiv{
   svg {
-    right:10%;
+    right:15%;
   }
 }
 .singleListItem {
