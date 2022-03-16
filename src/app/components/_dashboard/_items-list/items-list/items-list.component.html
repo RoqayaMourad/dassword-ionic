@@ -8,7 +8,7 @@
   <!--  Items list   -->
   <ul class="mt-4 space-y-4">
     <li>
-      <ng-container *ngFor="let item of this.data.mainDb.items">
+      <ng-container *ngFor="let item of this.data?.mainDb?.items">
           <app-single-list-item [item]="item"></app-single-list-item>
       </ng-container>
     </li>
