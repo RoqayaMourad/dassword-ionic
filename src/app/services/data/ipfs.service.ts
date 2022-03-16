@@ -11,7 +11,7 @@ export class IPFSService {
   constructor(private api: Api) {
   }
 
-  async uploadFileToIPFS(type:"db"|"file",file: File, body?:any) {
+  async uploadFileToIPFS(type:"db"|"file",file: File, body?:{[key:string]:ISecurity}) {
     new Promise((resolve, reject) => {
       this.api.uploadFile(`ipfs/store/${type}/`, file, body).subscribe(
         (event: HttpProgressEvent) => {
@@ -28,7 +28,7 @@ export class IPFSService {
     })
   }
 
-  getDbFromIPFS(body?:ISecurity) {
+  getDbFromIPFS(body?:{[key:string]:ISecurity}) {
       return this.api.post<IEnctyptedDBObject>(`ipfs/store/db/`, body)
   }
 
