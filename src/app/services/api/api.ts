@@ -59,11 +59,10 @@ export class Api {
 
     if (body) {
       for (let k in body) {
-        formData.append(k, body[k]);
+        formData.append(k, JSON.stringify(body[k]));
       }
     }
     let params = new HttpParams();
-
     const options = {
       params: params,
       reportProgress: true,
