@@ -20,7 +20,14 @@ export class DataService {
   }
 
   user: User = new User();
-  private MASTER_PASSWORD:string;
+  /**
+   * The logged in Master password, this value is never called unless from this class only
+   *
+   * @private
+   * @type {string}
+   * @memberof DataService
+   */
+  private MASTER_PASSWORD: string;
   /**
    * The main Db Observable used across the app
    *
@@ -168,7 +175,7 @@ export class DataService {
    *
    * @memberof DataService
    */
-  setMasterPassword(password){
+  setMasterPassword(password) {
     this.MASTER_PASSWORD = password;
   }
   //#endregion
@@ -183,32 +190,27 @@ export class DataService {
    * @memberof DataService
    */
   async uploadDbToIPFS() {
-    try {
-      // TODO:Encrypt the current db with MASTER_PASSWORD
-      let str = JSON.stringify(this.mainDb);
-      let enctyptedDBObject:IEnctyptedDBObject = {data:str}
+    // TODO:Encrypt the current db with MASTER_PASSWORD
+    let str = JSON.stringify(this.mainDb);
+    let enctyptedDBObject: IEnctyptedDBObject = { data: str }
 
-      // the following conversion supports arabic characters, emojis and Chinese and asian character
-      // Object ==> String ==> Base64 ==> ArrayBuffer ==> File
+    // the following conversion supports arabic characters, emojis and Chinese and asian character
+    // Object ==> String ==> Base64 ==> ArrayBuffer ==> File
 
-      // Convert the encrypted db to string
-      let enctyptedStringfiedDBObject = JSON.stringify(enctyptedDBObject);
+    // Convert the encrypted db to string
+    let enctyptedStringfiedDBObject = JSON.stringify(enctyptedDBObject);
 
-      // encode the string to base64
-      let strBase64 = Base64.encode(enctyptedStringfiedDBObject)
+    // encode the string to base64
+    let strBase64 = Base64.encode(enctyptedStringfiedDBObject)
 
-      // convert the base64 string to file formate
-      var blob = new Blob([strBase64], { type: 'text/plain' });
-      var file = new File([blob], HelperService.makeid(), { type: "text/plain" });
+    // convert the base64 string to file formate
+    var blob = new Blob([strBase64], { type: 'text/plain' });
+    var file = new File([blob], HelperService.makeid(), { type: "text/plain" });
 
-      // upload file
-      const sec = new Security();
-      const secureAuthObject = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
-      await this.ipfs.uploadFileToIPFS("db",file,{secureAuthObject});
-    } catch (error) {
-      console.error(error)
-      throw new Error(error);
-    }
+    // upload file
+    const sec = new Security();
+    const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD)
+    return await this.ipfs.uploadFileToIPFS("db", file, { secureAuthObject, db_version: this.mainDb.objectVersionId });
   }
 
   /**
@@ -219,10 +221,10 @@ export class DataService {
     try {
       // upload file
       const sec = new Security();
-      const secureAuthObject = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
-      this.ipfs.getDbFromIPFS({secureAuthObject}).subscribe(r=>{
+      const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD)
+      this.ipfs.getDbFromIPFS({ secureAuthObject }).subscribe(r => {
         if (r.success && r.data) {
-          let enctyptedDBObject:IEnctyptedDBObject = r.data
+          let enctyptedDBObject: IEnctyptedDBObject = r.data
 
           // TODO:Decrypt the current db with MASTER_PASSWORD
           let mainDb = JSON.parse(enctyptedDBObject.data);
@@ -241,15 +243,21 @@ export class DataService {
    *
    * @memberof DataService
    */
-  async syncDb(){
+  async syncDb() {
     // check that main db is inited and user is logged in
     if (!this.mainDb || !this.user.user_id) {
       throw new Error("User or local DB not found");
     }
     // if local version is higher than IPFS version update the IPFS version
-    if(this.mainDb.objectVersionId > this.user.db_version){
+    if (this.mainDb.objectVersionId > this.user.db_version) {
       await this.show_loading(60);
-      await this.uploadDbToIPFS();
+      let http_response = await this.uploadDbToIPFS() as any;
+      if (!http_response.success) {
+        await this.dismiss_loading();
+        await this.toast("DB is synced")
+        throw new Error("Faild to update DB");
+      }
+      await this.setUser(http_response.data);
       await this.dismiss_loading();
     } else if (this.mainDb.objectVersionId < this.user.db_version) {
       this.show_loading(60);
@@ -301,9 +309,17 @@ export class DataService {
   }
 
   toastError(message) {
+    if (!message) {
+      return;
+    }
     console.error(message);
-    this.toast(message, "Error")
-
+    if (typeof message === "object") {
+      if (typeof message.message === "string") {
+        this.toast(message.message, "Error")
+        return;
+      }
+    }
+    this.toast(message.message, "Error")
   }
 
   loading_present: any;

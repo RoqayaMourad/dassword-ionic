@@ -1,8 +1,8 @@
+import { ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data/data.service';
 import { LoginService } from './../../../services/auth/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Security } from 'src/app/models/security.class';
 
 @Component({
   selector: 'app-login-register',
@@ -14,7 +14,7 @@ export class LoginRegisterComponent implements OnInit {
   login_form: FormGroup
   register_form: FormGroup
   shown_form: "login" | "register" = "login";
-  constructor(fb: FormBuilder, private loginSrv: LoginService, private data: DataService) {
+  constructor(fb: FormBuilder, private loginSrv: LoginService, private data: DataService, private modalController:ModalController) {
     this.register_form = fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -40,15 +40,31 @@ export class LoginRegisterComponent implements OnInit {
       this.data.toastError("Invalid login fields")
       return;
     }
-    await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password)
+    try {
+      await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password);
+      this.dissmiss();
+      this.data.toast("Logged in")
+    } catch (error) {
+      this.data.toastError(error)
+    }
   }
 
-  register() {
+  async register() {
     if (this.register_form.invalid) {
       this.data.toastError("Invalid fields")
       return;
     }
-    this.loginSrv.register(this.register_form.value.email, this.register_form.value.password)
+    try {
+      await this.loginSrv.register(this.login_form.value.email, this.login_form.value.password);
+      this.dissmiss()
+      this.data.toast("Account created")
+    } catch (error) {
+      this.data.toastError(error)
+    }
+  }
+
+  dissmiss(){
+    this.modalController.dismiss()
   }
 
 }
