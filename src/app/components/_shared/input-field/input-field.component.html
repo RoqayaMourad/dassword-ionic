@@ -1,4 +1,4 @@
-<div *ngIf="enabled" [formGroup]="valueFormGroup">
+<div [formGroup]="valueFormGroup">
   <label *ngIf="label" [for]="controlName+'_'+'type'" class="block mb-2 text-sm font-medium text-cyan-2">{{label}}</label>
 
   <!-- If input -->
@@ -8,6 +8,7 @@
     [id]="controlName+'_'+'type'"
     [name]="controlName"
     [formControlName]="controlName"
+    
     class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
     [placeholder]="placeholder">
 
