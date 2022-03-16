@@ -27,7 +27,7 @@ export class DataService {
    * @type {BehaviorSubject<MainDB>}
    * @memberof DataService
    */
-  mainDb: MainDB = new MainDB();
+  mainDb: MainDB = null;
   mainDb$: BehaviorSubject<MainDB> = new BehaviorSubject(this.mainDb);
 
 
@@ -36,22 +36,10 @@ export class DataService {
   // ==========================================================================================
 
   async initDb() {
-    let db: MainDB;
+    let db_json: IMainDB;
     // try to get db from local storage
-    db = await this.getDbFromStorage();
-    if (db) {
-      this.setDb(db)
-    }
-    // else init a new db
-    else {
-      db = new MainDB()
-      this.setDb(db);
-      // Test Upload File
-      setTimeout(() => {
-        this.uploadDbToIPFS()
-      }, 5000);
-    }
-
+    db_json = await this.getDbFromStorage();
+    this.setDb(db_json);
   }
 
   /**
@@ -108,12 +96,11 @@ export class DataService {
    * @return {MainDB}
    */
   async getDbFromStorage(delay = 100) {
-    return new Promise<MainDB>((resolve, reject) => {
+    return new Promise<IMainDB>((resolve, reject) => {
       setTimeout(() => {
         this.storage.get("maindb").then((db_json) => {
           console.log("Db loaded from storage 📦 -> 📄  ");
-          let maindb = new MainDB(db_json)
-          resolve(maindb)
+          resolve(db_json)
         }).catch(reject)
       }, delay);
     })
@@ -159,7 +146,7 @@ export class DataService {
   }
 
   /**
-   * Get the db from the local storage
+   * Get the user from the local storage
    *
    * @param {number} [delay=100] object fetch from storage delay
    * @return {User}
@@ -216,8 +203,8 @@ export class DataService {
 
       // upload file
       const sec = new Security();
-      const secure_hash = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
-      await this.ipfs.uploadFileToIPFS("db",file,secure_hash);
+      const secureAuthObject = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
+      await this.ipfs.uploadFileToIPFS("db",file,{secureAuthObject});
     } catch (error) {
       console.error(error)
       throw new Error(error);
@@ -232,8 +219,8 @@ export class DataService {
     try {
       // upload file
       const sec = new Security();
-      const secure_hash = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
-      this.ipfs.getDbFromIPFS(secure_hash).subscribe(r=>{
+      const secureAuthObject = sec.generateSecureAuthObject(this.user.email,this.MASTER_PASSWORD)
+      this.ipfs.getDbFromIPFS({secureAuthObject}).subscribe(r=>{
         if (r.success && r.data) {
           let enctyptedDBObject:IEnctyptedDBObject = r.data
 
@@ -247,6 +234,29 @@ export class DataService {
       console.error(error)
       throw new Error(error);
     }
+  }
+
+  /**
+   * Check if the local db version is the correct version and if fetches the remote db version and determines update the local storage or the remote storage
+   *
+   * @memberof DataService
+   */
+  async syncDb(){
+    // check that main db is inited and user is logged in
+    if (!this.mainDb || !this.user.user_id) {
+      throw new Error("User or local DB not found");
+    }
+    // if local version is higher than IPFS version update the IPFS version
+    if(this.mainDb.objectVersionId > this.user.db_version){
+      await this.show_loading(60);
+      await this.uploadDbToIPFS();
+      await this.dismiss_loading();
+    } else if (this.mainDb.objectVersionId < this.user.db_version) {
+      this.show_loading(60);
+      await this.getDbFromIPFS();
+      this.dismiss_loading();
+    }
+    await this.toast("DB is synced")
   }
 
   //#endregion
