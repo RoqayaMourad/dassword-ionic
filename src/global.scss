@@ -61,11 +61,21 @@
     height: 18px;
   }
 }
+.fieldIcons{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  transform-origin: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .revealDiv , .copyDiv{
   svg {
-    position: absolute;
-    right: 3%;
-    bottom: 32%;
+    // position: absolute;
+    // right: 3%;
+    // bottom: 32%;
     stroke: #ABABAB;
     &:hover{
        @apply stroke-cyan-2;
@@ -74,7 +84,7 @@
 }
 .revealDiv{
   svg {
-    right:15%;
+    // right:15%;
   }
 }
 
