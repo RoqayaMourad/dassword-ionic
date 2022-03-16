@@ -60,7 +60,10 @@ module.exports = {
             },
             fontFamily: {
                 poppins: 'Poppins',
-            }
+            },
+            backgroundImage: {
+                'net-bg': "url('/assets/net-bg.png')",
+              }
         }
     }
 }
