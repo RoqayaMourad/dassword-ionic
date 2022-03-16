@@ -41,11 +41,14 @@ export class LoginRegisterComponent implements OnInit {
       return;
     }
     try {
+      this.data.show_loading();
       await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password);
-      this.dissmiss();
-      this.data.toast("Logged in")
+      await this.dissmiss();
+      await  this.data.toast("Logged in")
+      this.data.dismiss_loading();
     } catch (error) {
-      this.data.toastError(error)
+      await  this.data.toastError(error)
+      this.data.dismiss_loading();
     }
   }
 
@@ -55,16 +58,19 @@ export class LoginRegisterComponent implements OnInit {
       return;
     }
     try {
+      this.data.show_loading();
       await this.loginSrv.register(this.login_form.value.email, this.login_form.value.password);
-      this.dissmiss()
-      this.data.toast("Account created")
+      await this.dissmiss()
+      await this.data.toast("Account created")
+      this.data.dismiss_loading();
     } catch (error) {
-      this.data.toastError(error)
+      await this.data.toastError(error);
+      this.data.dismiss_loading();
     }
   }
 
-  dissmiss(){
-    this.modalController.dismiss()
+  async dissmiss(){
+    await this.modalController.dismiss()
   }
 
 }

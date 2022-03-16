@@ -1,3 +1,4 @@
+import { Api } from './../api/api';
 import { Security } from 'src/app/models/security.class';
 import { HelperService } from 'src/app/services/util/helper';
 import { User } from './../../models/user.class';
@@ -11,12 +12,13 @@ import { StorageService } from './storage.service';
 import { Base64 } from 'js-base64';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { IEnctyptedDBObject, IMainDB } from 'src/app/interfaces/interfaces';
+import { HttpEventType, HttpProgressEvent, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController, private storage: StorageService, private ipfs: IPFSService) {
+  constructor(private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController, private storage: StorageService, private ipfs: IPFSService, private api: Api) {
   }
 
   user: User = new User();
@@ -35,7 +37,6 @@ export class DataService {
    * @memberof DataService
    */
   mainDb: MainDB = null;
-  mainDb$: BehaviorSubject<MainDB> = new BehaviorSubject(this.mainDb);
 
 
   // ==========================================================================================
@@ -68,7 +69,6 @@ export class DataService {
    * @memberof DataService
    */
   async refreshDb(updateStorage = true) {
-    this.mainDb$.next(this.mainDb);
     if (updateStorage) {
       await this.setDbToStorage();
       return this.mainDb
@@ -192,7 +192,8 @@ export class DataService {
   async uploadDbToIPFS() {
     // TODO:Encrypt the current db with MASTER_PASSWORD
     let str = JSON.stringify(this.mainDb);
-    let enctyptedDBObject: IEnctyptedDBObject = { data: str }
+    let encryptedDbString = Security.decryptString(str, this.MASTER_PASSWORD);
+    let enctyptedDBObject: IEnctyptedDBObject = { data: encryptedDbString }
 
     // the following conversion supports arabic characters, emojis and Chinese and asian character
     // Object ==> String ==> Base64 ==> ArrayBuffer ==> File
@@ -210,7 +211,31 @@ export class DataService {
     // upload file
     const sec = new Security();
     const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD)
-    return await this.ipfs.uploadFileToIPFS("db", file, { secureAuthObject, db_version: this.mainDb.objectVersionId });
+
+    // Start uploading
+    return new Promise((resolve, reject) => {
+      this.api.uploadFile(`ipfs/store/db/`, file, {
+        secureAuthObject,
+        db_version: this.mainDb.objectVersionId
+      }).subscribe(
+        async (http_response: HttpProgressEvent) => {
+          if (http_response.type === HttpEventType.UploadProgress) {
+            console.log("== Upload Progress:", (http_response.loaded / http_response.total) * 100);
+          } else if (http_response instanceof HttpResponse) {
+            // when file upload is successful set the user to local storage and dismiss loading
+            const body = (http_response as any).body;
+            if (body.success) {
+              await this.setUser(body.data);
+            }
+            await this.dismiss_loading();
+            await this.toast("DB is synced")
+            throw new Error("Faild to update DB");
+          }
+        },
+        e => reject(e)
+      )
+    })
+
   }
 
   /**
@@ -218,24 +243,32 @@ export class DataService {
    * @memberof DataService
    */
   async getDbFromIPFS() {
-    try {
-      // upload file
-      const sec = new Security();
-      const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD)
-      this.ipfs.getDbFromIPFS({ secureAuthObject }).subscribe(r => {
+    // upload file
+    const sec = new Security();
+    const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD);
+
+    // Start Downloading the encrypted DB
+    return new Promise((resolve, reject) => {
+      this.api.post<IEnctyptedDBObject>(`ipfs/retrive/db/`, { secureAuthObject }).subscribe(r => {
         if (r.success && r.data) {
           let enctyptedDBObject: IEnctyptedDBObject = r.data
 
           // TODO:Decrypt the current db with MASTER_PASSWORD
-          let mainDb = JSON.parse(enctyptedDBObject.data);
+          let decryptedDbString = Security.decryptString(enctyptedDBObject.data, this.MASTER_PASSWORD);
+          let mainDb = JSON.parse(decryptedDbString);
           this.setDb(mainDb);
+          resolve(true);
+          this.toast("Database retrived from IPFS successfuly")
+          return;
         }
-      });
+        this.toast("Failed to retrive DB from IPFS")
+        reject(false);
+      },
+        e => reject(e)
+      )
+    })
 
-    } catch (error) {
-      console.error(error)
-      throw new Error(error);
-    }
+
   }
 
   /**
@@ -260,9 +293,9 @@ export class DataService {
       await this.setUser(http_response.data);
       await this.dismiss_loading();
     } else if (this.mainDb.objectVersionId < this.user.db_version) {
-      this.show_loading(60);
+      await this.show_loading();
       await this.getDbFromIPFS();
-      this.dismiss_loading();
+      await this.dismiss_loading();
     }
     await this.toast("DB is synced")
   }
@@ -323,7 +356,7 @@ export class DataService {
   }
 
   loading_present: any;
-  async show_loading(max_duartion = 20000) {
+  async show_loading(max_duartion = 300) {
     this.loading_present = await this.loadingController.create({
       cssClass: 'loading-class',
       message: 'Please wait...',

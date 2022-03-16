@@ -11,26 +11,4 @@ export class IPFSService {
   constructor(private api: Api) {
   }
 
-  async uploadFileToIPFS(type:"db"|"file",file: File, body?:IDBTransfer) {
-    return new Promise((resolve, reject) => {
-      this.api.uploadFile(`ipfs/store/${type}/`, file, body).subscribe(
-        (event: HttpProgressEvent) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            console.log("== Upload Progress:", (event.loaded / event.total) * 100);
-          } else if (event instanceof HttpResponse) {
-            resolve((event as any).body)
-          }
-        },
-        (e) => {
-          reject(e)
-        }
-      )
-    })
-  }
-
-  getDbFromIPFS(body?:{[key:string]:ISecurity}) {
-      return this.api.post<IEnctyptedDBObject>(`ipfs/store/db/`, body)
-  }
-
-
 }

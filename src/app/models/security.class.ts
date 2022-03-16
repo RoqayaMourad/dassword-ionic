@@ -46,4 +46,12 @@ export class Security implements ISecurity {
 
     return message;
   }
+
+  static encryptString(string:string, encryptionKey:string){
+    return string;
+  }
+
+  static decryptString(string:string, encryptionKey:string){
+    return string;
+  }
 }

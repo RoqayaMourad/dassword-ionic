@@ -28,7 +28,7 @@ export class LoginService {
         this.d.setMasterPassword(password);
         await this.d.initDb();
         await this.d.syncDb();
-        this.d.alert("User set and Upaded in the storage, fetching DB")
+        await this.d.alert("User set and Upaded in the storage, fetching DB")
 
       } else {
         this.d.alert("Wrong Email or Password")
