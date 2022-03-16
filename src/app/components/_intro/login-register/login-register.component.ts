@@ -14,7 +14,7 @@ export class LoginRegisterComponent implements OnInit {
   login_form: FormGroup
   register_form: FormGroup
   shown_form: "login" | "register" = "login";
-  constructor(fb: FormBuilder, private loginSrv: LoginService, private data: DataService, private modalController:ModalController) {
+  constructor(fb: FormBuilder, private loginSrv: LoginService, private data: DataService, private modalController: ModalController) {
     this.register_form = fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -43,11 +43,11 @@ export class LoginRegisterComponent implements OnInit {
     try {
       this.data.show_loading();
       await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password);
+      await this.data.toast("Logged in")
       await this.dissmiss();
-      await  this.data.toast("Logged in")
       this.data.dismiss_loading();
     } catch (error) {
-      await  this.data.toastError(error)
+      await this.data.toastError(error)
       this.data.dismiss_loading();
     }
   }
@@ -59,9 +59,9 @@ export class LoginRegisterComponent implements OnInit {
     }
     try {
       this.data.show_loading();
-      await this.loginSrv.register(this.login_form.value.email, this.login_form.value.password);
-      await this.dissmiss()
+      await this.loginSrv.register(this.register_form.value.email, this.register_form.value.password);
       await this.data.toast("Account created")
+      await this.dissmiss();
       this.data.dismiss_loading();
     } catch (error) {
       await this.data.toastError(error);
@@ -69,7 +69,7 @@ export class LoginRegisterComponent implements OnInit {
     }
   }
 
-  async dissmiss(){
+  async dissmiss() {
     await this.modalController.dismiss()
   }
 

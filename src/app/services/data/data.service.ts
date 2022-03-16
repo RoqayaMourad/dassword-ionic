@@ -302,6 +302,13 @@ export class DataService {
 
   //#endregion
 
+  async resetStorage(){
+    this.mainDb = new MainDB();
+    await this.storage.remove("maindb");
+    await this.storage.remove("user");
+    console.log("Storage Rest 🔁")
+  }
+
   // ==========================================================================================
   // #region ============================== Alerts
   // ==========================================================================================

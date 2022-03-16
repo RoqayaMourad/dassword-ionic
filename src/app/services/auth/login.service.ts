@@ -28,10 +28,10 @@ export class LoginService {
         this.d.setMasterPassword(password);
         await this.d.initDb();
         await this.d.syncDb();
-        await this.d.alert("User set and Upaded in the storage, fetching DB")
-
+        return;
       } else {
         this.d.alert("Wrong Email or Password")
+        throw new Error("Failed to create user");
       }
     });
   }
@@ -41,13 +41,14 @@ export class LoginService {
     let secureAuthObject = sec.generateSecureAuthObject(email, password);
     this.api.post<IUser>('register', { secureAuthObject }).subscribe(async (r) => {
       if (r.success && r.data.user_id) {
-        await this.d.setUser(r.data);
+        await this.d.resetStorage();
         this.d.setMasterPassword(password);
+        await this.d.setUser(r.data);
         await this.d.initDb();
         await this.d.syncDb();
-        this.d.alert("User set and Upaded in the storage, fetching DB")
       } else {
-        this.d.alert("Wrong Email or Password")
+        this.d.alert("User already exists")
+        throw new Error("Failed to create user");
       }
     });
   }
