@@ -11,7 +11,7 @@ export class Api {
 
   constructor(public http: HttpClient) {
     if (environment.production) {
-      this.url = 'https://api.viafusion.net';
+      this.url = 'https://dassword.com/api';
     }
   }
 
