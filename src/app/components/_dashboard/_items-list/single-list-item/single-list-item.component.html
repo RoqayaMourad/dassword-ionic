@@ -1,6 +1,6 @@
-<div href="#" class="flex items-center p-3 text-lg bg-grey-400 rounded-lg hover:bg-cyan-2 hover:shadow-lg  px-4 mb-4 singleListItem">
+<div [ngClass]="isActive(item.itemId)?'bg-cyan-2':''"  href="#" class="flex items-center p-3 text-lg bg-grey-400 rounded-lg hover:bg-cyan-2 hover:shadow-lg  px-4 mb-4 singleListItem">
   <div class="itemIconDiv w-16 h-16">
-    <img [src]="item.icon" alt="" srcset="">    
+    <img [src]="item.icon" alt="" srcset="">
   </div>
   <div class="flex flex-col pl-4">
     <span class="flex-1 whitespace-nowrap text-light-text text-lg capitalize font-bold itemName">{{item.name}}</span>

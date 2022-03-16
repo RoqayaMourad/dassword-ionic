@@ -50,6 +50,7 @@ export class LoginRegisterComponent implements OnInit {
     } catch (error) {
       await this.data.toastError(error)
       this.data.dismiss_loading();
+      await this.dissmiss();
     }
   }
 
@@ -71,6 +72,7 @@ export class LoginRegisterComponent implements OnInit {
     } catch (error) {
       await this.data.toastError(error);
       this.data.dismiss_loading();
+      await this.dissmiss();
     }
   }
 

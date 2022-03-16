@@ -1,37 +1,41 @@
-<div [formGroup]="valueFormGroup">
+<div [formGroup]="valueFormGroup" class="relative">
   <label *ngIf="label" [for]="controlName+'_'+'type'" class="block mb-2 text-sm font-medium text-cyan-2">{{label}}</label>
 
-  <!-- If input -->
-  <input
-    *ngIf="type != 'textarea'"
-    [type]="type"
-    [id]="controlName+'_'+'type'"
-    [name]="controlName"
-    [formControlName]="controlName"
-    
-    class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
-    [placeholder]="placeholder">
+  <div class="relative">
 
-  <!-- If Textarea -->
-  <textarea
-    *ngIf="type == 'textarea'"
-    [rows]="rows"
-    [id]="controlName+'_'+type"
-    [name]="controlName"
-    [formControlName]="controlName"
-    class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
-    [placeholder]="placeholder">
+    <!-- If input -->
+    <input
+      *ngIf="type != 'textarea'"
+      [type]="type"
+      [id]="controlName+'_'+'type'"
+      [name]="controlName"
+      [formControlName]="controlName"
+
+      class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
+      [placeholder]="placeholder">
+
+    <!-- If Textarea -->
+    <textarea
+      *ngIf="type == 'textarea'"
+      [rows]="rows"
+      [id]="controlName+'_'+type"
+      [name]="controlName"
+      [formControlName]="controlName"
+      class="shadow-sm text-light-grey-100 text-sm rounded-lg focus:ring-light-grey-700 focus:outline-none bg-grey-500 block w-full p-2.5"
+      [placeholder]="placeholder">
   </textarea>
 
+    <div class="fieldIcons">
+      <button type="button" *ngIf="showReveal == true" (click)="revealPass()">
+        <div *ngIf="type === 'password'" class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
+        <div *ngIf="type === 'text'" class='revealDiv' [inlineSVG]="'/assets/icon/eye-off.svg'"></div>
+      </button>
 
-  <button type="button" *ngIf="showReveal == true" (click)="revealPass()">
-    <div *ngIf="type === 'password'" class='revealDiv' [inlineSVG]="'/assets/icon/eye.svg'"></div>
-    <div *ngIf="type === 'text'" class='revealDiv' [inlineSVG]="'/assets/icon/eye-off.svg'"></div>
-  </button>
-
-  <button type="button" *ngIf="showCopy == true" (click)="copyToCLipboard()">
-    <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
-  </button>
+      <button type="button" *ngIf="showCopy == true" (click)="copyToCLipboard()">
+        <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
+      </button>
+    </div>
+  </div>
 
 
   <div *ngIf="subtext" class="mt-1 text-xs text-light-grey-400" id="user_avatar_help">{{subtext}}</div>

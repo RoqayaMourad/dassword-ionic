@@ -22,16 +22,22 @@ export class ItemDetailsComponent implements OnInit {
       url: [''],
       password: [''],
       description: [''],
-      notes: [''],
+      note: [''],
       file: [''],
       type: ['']
     });
   }
 
-  DetailsForm: FormGroup
-
-
+  DetailsForm: FormGroup;
+  currentItem:Item = new Item;
   ngOnInit() {
+    this.data.showItem$.subscribe((itemId)=>{
+      if (itemId) {
+        this.currentItem = this.data.mainDb.getItem(itemId);
+        this.updateFields();
+      }
+    })
+    this.disableFields();
     this.DetailsForm.get("url").valueChanges.pipe(
       throttleTime(3000, asyncScheduler, { leading: false, trailing: true })
     ).subscribe((url) => {
@@ -39,6 +45,38 @@ export class ItemDetailsComponent implements OnInit {
         this.updateIcon();
       }
     })
+  }
+
+  disableFields(){
+    this.DetailsForm.get("name").disable()
+    this.DetailsForm.get("email").disable()
+    this.DetailsForm.get("url").disable()
+    this.DetailsForm.get("password").disable()
+    this.DetailsForm.get("description").disable()
+    this.DetailsForm.get("type").disable()
+    this.DetailsForm.get("note").disable()
+    this.DetailsForm.get("file").disable()
+  }
+
+  enableFields(){
+    this.DetailsForm.get("name").enable()
+    this.DetailsForm.get("email").enable()
+    this.DetailsForm.get("url").enable()
+    this.DetailsForm.get("password").enable()
+    this.DetailsForm.get("description").enable()
+    this.DetailsForm.get("type").enable()
+    this.DetailsForm.get("note").enable()
+    this.DetailsForm.get("file").enable()
+
+  }
+
+  updateFields(){
+    this.DetailsForm.get("name").setValue(this.currentItem.name);
+    this.DetailsForm.get("email").setValue(this.currentItem.email);
+    this.DetailsForm.get("url").setValue(this.currentItem.url);
+    this.DetailsForm.get("password").setValue(this.currentItem.password);
+    this.DetailsForm.get("description").setValue(this.currentItem.description);
+    this.DetailsForm.get("type").setValue(this.currentItem.type);
   }
 
   async editItem() {
@@ -56,7 +94,7 @@ export class ItemDetailsComponent implements OnInit {
     item.setName(this.DetailsForm.value.name);
 
     // add item to the main db
-    this.data.mainDb.addItem(item);
+    this.data.mainDb.updateItem(item);
 
     // emit change to all listener to the db object
     this.data.refreshDb();
