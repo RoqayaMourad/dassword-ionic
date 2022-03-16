@@ -38,6 +38,11 @@
     fill: #9a9a9a;
   }
 }
+.deleteIconDiv {
+  svg {
+    stroke: #9a9a9a;
+  }
+}
 .sidebarSvgDiv {
   svg {
     width: 20px;
@@ -120,6 +125,11 @@
 }
 .newItemForm {
   label{
-    @apply text-base
+    @apply text-base;
+  }
+}
+.menuActive {
+  .menuItem{
+    @apply bg-grey-400 cursor-pointer;
   }
 }

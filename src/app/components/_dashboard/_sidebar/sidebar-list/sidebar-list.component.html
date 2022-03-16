@@ -1,10 +1,10 @@
 <div class="relative h-screen border-r border-cyan-2 shadow-dark-4 shadow-md  bg-grey-500 md:h-screen ">
   <div class="flex flex-col sm:flex-row sm:justify-around">
-    <div class="w-80 h-screen pb-4 px-6 flex flex-col justify-between ">
+    <div class="w-80 h-screen pb-4 pl-6 flex flex-col justify-between ">
       <div>
         <!-- Logo -->
         <a class="py-2 mb-6 justify-start" href="#">
-          <img src="../../assets/brand/logo-rounded.svg" class="mt-4 w-full" alt="">
+          <img src="../../assets/brand/logo-rounded.svg" class="mt-6 pr-4 w-full" alt="">
         </a>
 
         <!-- General -->
@@ -12,7 +12,7 @@
           <!-- <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             General
           </p> -->
-          <app-single-menu-item [name]="'All Items'" [icon]="'/assets/icon/sidebar/all.svg'"></app-single-menu-item>
+          <app-single-menu-item class="menuActive" [name]="'All Items'" [icon]="'/assets/icon/sidebar/all.svg'"></app-single-menu-item>
         </div>
 
 
@@ -30,22 +30,24 @@
 
         <!-- Folder -->
         <div class="py-1">
-          <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
-           Folder
-          </p>
+          <div class="flex flex-nowrap justify-between pr-2">
+            <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
+             Folder
+            </p>
+            <span class="text-light-grey-500 text-sm font-normal mr-2 px-2.5 py-0.5 rounded cursor-pointer underline">Edit</span>
+          </div>
 
-          <app-single-menu-item [name]="'Work'" [icon]="'/assets/icon/sidebar/folder.svg'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Social Media'" [icon]="'/assets/icon/sidebar/folder.svg'"></app-single-menu-item>
+
+          <app-single-folder-item [name]="'Work'"></app-single-folder-item>
+          <app-single-folder-item [name]="'Social Media'"></app-single-folder-item>
           
 
-          <a class="hover:text-light-text font-thin text-light-grey-50 flex items-center p-2 mt-2 transition-colors duration-200 justify-start" href="#">
-            <span class="text-left">
-              <div class="plusIconDiv" [inlineSVG]="'/assets/icon/plus.svg'" ></div>
-            </span>
-            <span class="ml-3 text-base font-normal text-light-grey-300 hover:text-gray-500 cursor-pointer">
-              New Folder
-            </span>
-          </a>
+          <div class="flex items-center p-2 mt-2 transition-colors duration-200 justify-start ml-0 text-base font-normal text-light-grey-300 hover:text-gray-500 cursor-pointer">    
+             <div class="plusIconDiv" [inlineSVG]="'/assets/icon/plus.svg'" ></div>
+             <span class="pl-2">
+               New Folder
+             </span>  
+          </div>
         </div>
       </div>
 
