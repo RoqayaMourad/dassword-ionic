@@ -12,7 +12,8 @@
           <!-- <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             General
           </p> -->
-          <app-single-menu-item class="menuActive" [name]="'All Items'" [icon]="'/assets/icon/sidebar/all.svg'"></app-single-menu-item>
+          <app-single-menu-item class="menuActive" [name]="'All Items'" [icon]="'/assets/icon/sidebar/all.svg'">
+          </app-single-menu-item>
         </div>
 
 
@@ -21,10 +22,13 @@
           <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             Types
           </p>
-          <app-single-menu-item [name]="'Passwords'" [icon]="'/assets/icon/sidebar/password.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Passwords'" [icon]="'/assets/icon/sidebar/password.svg'">
+          </app-single-menu-item>
           <app-single-menu-item [name]="'Cards'" [icon]="'/assets/icon/sidebar/card.svg'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Bank Accounts'" [icon]="'/assets/icon/sidebar/bank.svg'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Documents'" [icon]="'/assets/icon/sidebar/document.svg'"></app-single-menu-item>
+          <app-single-menu-item [name]="'Bank Accounts'" [icon]="'/assets/icon/sidebar/bank.svg'">
+          </app-single-menu-item>
+          <app-single-menu-item [name]="'Documents'" [icon]="'/assets/icon/sidebar/document.svg'">
+          </app-single-menu-item>
           <app-single-menu-item [name]="'Note'" [icon]="'/assets/icon/sidebar/note.svg'"></app-single-menu-item>
         </div>
 
@@ -32,39 +36,46 @@
         <div class="py-1">
           <div class="flex flex-nowrap justify-between pr-2">
             <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
-             Folder
+              Folder
             </p>
-            <span class="text-light-grey-500 text-sm font-normal mr-2 px-2.5 py-0.5 rounded cursor-pointer underline">Edit</span>
+            <span
+              class="text-light-grey-500 text-sm font-normal mr-2 px-2.5 py-0.5 rounded cursor-pointer underline">Edit</span>
           </div>
 
 
           <app-single-folder-item [name]="'Work'"></app-single-folder-item>
           <app-single-folder-item [name]="'Social Media'"></app-single-folder-item>
-          
 
-          <div class="flex items-center p-2 mt-2 transition-colors duration-200 justify-start ml-0 text-base font-normal text-light-grey-300 hover:text-gray-500 cursor-pointer">    
-             <div class="plusIconDiv" [inlineSVG]="'/assets/icon/plus.svg'" ></div>
-             <span class="pl-2">
-               New Folder
-             </span>  
+
+          <div
+            class="flex items-center p-2 mt-2 transition-colors duration-200 justify-start ml-0 text-base font-normal text-light-grey-300 hover:text-gray-500 cursor-pointer">
+            <div class="plusIconDiv" [inlineSVG]="'/assets/icon/plus.svg'"></div>
+            <span class="pl-2">
+              New Folder
+            </span>
           </div>
         </div>
       </div>
 
-
-      <div class="">
-         <!-- Tools -->
-         <div class="py-1">
-          <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
-           Tools
-           </p>
-
-          <app-single-menu-item (click)="openGenpassModal()" [name]="'Generate Password'" [icon]="'/assets/icon/sidebar/refresh.svg'"></app-single-menu-item>
-          <app-single-menu-item (click)="openSettingsModal()" [name]="'Settings'" [icon]="'/assets/icon/sidebar/settings.svg'"></app-single-menu-item>
-        </div>
-      </div>
-      <!-- Notice
-      <app-sidebar-notice></app-sidebar-notice> -->
-    </div>
+<div class="">
+  <!-- Tools -->
+  <div class="py-1">
+    <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
+      Tools
+    </p>
+    <app-single-menu-item-with-icon [name]="'Upload to IPFS'" [icon]="'/assets/icon/sidebar/cloud-upload.svg'" [badge]="'/assets/icon/sidebar/check.svg'">
+      
+    </app-single-menu-item-with-icon>
+    <app-single-menu-item (click)="openGenpassModal()" [name]="'Generate Password'"
+      [icon]="'/assets/icon/sidebar/refresh.svg'"></app-single-menu-item>
+    <app-single-menu-item (click)="openSettingsModal()" [name]="'Settings'"
+      [icon]="'/assets/icon/sidebar/settings.svg'"></app-single-menu-item>
   </div>
+</div>
+
+
+<!-- Notice
+      <app-sidebar-notice></app-sidebar-notice> -->
+</div>
+</div>
 </div>

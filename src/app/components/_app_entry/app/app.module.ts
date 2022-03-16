@@ -39,6 +39,7 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { SettingsModalComponent } from '../../_dashboard/_sidebar/settings-modal/settings-modal.component';
 import { GenpasswordModalComponent } from '../../_dashboard/_sidebar/genpassword-modal/genpassword-modal.component';
 import { SingleFolderItemComponent } from '../../_dashboard/_sidebar/single-folder-item/single-folder-item.component';
+import { SingleMenuItemWithIconComponent } from '../../_dashboard/_sidebar/single-menu-item-with-icon/single-menu-item-with-icon.component';
 
 @NgModule({
 
@@ -79,6 +80,7 @@ import { SingleFolderItemComponent } from '../../_dashboard/_sidebar/single-fold
     SettingsModalComponent,
     GenpasswordModalComponent,
     SingleFolderItemComponent,
+    SingleMenuItemWithIconComponent,
   ],
 
   entryComponents: [
