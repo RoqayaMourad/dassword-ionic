@@ -17,15 +17,17 @@ export class LoginService {
    * when user registers an account he sends his email and an encrypted password to the server to register a new account
    */
 
-  login(email, password) {
+  async login(email, password) {
     let sec = new Security();
     let secureAuthObject = sec.generateSecureAuthObject(email, password);
     // Send the encrypted secure object to the server
-    this.api.post<IUser>('login', { encrypted_data: secureAuthObject }).subscribe(async (r) => {
+    await this.api.post<IUser>('login', { secureAuthObject }).subscribe(async (r) => {
       if (r.success && r.data.user_id) {
         // set global user
         await  this.d.setUser(r.data)
+        this.d.setMasterPassword(password);
         await this.d.initDb();
+        await this.d.syncDb();
         this.d.alert("User set and Upaded in the storage, fetching DB")
 
       } else {
@@ -34,14 +36,15 @@ export class LoginService {
     });
   }
 
-  register(email, password) {
+  async register(email, password) {
     let sec = new Security();
     let secureAuthObject = sec.generateSecureAuthObject(email, password);
-    this.api.post<IUser>('register', { encrypted_data: secureAuthObject }).subscribe(async (r) => {
+    this.api.post<IUser>('register', { secureAuthObject }).subscribe(async (r) => {
       if (r.success && r.data.user_id) {
-        await this.d.setUser(r.data)
+        await this.d.setUser(r.data);
+        this.d.setMasterPassword(password);
         await this.d.initDb();
-
+        await this.d.syncDb();
         this.d.alert("User set and Upaded in the storage, fetching DB")
       } else {
         this.d.alert("Wrong Email or Password")
