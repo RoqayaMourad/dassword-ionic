@@ -63,6 +63,8 @@ export class NewItemComponent implements OnInit {
 
     // set name from url if not already set
     item.setName(this.DetailsForm.value.name);
+
+    this.data.mainDb.updateVersion();
     // add item to the main db
     this.data.mainDb.addItem(item);
 

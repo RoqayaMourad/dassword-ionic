@@ -49,8 +49,12 @@ export class DataService {
   async initDb() {
     let db_json: IMainDB;
     // try to get db from local storage
-    db_json = await this.getDbFromStorage();
-    return await this.setDb(db_json);
+    try{
+      db_json = await this.getDbFromStorage();
+      return await this.setDb(db_json);
+    }catch{
+      return await this.setDb();
+    }
   }
 
   /**
@@ -59,7 +63,7 @@ export class DataService {
    * @param {MainDB} mainDb
    * @memberof DataService
    */
-  async setDb(_mainDb_obj: MainDB | IMainDB) {
+  async setDb(_mainDb_obj?: MainDB | IMainDB) {
     let maindb = new MainDB(_mainDb_obj)
     this.mainDb = maindb;
     return await this.refreshDb();
@@ -114,10 +118,10 @@ export class DataService {
     return new Promise<IMainDB>((resolve, reject) => {
       this.storage.get("maindb").then((encryptedDb) => {
         console.log("Db loaded from storage 📦 -> 📄  ");
-        // decrypt the database from the local storage
-        let decryptedDbString: any = Security.decryptString(encryptedDb, this.MASTER_PASSWORD);
         let db_object;
         try {
+          // decrypt the database from the local storage
+          let decryptedDbString: any = Security.decryptString(encryptedDb, this.MASTER_PASSWORD);
           // parse the database
           db_object = JSON.parse(decryptedDbString)
         } catch (error) {
@@ -227,35 +231,31 @@ export class DataService {
     let strBase64 = Base64.encode(enctyptedStringfiedDBObject)
 
     // convert the base64 string to file formate
-    var blob = new Blob([strBase64], { type: 'text/plain' });
-    var file = new File([blob], HelperService.makeid(), { type: "text/plain" });
+    // var blob = new Blob([strBase64], { type: 'text/plain' });
+    // var file = new File([blob], HelperService.makeid(), { type: "text/plain" });
 
     // upload file
     const sec = new Security();
     const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD)
-
+    const dbObject = {
+      secureAuthObject,
+      encrypteddb:strBase64,
+      db_version: this.mainDb.objectVersionId
+    }
     // Start uploading
     return new Promise((resolve, reject) => {
-      this.api.uploadFile(`ipfs/store/db/`, file, {
-        secureAuthObject,
-        db_version: this.mainDb.objectVersionId
-      }).subscribe(
-        async (http_response: HttpProgressEvent) => {
-          if (http_response.type === HttpEventType.UploadProgress) {
-            console.log("== Upload Progress:", (http_response.loaded / http_response.total) * 100);
-          } else if (http_response instanceof HttpResponse) {
+      this.api.post(`ipfs/store/db/`, dbObject).subscribe(
+        async (response) => {
             // when file upload is successful set the user to local storage and dismiss loading
-            const body = (http_response as any).body;
+            const body = response;
             if (body.success) {
               await this.setUser(body.data);
               this.IPFSState = "Synced";
-              await this.toast("DB is synced")
               resolve(body.data)
             } else {
               this.IPFSState = lastState;
               reject("Faild to update DB");
             }
-          }
         },
         e => {
           this.IPFSState = lastState;
@@ -313,7 +313,6 @@ export class DataService {
     if (this.user.db_version && this.mainDb.objectVersionId < this.user.db_version) {
       await this.getDbFromIPFS();
     }
-    await this.toast("DB is synced")
   }
 
   //#endregion

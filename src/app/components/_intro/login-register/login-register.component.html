@@ -30,7 +30,7 @@
           <div *ngIf="shown_form == 'login'" class="active">
             <form class="flex flex-col" [formGroup]="login_form" (ngSubmit)="login()">
               <div class="mb-6">
-                <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email"
+                <app-input-field label="Email" placeholder="" type="email" formControlName="email"
                   ngDefaultControl></app-input-field>
               </div>
 
@@ -55,7 +55,7 @@
             <form class="" [formGroup]="register_form" (ngSubmit)="register()">
 
               <div class="mb-6">
-                <app-input-field label="Email" placeholder="email@example.com" type="email" formControlName="email"
+                <app-input-field label="Email" placeholder="" type="email" formControlName="email"
                   ngDefaultControl></app-input-field>
               </div>
               <div class="mb-6">
