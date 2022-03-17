@@ -51,7 +51,6 @@ export class NewItemComponent implements OnInit {
     item.setDescription(this.DetailsForm.get("description").value);
     item.setNote(this.DetailsForm.get("note").value);
     item.setUrl(this.DetailsForm.get("url").value);
-    item.setType(this.DetailsForm.get("type").value);
 
     // set icon only if type is password
     if (item.type !== "Password") {
@@ -112,7 +111,6 @@ export class NewItemComponent implements OnInit {
   type: ItemType = "Password";
 
   setType(t) {
-    console.log("setType(t) t=", t);
     this.type = t;
     this.closeSelect()
   }
