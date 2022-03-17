@@ -1,3 +1,4 @@
+import { IIPFSState } from './../../interfaces/IPFS.interface';
 import { Api } from './../api/api';
 import { Security } from 'src/app/models/security.class';
 import { HelperService } from 'src/app/services/util/helper';
@@ -38,7 +39,7 @@ export class DataService {
    */
   mainDb: MainDB = null;
 
-
+  IPFSState: IIPFSState;
   // ==========================================================================================
   //#region ====== DB Storage Handling
   // ==========================================================================================
@@ -47,7 +48,7 @@ export class DataService {
     let db_json: IMainDB;
     // try to get db from local storage
     db_json = await this.getDbFromStorage();
-    this.setDb(db_json);
+    await this.setDb(db_json);
   }
 
   /**
@@ -190,8 +191,11 @@ export class DataService {
    * @memberof DataService
    */
   async uploadDbToIPFS() {
+    this.show_loading();
     // TODO:Encrypt the current db with MASTER_PASSWORD
     let str = JSON.stringify(this.mainDb);
+    let lastState = this.IPFSState;
+    this.IPFSState = "Uploading";
     let encryptedDbString = Security.decryptString(str, this.MASTER_PASSWORD);
     let enctyptedDBObject: IEnctyptedDBObject = { data: encryptedDbString }
 
@@ -226,13 +230,20 @@ export class DataService {
             const body = (http_response as any).body;
             if (body.success) {
               await this.setUser(body.data);
+              this.IPFSState = "Synced";
+              await this.dismiss_loading();
+              await this.toast("DB is synced")
+            } else {
+              throw new Error("Faild to update DB");
+              this.IPFSState = lastState;
             }
-            await this.dismiss_loading();
-            await this.toast("DB is synced")
-            throw new Error("Faild to update DB");
           }
         },
-        e => reject(e)
+        e => {
+          this.IPFSState = lastState;
+          reject(e)
+          throw new Error("Faild to update DB");
+        }
       )
     })
 
@@ -246,25 +257,28 @@ export class DataService {
     // upload file
     const sec = new Security();
     const secureAuthObject = sec.generateSecureAuthObject(this.user.email, this.MASTER_PASSWORD);
-
+    let lastState = this.IPFSState;
+    this.IPFSState = "Downloading";
     // Start Downloading the encrypted DB
     return new Promise((resolve, reject) => {
       this.api.post<IEnctyptedDBObject>(`ipfs/retrive/db/`, { secureAuthObject }).subscribe(r => {
         if (r.success && r.data) {
           let enctyptedDBObject: IEnctyptedDBObject = r.data
-
           // TODO:Decrypt the current db with MASTER_PASSWORD
           let decryptedDbString = Security.decryptString(enctyptedDBObject.data, this.MASTER_PASSWORD);
           let mainDb = JSON.parse(decryptedDbString);
           this.setDb(mainDb);
           resolve(true);
-          this.toast("Database retrived from IPFS successfuly")
+          this.IPFSState = "Synced";
           return;
         }
-        this.toast("Failed to retrive DB from IPFS")
+        this.IPFSState = lastState;
         reject(false);
       },
-        e => reject(e)
+        e => {
+          this.IPFSState = lastState;
+          reject(e)
+        }
       )
     })
 
@@ -272,7 +286,7 @@ export class DataService {
   }
 
   /**
-   * Check if the local db version is the correct version and if fetches the remote db version and determines update the local storage or the remote storage
+   * Check if the local db version is the latest version, if it's not update the local version
    *
    * @memberof DataService
    */
@@ -281,41 +295,28 @@ export class DataService {
     if (!this.mainDb || !this.user.user_id) {
       throw new Error("User or local DB not found");
     }
-    // if local version is higher than IPFS version update the IPFS version
-    if (this.mainDb.objectVersionId > this.user.db_version) {
-      await this.show_loading(60);
-      let http_response = await this.uploadDbToIPFS() as any;
-      if (!http_response.success) {
-        await this.dismiss_loading();
-        await this.toast("DB is synced")
-        throw new Error("Faild to update DB");
-      }
-      await this.setUser(http_response.data);
-      await this.dismiss_loading();
-    } else if (this.mainDb.objectVersionId < this.user.db_version) {
-      await this.show_loading();
+    if (this.user.db_version && this.mainDb.objectVersionId < this.user.db_version) {
       await this.getDbFromIPFS();
-      await this.dismiss_loading();
     }
     await this.toast("DB is synced")
   }
 
   //#endregion
 
-  async resetStorage(){
+  async resetStorage(resetUser = true) {
     await this.setDb(new MainDB());
-    await this.setUser(new User());
-    this.MASTER_PASSWORD = "";
+    if (resetUser) await this.setUser(new User());
+    if (resetUser) this.MASTER_PASSWORD = "";
     await this.storage.remove("maindb");
-    await this.storage.remove("user");
+    if (resetUser) await this.storage.remove("user");
     console.log("Storage Rest 🔁")
   }
 
   // ==========================================================================================
   // #region ============================== Messaging
   // ==========================================================================================
-  showItem$:BehaviorSubject<string> = new BehaviorSubject<string>(null)
-  showItem(itemId:string){
+  showItem$: BehaviorSubject<string> = new BehaviorSubject<string>(null)
+  showItem(itemId: string) {
     this.showItem$.next(itemId);
   }
   // #endregion

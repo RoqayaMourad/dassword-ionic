@@ -16,6 +16,7 @@ export class InputFieldComponent implements OnInit {
   @Input() rows: number = 4;
   @Input() showReveal = false;
   @Input() showCopy = false;
+  @Input() showGen = false;
 
   valueFormGroup?: FormGroup;
   valueFormControl?: FormControl;
@@ -61,6 +62,11 @@ export class InputFieldComponent implements OnInit {
       this.flip = !this.flip
       return;
     }
+  }
+
+  genpassword(){
+    let random = HelperService.makePass();
+    this.valueFormControl.setValue(random)
   }
 
 }

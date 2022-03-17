@@ -34,6 +34,11 @@
       <button class="inline-block" type="button" *ngIf="showCopy == true" (click)="copyToCLipboard()">
         <div class='copyDiv' [inlineSVG]="'/assets/icon/copy.svg'"></div>
       </button>
+
+      <button class="inline-block" type="button" *ngIf="showGen == true" (click)="genpassword()">
+        <div class='revealDiv' [inlineSVG]="'/assets/icon/sidebar/refresh.svg'"></div>
+      </button>
+
     </div>
   </div>
 

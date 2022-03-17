@@ -6,7 +6,7 @@
 
 
 
-      <form class="" [formGroup]="DetailsForm" >
+      <form class="" [formGroup]="DetailsForm">
 
         <div class="mb-6">
           <app-input-field label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
@@ -21,7 +21,8 @@
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl></app-input-field>
+          <app-input-field label="Password" type="password" formControlName="password"
+            ngDefaultControl [showReveal]="true" [showCopy]="true" [showGen]="formMode === 'edit'"></app-input-field>
         </div>
 
         <div class="mb-6">

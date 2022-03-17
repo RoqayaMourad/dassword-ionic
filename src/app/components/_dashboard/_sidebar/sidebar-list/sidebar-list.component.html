@@ -57,25 +57,39 @@
         </div>
       </div>
 
-<div class="">
-  <!-- Tools -->
-  <div class="py-1">
-    <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
-      Tools
-    </p>
-    <app-single-menu-item-with-icon [name]="'Upload to IPFS'" [icon]="'/assets/icon/sidebar/cloud-upload.svg'" [badge]="'/assets/icon/sidebar/check.svg'">
-      
-    </app-single-menu-item-with-icon>
-    <app-single-menu-item (click)="openGenpassModal()" [name]="'Generate Password'"
-      [icon]="'/assets/icon/sidebar/refresh.svg'"></app-single-menu-item>
-    <app-single-menu-item (click)="openSettingsModal()" [name]="'Settings'"
-      [icon]="'/assets/icon/sidebar/settings.svg'"></app-single-menu-item>
-  </div>
-</div>
+      <div class="">
+        <!-- Tools -->
+        <div class="py-1">
+          <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
+            Tools
+          </p>
+          <!-- ==== State Button ==== -->
+          <div class="text-gray-300 hover:bg-grey-400 hover:cursor-pointer flex items-center p-2 mt-2 transition-colors duration-200 justify-between menuItem"
+            *ngIf="data.IPFSState" (click)="syncIfYouNeed()">
+            <div class="flex w-full justify-start">
+              <span class="text-left">
+                <div class="sidebarSvgDiv" [inlineSVG]="'/assets/icon/sidebar/cloud-upload.svg'"></div>
+              </span>
+              <span class="ml-3 text-base font-normal">
+                {{data.IPFSState}}
+              </span>
+            </div>
+            <div class="">
+              <div class="badgeIconDiv mr-4 pr-1" [inlineSVG]="'/assets/icon/sidebar/check.svg'"></div>
+
+            </div>
+          </div>
+
+          <app-single-menu-item (click)="openGenpassModal()" [name]="'Generate Password'"
+            [icon]="'/assets/icon/sidebar/refresh.svg'"></app-single-menu-item>
+          <app-single-menu-item (click)="openSettingsModal()" [name]="'Settings'"
+            [icon]="'/assets/icon/sidebar/settings.svg'"></app-single-menu-item>
+        </div>
+      </div>
 
 
-<!-- Notice
+      <!-- Notice
       <app-sidebar-notice></app-sidebar-notice> -->
-</div>
-</div>
+    </div>
+  </div>
 </div>
