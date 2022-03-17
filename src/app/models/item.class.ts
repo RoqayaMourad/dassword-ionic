@@ -137,12 +137,26 @@ export class Item implements IItem {
     if (!word) {
       return false;
     }
-    let result=  this.name.indexOf(word) !== -1 ||
-    this.description.indexOf(word) !== -1 ||
-    this.email.indexOf(word) !== -1 ||
-    this.fileName.indexOf(word) !== -1 ||
-    this.url.indexOf(word) !== -1 ||
-    (includeNote && (this.note.indexOf(word) !== -1))
+    word = word.toLowerCase();
+    let result = false;
+    let name = this.name?.toLowerCase().indexOf(word)
+    if(name !==undefined && name !== -1) result = true;
+
+    let description = !result?this.description?.toLowerCase().indexOf(word):""
+    if(description !==undefined && description !== -1) result = true;
+
+    let email = !result?this.email?.toLowerCase().indexOf(word):""
+    if(email !==undefined && email !== -1) result = true;
+
+    let fileName = !result?this.fileName?.toLowerCase().indexOf(word):""
+    if(fileName !==undefined && fileName !== -1) result = true;
+
+    let url = !result?this.url?.toLowerCase().indexOf(word):""
+    if(url !==undefined && url !== -1) result = true;
+
+    let note = !result?this.note?.toLowerCase().indexOf(word):""
+    if(note !==undefined && note !== -1) result = true;
+
     return result;
   }
 
