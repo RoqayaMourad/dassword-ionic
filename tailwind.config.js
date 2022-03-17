@@ -63,7 +63,11 @@ module.exports = {
             },
             backgroundImage: {
                 'net-bg': "url('/assets/net-bg.png')",
-              }
+            },
+            screens: {
+                'lg': '1400px',
+                // => @media (min-width: 992px) { ... }
+            }
         }
     }
 }

@@ -176,4 +176,7 @@ export class ItemDetailsComponent implements OnInit {
   ngOnDestroy(): void {
     console.log("item details Destroyed");
   }
+  comingSoon(){
+    this.data.alert('Coming Soon!')
+  }
 }

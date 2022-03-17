@@ -67,4 +67,8 @@ export class SidebarListComponent implements OnInit {
       })
     }
   }
+
+  comingSoon(){
+    this.data.alert('Coming Soon!')
+  }
 }

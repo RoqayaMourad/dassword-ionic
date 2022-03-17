@@ -116,7 +116,7 @@
   }
 
 }
-.createItemModal , .loginRegisterModal , .settingsModal , .genpasswordModal {
+.createItemModal , .loginRegisterModal , .settingsModal , .genpasswordModal , .alert-class {
   &::part(backdrop) {
     background-color: #121212;
     --backdrop-opacity: 0.8;
