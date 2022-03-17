@@ -1,15 +1,15 @@
 <ion-content>
-  <div class="bg-grey-400 rounded-md p-4 h-full">
+  <div class="bg-grey-400 rounded-md pt-8 px-16 my-auto h-full">
     <form class="newItemForm" [formGroup]="DetailsForm" (ngSubmit)="onSubmit()">
 
       <div class="flex">
         <div class="justify-center w-full">
-          <img src="/assets/brand/logo-rounded.svg" width="40%" class="mx-auto" alt="" srcset="">
+          <img src="/assets/brand/logo-rounded.svg" width="50%" class="mx-auto" alt="" srcset="">
         </div>
       </div>
 
      <!-- ================= Select Type -->
-      <div class="mx-auto mb-6">
+      <div class="mx-auto mb-6 mt-4">
         <label class="block mb-2 text-lg font-medium text-cyan-2">Select Type</label>
         <!-- component -->
         <div class="relative w-full" (clickOutside)="closeSelect()">
@@ -26,7 +26,7 @@
             </svg>
           </button>
           <!-- list items -->
-          <ul class="z-2 absolute w-full rounded bg-grey-500" *ngIf="typeSelectOpen">
+          <ul class="z-2 absolute w-full rounded bg-grey-500 z-50" *ngIf="typeSelectOpen">
             <li class="cursor-pointer select-none p-2 text-light-grey-100 hover:bg-grey-100" (click)="setType('Password')">
               Password
             </li>
