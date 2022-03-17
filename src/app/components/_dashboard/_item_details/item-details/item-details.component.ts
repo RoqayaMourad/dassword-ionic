@@ -57,6 +57,7 @@ export class ItemDetailsComponent implements OnInit {
   // reset forms and disable edit mode
   updateFields() {
     this.formMode = "display";
+    this.DetailsForm.disable();
     this.DetailsForm.get("name").setValue(this.currentItem.name);
     this.DetailsForm.get("email").setValue(this.currentItem.email);
     this.DetailsForm.get("url").setValue(this.currentItem.url);
