@@ -12,7 +12,7 @@
           <!-- <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             General
           </p> -->
-          <app-single-menu-item class="menuActive" [name]="'All Items'" [icon]="'/assets/icon/sidebar/all.svg'">
+          <app-single-menu-item (click)="setType('All Items')" [ngClass]="type==='All Items'?'menuActive':''" [name]="'All Items'" [icon]="'/assets/icon/sidebar/all.svg'">
           </app-single-menu-item>
         </div>
 
@@ -22,14 +22,14 @@
           <p class="text-light-grey-500 ml-2 w-full text-md font-normal">
             Types
           </p>
-          <app-single-menu-item [name]="'Passwords'" [icon]="'/assets/icon/sidebar/password.svg'">
+          <app-single-menu-item (click)="setType('Password')" [ngClass]="type==='Password'?'menuActive':''" [name]="'Passwords'" [icon]="'/assets/icon/sidebar/password.svg'">
           </app-single-menu-item>
-          <app-single-menu-item [name]="'Cards'" [icon]="'/assets/icon/sidebar/card.svg'"></app-single-menu-item>
-          <app-single-menu-item [name]="'Bank Accounts'" [icon]="'/assets/icon/sidebar/bank.svg'">
+          <app-single-menu-item (click)="setType('Card')" [ngClass]="type==='Card'?'menuActive':''" [name]="'Cards'" [icon]="'/assets/icon/sidebar/card.svg'"></app-single-menu-item>
+          <app-single-menu-item (click)="setType('Bank Account')" [ngClass]="type==='Bank Account'?'menuActive':''" [name]="'Bank Accounts'" [icon]="'/assets/icon/sidebar/bank.svg'">
           </app-single-menu-item>
-          <app-single-menu-item [name]="'Documents'" [icon]="'/assets/icon/sidebar/document.svg'">
+          <app-single-menu-item (click)="setType('File')" [ngClass]="type==='File'?'menuActive':''" [name]="'Documents'" [icon]="'/assets/icon/sidebar/document.svg'">
           </app-single-menu-item>
-          <app-single-menu-item [name]="'Note'" [icon]="'/assets/icon/sidebar/note.svg'"></app-single-menu-item>
+          <app-single-menu-item (click)="setType('Note')" [ngClass]="type==='Note'?'menuActive':''" [name]="'Note'" [icon]="'/assets/icon/sidebar/note.svg'"></app-single-menu-item>
         </div>
 
         <!-- Folder -->

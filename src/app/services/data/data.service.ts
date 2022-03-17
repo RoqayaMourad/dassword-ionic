@@ -24,6 +24,7 @@ export class DataService {
 
   user: User = new User();
   filter$:BehaviorSubject<string> = new BehaviorSubject("")
+  setSearch$:BehaviorSubject<string> = new BehaviorSubject("")
   /**
    * The logged in Master password, this value is never called unless from this class only
    *

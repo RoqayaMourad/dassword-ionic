@@ -1,3 +1,4 @@
+import { ItemType } from './../../../../interfaces/interfaces';
 import { DataService } from 'src/app/services/data/data.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -28,6 +29,17 @@ export class SidebarListComponent implements OnInit {
 
       }
     },3000)
+  }
+  type:string = "All Items"
+  // Set type
+  setType(str:string){
+    if (str == "All Items") {
+      this.data.setSearch$.next("")
+      this.type = str;
+      return;
+    }
+    this.data.setSearch$.next("type:"+str)
+    this.type = str;
   }
 
   async openSettingsModal() {

@@ -150,7 +150,7 @@ export class Item implements IItem {
     if (!type) {
       return false;
     }
-    let result=  this.type == type;
+    let result=  this.type.toLowerCase() == type.toLowerCase();
     return result;
   }
 

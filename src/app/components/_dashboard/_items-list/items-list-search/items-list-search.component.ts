@@ -19,9 +19,11 @@ export class ItemsListSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filterForm.valueChanges.subscribe((v)=>{
-      let value = this.filterForm.get("searchField").value
-      this.data.filter$.next(value as string)
+    this.data.setSearch$.subscribe(type=>{
+      this.filterForm.get("searchField").setValue(type)
+    })
+    this.filterForm.get("searchField").valueChanges.subscribe((v)=>{
+      this.data.filter$.next(v as string)
     })
   }
 

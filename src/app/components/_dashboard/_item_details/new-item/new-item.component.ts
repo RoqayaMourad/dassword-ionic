@@ -48,10 +48,14 @@ export class NewItemComponent implements OnInit {
     item.update(this.DetailsForm.value);
 
     // force update current icon
-    this.updateIcon();
 
     // set item icon
-    item.setIcon(this.iconUrl);
+    if (this.type !== "Password") {
+      this.updateIcon(true);
+      item.setIcon("");
+    }
+
+    item.setType(this.type);
 
     // set name from url if not already set
     item.setName(this.DetailsForm.value.name);
@@ -72,7 +76,11 @@ export class NewItemComponent implements OnInit {
 
   //#region Handle Icon update
   iconUrl = "";
-  updateIcon() {
+  updateIcon(dontSet=false) {
+    if (dontSet) {
+      this.iconUrl = "";
+      return ;
+    }
     let url = this.DetailsForm.get("url").value;
     console.log(url);
 
