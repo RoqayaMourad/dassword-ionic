@@ -106,9 +106,11 @@ export class ItemDetailsComponent implements OnInit {
       await this.data.dismiss_loading();
       this.data.toast("Item Updated");
       console.log(this.data.mainDb);
+      this.formMode = "display";
     }).catch((e) => {
       this.data.dismiss_loading();
       this.data.alert(e)
+      this.formMode = "display";
     })
   }
 
