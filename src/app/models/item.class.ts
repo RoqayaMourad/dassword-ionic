@@ -137,12 +137,21 @@ export class Item implements IItem {
     if (!word) {
       return false;
     }
-    return this.name.indexOf(word) ||
-    this.description.indexOf(word) ||
-    this.email.indexOf(word) ||
-    this.fileName.indexOf(word) ||
-    this.url.indexOf(word) ||
-    (includeNote && this.note.indexOf(word))
+    let result=  this.name.indexOf(word) !== -1 ||
+    this.description.indexOf(word) !== -1 ||
+    this.email.indexOf(word) !== -1 ||
+    this.fileName.indexOf(word) !== -1 ||
+    this.url.indexOf(word) !== -1 ||
+    (includeNote && (this.note.indexOf(word) !== -1))
+    return result;
+  }
+
+  hasType(type:ItemType){
+    if (!type) {
+      return false;
+    }
+    let result=  this.type == type;
+    return result;
   }
 
   getIcon(url:string = ""){

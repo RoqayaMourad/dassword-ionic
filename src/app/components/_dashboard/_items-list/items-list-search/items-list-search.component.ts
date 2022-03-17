@@ -1,3 +1,5 @@
+import { DataService } from 'src/app/services/data/data.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NewItemComponent } from '../../_item_details/new-item/new-item.component';
@@ -9,9 +11,19 @@ import { NewItemComponent } from '../../_item_details/new-item/new-item.componen
 })
 export class ItemsListSearchComponent implements OnInit {
 
-  constructor(private modalController: ModalController) { }
+  filterForm:FormGroup;
+  constructor(private modalController: ModalController, fb:FormBuilder, private data:DataService) {
+    this.filterForm = fb.group({
+      searchField:[""]
+    })
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.filterForm.valueChanges.subscribe((v)=>{
+      let value = this.filterForm.get("searchField").value
+      this.data.filter$.next(value as string)
+    })
+  }
 
 
   async createItem() {
@@ -19,7 +31,7 @@ export class ItemsListSearchComponent implements OnInit {
       component: NewItemComponent,
       backdropDismiss:true,
       cssClass: 'createItemModal',
-    
+
     });
     await modal.present();
   }

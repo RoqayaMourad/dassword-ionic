@@ -40,6 +40,7 @@ export class LoginService {
               await this.d.dismiss_loading();
             }
             await this.d.dismiss_loading();
+            this.d.filter$.next("")
             resolve(true)
           } else {
             await this.d.dismiss_loading();
@@ -73,6 +74,7 @@ export class LoginService {
               this.d.IPFSState = "Create Item to Sync"
             }
             await this.d.toast("Welcom To Dassword 🔐, The Password Manager build on decentralized technology", "Registred", 5000);
+            this.d.filter$.next("")
             resolve(true);
           } else {
             await this.d.dismiss_loading();

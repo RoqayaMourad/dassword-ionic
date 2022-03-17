@@ -1,5 +1,5 @@
 <div class="flex">
-  <div class="relative flex-grow mr-4">
+  <form class="relative flex-grow mr-4" [formGroup]="filterForm">
     <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
       <svg class="h-6 w-6 text-gray-500" viewBox="0 0 24 24" fill="none">
         <path
@@ -8,10 +8,10 @@
         </path>
       </svg>
     </span>
-    <input class="form-input w-full bg-grey-500 py-3 rounded-md pl-10 pr-4 focus:border-grey-400" type="text" placeholder="Search">
-  </div>
+    <input formControlName="searchField" class="form-input w-full bg-grey-500 py-3 rounded-md pl-10 pr-4 focus:border-grey-400" type="text" placeholder="Search">
+  </form>
   <div class="add-item flex justify-center items-center">
-    <button (click)="createItem()" class="font-medium text-lg  p-2.5 text-light-text ml-2 flex bg-cyan-2 rounded-md "> 
+    <button (click)="createItem()" class="font-medium text-lg  p-2.5 text-light-text ml-2 flex bg-cyan-2 rounded-md ">
        <div class="mr-[3px] mt-[3px]" [inlineSVG]="'/assets/icon/plus.svg'"></div>  Add Item
     </button>
   </div>

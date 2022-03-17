@@ -28,7 +28,6 @@ export class MainPage implements OnInit {
       component: LoginRegisterComponent,
       cssClass: "loginRegisterModal",
     }).then((m) => { m.present() })
-
   }
 }
 
