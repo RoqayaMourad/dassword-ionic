@@ -13,11 +13,17 @@ export class SingleListItemComponent implements OnInit {
 
   @Input() item: Item = new Item();
   ngOnInit() { }
+
   isActive(itemId) {
+    console.log(this.data.showItem$.value);
     if (this.data.showItem$.value == itemId) {
       return true;
     }
     return false;
+  }
+
+  showItem() {
+    this.data.showItem$.next(this.item.itemId);
   }
 
 }

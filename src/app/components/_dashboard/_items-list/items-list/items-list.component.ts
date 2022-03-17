@@ -23,9 +23,6 @@ export class ItemsListComponent implements OnInit {
       }, 500);
   }
 
-  showItem(itemId: string) {
-    this.data.showItem$.next(itemId);
-  }
 
   filter(str:string) {
     // if no entry show all items

@@ -9,7 +9,7 @@
   <ul class="mt-4 space-y-4">
     <li>
       <ng-container *ngFor="let item of filteredItems">
-          <app-single-list-item class="hover:bg-cyan-1" (click)="showItem(item.itemId)" [item]="item"></app-single-list-item>
+          <app-single-list-item class="hover:bg-cyan-1" [item]="item"></app-single-list-item>
       </ng-container>
     </li>
   </ul>

@@ -36,7 +36,7 @@ export class Item implements IItem {
   fileCid?: string = "";
 
   // item metadata
-  itemId?:string = "";
+  itemId?:string = HelperService.makeid();
   type?: ItemType = "Password";
   folderId?: string = "";
   /** timestamp in seconds */
