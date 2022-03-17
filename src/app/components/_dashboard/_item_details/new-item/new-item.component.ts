@@ -22,7 +22,7 @@ export class NewItemComponent implements OnInit {
       url: [''],
       password: [''],
       description: [''],
-      notes: [''],
+      note: [''],
       file: [''],
       type: ['']
     });
@@ -45,35 +45,39 @@ export class NewItemComponent implements OnInit {
 
     // update item records
     let item = new Item();
-    item.update(this.DetailsForm.value);
+    item.setName(this.DetailsForm.get("name").value);
+    item.setEmail(this.DetailsForm.get("email").value);
+    item.setPassword(this.DetailsForm.get("password").value);
+    item.setDescription(this.DetailsForm.get("description").value);
+    item.setNote(this.DetailsForm.get("note").value);
+    item.setUrl(this.DetailsForm.get("url").value);
+    item.setType(this.DetailsForm.get("type").value);
 
-    // set item icon
-    if (this.type !== "Password") {
+    // set icon only if type is password
+    if (item.type !== "Password") {
+      // don't set item icon
       this.updateIcon(true);
       item.setIcon("");
     } else {
       // force update current icon
       this.updateIcon();
-
-      // set item icon
       item.setIcon(this.iconUrl);
     }
 
     item.setType(this.type);
 
-    // set name from url if not already set
-    item.setName(this.DetailsForm.value.name);
-
+    // update the local db version
     this.data.mainDb.updateVersion();
+
     // add item to the main db
     this.data.mainDb.addItem(item);
 
-    // emit change to all listener to the db object
+    // Save db to local storage
     await this.data.refreshDb();
     this.data.show_loading();
     this.data.uploadDbToIPFS().then(async (r) => {
       await this.data.dismiss_loading();
-      this.data.toast("Item Updated");
+      this.data.toast("Item Added","",1000);
       await this.dismiss();
       console.log(this.data.mainDb);
     }).catch((e) => {

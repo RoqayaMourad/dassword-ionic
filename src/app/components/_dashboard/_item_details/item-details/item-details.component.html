@@ -5,36 +5,35 @@
       <app-item-header title="Website Name"></app-item-header>
 
 
-
       <form class="" [formGroup]="DetailsForm">
 
         <div class="mb-6">
-          <app-input-field label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
+          <app-input-field *ngIf="showName" label="Name" placeholder="Name" type="text" formControlName="name" ngDefaultControl></app-input-field>
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Email" placeholder="Email" type="email" formControlName="email" ngDefaultControl></app-input-field>
+          <app-input-field *ngIf="showEmail" label="Email" placeholder="Email" type="email" formControlName="email" ngDefaultControl></app-input-field>
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Link" placeholder="https://example.com" type="url" formControlName="url" ngDefaultControl></app-input-field>
+          <app-input-field *ngIf="showUrl" label="Website Url" placeholder="https://example.com" type="url" formControlName="url" ngDefaultControl></app-input-field>
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Password" type="password" formControlName="password"
+          <app-input-field *ngIf="showPassword" label="Password" type="password" formControlName="password"
             ngDefaultControl [showReveal]="true" [showCopy]="true" [showGen]="formMode === 'edit'"></app-input-field>
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Description" placeholder="write any note here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
+          <app-input-field *ngIf="showDescription" label="Description" placeholder="write any note here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Note" placeholder="Leave a comment..." type="textarea" formControlName="note" ngDefaultControl></app-input-field>
+          <app-input-field *ngIf="showNote" label="Note" placeholder="" type="textarea" formControlName="note" ngDefaultControl></app-input-field>
         </div>
 
         <div class="mb-6">
-          <app-input-field label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit." formControlName="file" ngDefaultControl></app-input-field>
+          <app-input-field *ngIf="showDocument" label="Upload file" type="file" subtext="Lorem ipsum dolor sit amet, consectetur elit." formControlName="file" ngDefaultControl></app-input-field>
         </div>
 
 

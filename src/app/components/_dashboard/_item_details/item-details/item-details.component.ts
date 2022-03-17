@@ -24,7 +24,7 @@ export class ItemDetailsComponent implements OnInit {
       description: [''],
       note: [''],
       file: [''],
-      type: ['']
+      type: [''],
     });
   }
 
@@ -48,13 +48,13 @@ export class ItemDetailsComponent implements OnInit {
     })
   }
 
+  // enable edit mode on the form
   editMode() {
     this.DetailsForm.enable();
     this.formMode = "edit";
   }
 
-
-
+  // reset forms and disable edit mode
   updateFields() {
     this.formMode = "display";
     this.DetailsForm.get("name").setValue(this.currentItem.name);
@@ -62,42 +62,47 @@ export class ItemDetailsComponent implements OnInit {
     this.DetailsForm.get("url").setValue(this.currentItem.url);
     this.DetailsForm.get("password").setValue(this.currentItem.password);
     this.DetailsForm.get("description").setValue(this.currentItem.description);
+    this.DetailsForm.get("note").setValue(this.currentItem.note);
     this.DetailsForm.get("type").setValue(this.currentItem.type);
   }
 
+  // submit the edited item
   async submitEditItem() {
 
     await this.data.show_loading();
     console.log("Edit submitted");
     // update item records
-    let item = new Item();
-    item.update(this.DetailsForm.value);
+    const item = this.data.mainDb.getItem(this.currentItem.itemId);
+    item.setName(this.DetailsForm.get("name").value);
+    item.setEmail(this.DetailsForm.get("email").value);
+    item.setPassword(this.DetailsForm.get("password").value);
+    item.setDescription(this.DetailsForm.get("description").value);
+    item.setNote(this.DetailsForm.get("note").value);
+    item.setUrl(this.DetailsForm.get("url").value);
+    item.setType(this.DetailsForm.get("type").value);
 
-    // set item icon
-    if (this.type !== "Password") {
+    // set icon only if type is password
+    if (item.type !== "Password") {
+      // don't set item icon
       this.updateIcon(true);
       item.setIcon("");
     } else {
       // force update current icon
       this.updateIcon();
-
-      // set item icon
       item.setIcon(this.iconUrl);
     }
 
-    // set name from item if not already set
-    item.setName(this.DetailsForm.value.name);
-
-    item.setItemId(this.currentItem.itemId);
-
+    // update the local db version
     this.data.mainDb.updateVersion();
+
     // add item to the main db
     this.data.mainDb.updateItem(item);
 
-    // emit change to all listener to the db object
+    // Save db to local storage
     await this.data.refreshDb();
-    this.data.uploadDbToIPFS().then(async (r) => {
 
+    // save db to IPFS
+    this.data.uploadDbToIPFS().then(async (r) => {
       await this.data.dismiss_loading();
       this.data.toast("Item Updated");
       console.log(this.data.mainDb);
@@ -122,46 +127,29 @@ export class ItemDetailsComponent implements OnInit {
   }
   //#endregion
 
-
-  //#region  Type options menu handlers
-  typeSelectOpen = false;
-  type: ItemType = "Password";
-
-  setType(t) {
-    console.log("setType(t) t=", t);
-    this.type = t;
-    this.closeSelect()
-  }
-
-  toggleSelect() {
-    this.typeSelectOpen = !this.typeSelectOpen
-  }
-
-  closeSelect() {
-    this.typeSelectOpen = false;
-  }
-  //#endregion
-
   get showName() {
     return true
   }
   get showEmail() {
-    return this.type == 'Password'
+    return this.currentItem.type == 'Password'
   }
   get showPassword() {
-    return this.type == 'Password'
+    return this.currentItem.type == 'Password'
   }
   get showUrl() {
-    return this.type == 'Password'
+    return this.currentItem.type == 'Password'
   }
   get showDescription() {
-    return this.type == 'Password' || this.type == 'Bank Account' || this.type == 'Card' || this.type == 'Document'
+    return this.currentItem.type == 'Password' || this.currentItem.type == 'Bank Account' || this.currentItem.type == 'Card' || this.currentItem.type == 'Document'
   }
   get showNote() {
-    return this.type == 'Note'
+    return this.currentItem.type == 'Note'
   }
   get showDocument() {
-    return this.type == 'Document'
+    return this.currentItem.type == 'Document'
   }
 
+  ngOnDestroy(): void {
+    console.log("item details Destroyed");
+  }
 }

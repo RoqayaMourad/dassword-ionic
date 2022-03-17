@@ -39,13 +39,12 @@ export class LoginService {
               await this.d.resetStorage(false);
               // get from IPFS
               await this.d.getDbFromIPFS();
-              await this.d.dismiss_loading();
             }
-            await this.d.dismiss_loading();
+            this.d.dismiss_loading();
             this.d.filter$.next("")
             resolve(true)
           } else {
-            await this.d.dismiss_loading();
+            this.d.dismiss_loading();
             this.d.alert("Wrong Email or Password")
             reject("Wrong Email or Password")
           }
@@ -75,7 +74,9 @@ export class LoginService {
             if (!r.data.db_version) {
               this.d.IPFSState = "Create Item to Sync"
             }
-            this.d.toast("Welcom To Dassword 🔐, The Password Manager build on decentralized technology", "Registred", 5000);
+            setTimeout(() => {
+              this.d.toast("Welcom To Dassword 🔐, The Password Manager build on decentralized technology", "Registred", 5000);
+            }, 1000);
             this.d.filter$.next("")
             resolve(true);
           } else {

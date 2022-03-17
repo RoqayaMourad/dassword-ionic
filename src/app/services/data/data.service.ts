@@ -332,9 +332,6 @@ export class DataService {
   // #region ============================== Messaging
   // ==========================================================================================
   showItem$: BehaviorSubject<string> = new BehaviorSubject<string>(null)
-  showItem(itemId: string) {
-    this.showItem$.next(itemId);
-  }
   // #endregion
 
 
@@ -355,7 +352,7 @@ export class DataService {
     console.log('onDidDismiss resolved with role', role);
   }
 
-  async toast(message = "okay", title = "", duration = 30000) {
+  async toast(message = "okay", title = "", duration = 5000) {
     const toast = await this.toastController.create({
       header: title,
       message,
@@ -366,7 +363,6 @@ export class DataService {
           text: 'Done',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         }
       ]
@@ -374,7 +370,6 @@ export class DataService {
     await toast.present();
 
     const { role } = await toast.onDidDismiss();
-    console.log("toast");
   }
 
   toastError(message) {

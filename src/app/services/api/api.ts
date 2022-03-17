@@ -7,7 +7,7 @@ import { IAPIServerResponse } from 'src/app/interfaces/api.interface';
   providedIn: 'root'
 })
 export class Api {
-  url: string = 'http://localhost:3005';
+  url: string = 'https://dassword.com/api';//'http://localhost:3005';
 
   constructor(public http: HttpClient) {
     if (environment.production) {
