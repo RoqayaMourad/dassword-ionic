@@ -104,6 +104,18 @@
     }
   }
 }
+.isActive {
+  .itemName {
+    @apply text-dark-4;
+  }
+  .itemUrl {
+    @apply text-grey-600;
+  }
+  .itemEmail {
+    @apply text-grey-500;
+  }
+
+}
 .createItemModal , .loginRegisterModal , .settingsModal , .genpasswordModal {
   &::part(backdrop) {
     background-color: #121212;
