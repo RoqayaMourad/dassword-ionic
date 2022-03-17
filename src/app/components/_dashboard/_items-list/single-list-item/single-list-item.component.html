@@ -1,4 +1,4 @@
-<div [ngClass]="isActive(item.itemId)?'bg-cyan-2 isActive':''"  (click)="showItem()" href="#" class="flex items-center p-3 text-lg bg-grey-400 rounded-lg hover:bg-cyan-2 hover:shadow-lg  px-4 mb-4 singleListItem">
+<div [ngClass]="isActive(item.itemId)?'bg-cyan-2 isActive':''"  (click)="showItem()" href="#" class="flex items-center p-3 text-lg bg-grey-400 rounded-lg hover:bg-cyan-2 hover:shadow-lg  px-4 mb-4 singleListItem transition-all ease-in-out duration-75">
   <div class="itemIconDiv w-16 h-16">
     <img [src]="item.icon" class="w-full" alt="" srcset="">
   </div>

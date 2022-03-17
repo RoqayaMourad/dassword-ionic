@@ -171,6 +171,9 @@
 }
 .menuActive {
   .menuItem{
-    @apply bg-grey-400 cursor-pointer;
+    @apply bg-cyan-2 text-dark-4 cursor-pointer transition-all duration-75 ease-in-out;
+    svg {
+      stroke: #121212;
+    }
   }
 }
