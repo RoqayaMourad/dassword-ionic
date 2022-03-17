@@ -39,6 +39,7 @@ export class LoginService {
               await this.d.getDbFromIPFS();
               await this.d.dismiss_loading();
             }
+            await this.d.dismiss_loading();
             resolve(true)
           } else {
             await this.d.dismiss_loading();
