@@ -48,11 +48,12 @@ export class LoginService {
             this.d.alert("Wrong Email or Password")
             reject("Wrong Email or Password")
           }
-        },
-        (e) => {
+        }, (e) => {
           this.d.dismiss_loading();
           this.d.alert("Server Connection error");
           reject("Wrong Email or Password")
+        }, () => {
+          this.d.dismiss_loading();
         }
       );
     })
@@ -84,11 +85,12 @@ export class LoginService {
             this.d.alert("User already exists")
             reject(false)
           }
-        },
-        async (e) => {
-          await this.d.dismiss_loading();
+        }, (e) => {
+          this.d.dismiss_loading();
           this.d.alert("Failed to create User");
           reject(false)
+        }, () => {
+          this.d.dismiss_loading();
         }
       );
     })

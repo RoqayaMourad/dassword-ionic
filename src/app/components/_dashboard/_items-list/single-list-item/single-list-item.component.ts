@@ -15,7 +15,6 @@ export class SingleListItemComponent implements OnInit {
   ngOnInit() { }
 
   isActive(itemId) {
-    console.log(this.data.showItem$.value);
     if (this.data.showItem$.value == itemId) {
       return true;
     }

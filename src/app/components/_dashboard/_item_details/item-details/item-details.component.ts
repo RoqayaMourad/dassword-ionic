@@ -29,7 +29,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   DetailsForm: FormGroup;
-  currentItem: Item = new Item;
+  currentItem: Item = null;
   formMode: "edit" | "display" = "display"
   ngOnInit() {
     this.data.showItem$.subscribe((itemId) => {
@@ -112,6 +112,28 @@ export class ItemDetailsComponent implements OnInit {
     })
   }
 
+  async deleteItem() {
+    await this.data.show_loading();
+    this.data.mainDb.deleteItem(this.currentItem.itemId);
+    // update the local db version
+    this.data.mainDb.updateVersion();
+
+    // Save db to local storage
+    await this.data.refreshDb();
+
+    // save db to IPFS
+    this.data.uploadDbToIPFS().then(async (r) => {
+      await this.data.dismiss_loading();
+      this.data.toast("Item Deleted");
+      console.log(this.data.mainDb);
+      this.data.showItem$.next(null);
+      this.currentItem = null;
+    }).catch((e) => {
+      this.data.dismiss_loading();
+      this.data.alert(e)
+    })
+
+  }
 
   //#region Handle Icon update
   iconUrl = "";
@@ -131,22 +153,22 @@ export class ItemDetailsComponent implements OnInit {
     return true
   }
   get showEmail() {
-    return this.currentItem.type == 'Password'
+    return this.currentItem?.type == 'Password'
   }
   get showPassword() {
-    return this.currentItem.type == 'Password'
+    return this.currentItem?.type == 'Password'
   }
   get showUrl() {
-    return this.currentItem.type == 'Password'
+    return this.currentItem?.type == 'Password'
   }
   get showDescription() {
-    return this.currentItem.type == 'Password' || this.currentItem.type == 'Bank Account' || this.currentItem.type == 'Card' || this.currentItem.type == 'Document'
+    return this.currentItem?.type == 'Password' || this.currentItem?.type == 'Bank Account' || this.currentItem?.type == 'Card' || this.currentItem?.type == 'Document'
   }
   get showNote() {
-    return this.currentItem.type == 'Note'
+    return this.currentItem?.type == 'Note'
   }
   get showDocument() {
-    return this.currentItem.type == 'Document'
+    return this.currentItem?.type == 'Document'
   }
 
   ngOnDestroy(): void {

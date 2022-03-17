@@ -1,6 +1,6 @@
 <ion-content>
   <div class="p-4">
-    <div class="bg-grey-400 rounded-md p-4 mt-2">
+    <div *ngIf="currentItem" class="bg-grey-400 rounded-md p-4 mt-2">
 
       <app-item-header title="Website Name"></app-item-header>
 
@@ -69,6 +69,16 @@
                 <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/cancel.svg'"></div>
                 <div>
                   Cancel
+                </div>
+              </button>
+            </div>
+
+            <div>
+              <button type="cancel" (click)="deleteItem()"
+                class="rounded-lg px-6 py-2 font-medium text-sm bg-transparent text-light-grey-500 border-light-grey-500 border-2">
+                <div class="mr-2" [inlineSVG]="'/assets/icon/item-details/cancel.svg'"></div>
+                <div>
+                  Delete
                 </div>
               </button>
             </div>
