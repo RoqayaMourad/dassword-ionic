@@ -7,7 +7,7 @@ import { IAPIServerResponse } from 'src/app/interfaces/api.interface';
   providedIn: 'root'
 })
 export class Api {
-  url: string = 'https://dassword.com/api'; //'http://localhost:3005';
+  url: string = 'http://localhost:3005';
 
   constructor(public http: HttpClient) {
     if (environment.production) {
@@ -15,7 +15,7 @@ export class Api {
     }
   }
 
-  get<T>(endpoint: string, params?: any, reqOpts?: any) {
+  get<T>(endpoint: string, params?: any, reqOpts?: any, withCredentials=false) {
     let url = this.url + '/' + endpoint;
     if (endpoint.indexOf('http') == 0) {
       url = endpoint;
@@ -35,7 +35,7 @@ export class Api {
         reqOpts.params = reqOpts.params.append(k, params[k]);
       }
     }
-    reqOpts.withCredentials = true
+    reqOpts.withCredentials = withCredentials
     return this.http.get<IAPIServerResponse<T>>(url);
   }
 

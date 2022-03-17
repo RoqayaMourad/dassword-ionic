@@ -18,64 +18,74 @@ export class LoginService {
    */
 
   async login(email, password) {
-    await this.d.show_loading();
+    this.d.show_loading();
     let sec = new Security();
     let secureAuthObject = sec.generateSecureAuthObject(email, password);
     // Send the encrypted secure object to the server
-    await this.api.post<IUser>('login', { secureAuthObject }).subscribe(
-      async (r) => {
-        if (r.success && r.data.user_id) {
-          // set global user
-          await this.d.setUser(r.data)
-          this.d.setMasterPassword(password);
-          await this.d.initDb();
-          // if the fetched user has a newer DB version update the local version from IPFS
-          if (this.d.mainDb.objectVersionId < r.data.db_version) {
-            await this.d.resetStorage(false);
-            await this.d.getDbFromIPFS();
+    return new Promise((resolve, reject) => {
+      this.api.post<IUser>('login', { secureAuthObject }).subscribe(
+        async (r) => {
+          if (r.success && r.data.user_id) {
+            // set global user
+            await this.d.setUser(r.data)
+            this.d.setMasterPassword(password);
+            await this.d.initDb();
+            // if the fetched user has a newer DB version update the local version from IPFS
+            if (!r.data.db_version) {
+              this.d.IPFSState = "Create Item to Sync"
+            }
+            if (this.d.mainDb.objectVersionId < r.data.db_version) {
+              await this.d.resetStorage(false);
+              await this.d.getDbFromIPFS();
+              await this.d.dismiss_loading();
+            }
+            resolve(true)
+          } else {
             await this.d.dismiss_loading();
-            return;
+            this.d.alert("Wrong Email or Password")
+            reject("Wrong Email or Password")
           }
-        } else {
-          await this.d.dismiss_loading();
-          this.d.alert("Wrong Email or Password")
-          throw new Error("Failed to create user");
+        },
+        (e) => {
+          this.d.dismiss_loading();
+          this.d.alert("Server Connection error");
+          reject("Wrong Email or Password")
         }
-      },
-      async (e) => {
-        await this.d.dismiss_loading();
-        this.d.alert("Failed to update User");
-        throw new Error("Failed to create user");
-      }
-    );
+      );
+    })
   }
 
-  async register(email, password) {
-    await this.d.show_loading();
+  register(email, password) {
+    this.d.show_loading();
     let sec = new Security();
     let secureAuthObject = sec.generateSecureAuthObject(email, password);
-    return this.api.post<IUser>('register', { secureAuthObject }).subscribe(
-      async (r) => {
-        if (r.success && r.data.user_id) {
-          await this.d.resetStorage();
-          this.d.setMasterPassword(password);
-          await this.d.setUser(r.data);
-          await this.d.initDb();
+    return new Promise((resolve, reject) => {
+      this.api.post<IUser>('register', { secureAuthObject }).subscribe(
+        async (r) => {
+          if (r.success && r.data.user_id) {
+            await this.d.resetStorage();
+            this.d.setMasterPassword(password);
+            await this.d.setUser(r.data);
+            await this.d.initDb();
+            await this.d.dismiss_loading();
+            if (!r.data.db_version) {
+              this.d.IPFSState = "Create Item to Sync"
+            }
+            await this.d.toast("Welcom To Dassword 🔐, The Password Manager build on decentralized technology", "Registred", 5000);
+            resolve(true);
+          } else {
+            await this.d.dismiss_loading();
+            this.d.alert("User already exists")
+            reject(false)
+          }
+        },
+        async (e) => {
           await this.d.dismiss_loading();
-          await this.d.toast("Welcom To Dassword, Password Manager build on decentralized technology","Registred", 5000);
-          return;
-        } else {
-          await this.d.dismiss_loading();
-          this.d.alert("User already exists")
-          throw new Error("Failed to create user");
+          this.d.alert("Failed to create User");
+          reject(false)
         }
-      },
-      async (e) => {
-        await this.d.dismiss_loading();
-        this.d.alert("Failed to create User");
-        throw new Error("Failed to create user");
-      }
-    );
+      );
+    })
   }
 
 

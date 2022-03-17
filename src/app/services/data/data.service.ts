@@ -48,7 +48,7 @@ export class DataService {
     let db_json: IMainDB;
     // try to get db from local storage
     db_json = await this.getDbFromStorage();
-    await this.setDb(db_json);
+    return await this.setDb(db_json);
   }
 
   /**
@@ -60,7 +60,7 @@ export class DataService {
   async setDb(_mainDb_obj: MainDB | IMainDB) {
     let maindb = new MainDB(_mainDb_obj)
     this.mainDb = maindb;
-    await this.refreshDb();
+    return await this.refreshDb();
   }
 
   /**
@@ -380,7 +380,7 @@ export class DataService {
   }
 
   loading_present: any;
-  async show_loading(max_duartion = 300) {
+  async show_loading(max_duartion = 300000) {
     this.loading_present = await this.loadingController.create({
       cssClass: 'loading-class',
       message: 'Please wait...',

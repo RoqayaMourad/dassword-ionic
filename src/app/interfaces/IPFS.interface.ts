@@ -1,1 +1,1 @@
-export type IIPFSState = "Uploading" | "Downloading" | "Unsaved Changes" | "No DB Detected" | "Synced"
+export type IIPFSState = "Uploading" | "Downloading" | "Unsaved Changes" | "Create Item to Sync" | "Synced"

@@ -41,13 +41,12 @@ export class LoginRegisterComponent implements OnInit {
       this.data.alert("Invalid login fields")
       return;
     }
-    try {
-      await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password).then(async ()=>{
-        await this.dissmiss();
+    await this.loginSrv.login(this.login_form.value.email, this.login_form.value.password).then(
+      () => {
+        this.dissmiss();
+      }).catch((error) => {
       })
-    } catch (error) {
-      await this.data.toastError(error)
-    }
+
   }
 
   async register() {
@@ -57,14 +56,15 @@ export class LoginRegisterComponent implements OnInit {
     }
     if (this.register_form.value.password_confirm !== this.register_form.value.password) {
       this.data.alert("Confirm pasword field doesn't match password")
-      return ;
+      return;
     }
-    try {
-      await this.loginSrv.register(this.register_form.value.email, this.register_form.value.password)
-      await this.dissmiss();
-    } catch (error) {
-      await this.data.toastError(error);
-    }
+    await this.loginSrv.register(this.register_form.value.email, this.register_form.value.password).then(
+      () => {
+        this.dissmiss();
+      }).catch((error) => {
+        this.data.toastError(error);
+      })
+
   }
 
   async dissmiss() {
