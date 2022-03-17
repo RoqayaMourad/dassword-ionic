@@ -29,10 +29,10 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   DetailsForm: FormGroup;
-  currentItem:Item = new Item;
+  currentItem: Item = new Item;
   formMode: "edit" | "display" = "display"
   ngOnInit() {
-    this.data.showItem$.subscribe((itemId)=>{
+    this.data.showItem$.subscribe((itemId) => {
       if (itemId) {
         this.currentItem = this.data.mainDb.getItem(itemId);
         this.updateFields();
@@ -48,14 +48,15 @@ export class ItemDetailsComponent implements OnInit {
     })
   }
 
-  editMode(){
+  editMode() {
     this.DetailsForm.enable();
     this.formMode = "edit";
   }
 
 
 
-  updateFields(){
+  updateFields() {
+    this.formMode = "display";
     this.DetailsForm.get("name").setValue(this.currentItem.name);
     this.DetailsForm.get("email").setValue(this.currentItem.email);
     this.DetailsForm.get("url").setValue(this.currentItem.url);
@@ -66,35 +67,54 @@ export class ItemDetailsComponent implements OnInit {
 
   async submitEditItem() {
 
+    await this.data.show_loading();
     console.log("Edit submitted");
     // update item records
     let item = new Item();
     item.update(this.DetailsForm.value);
 
-    // force update current icon
-    this.updateIcon();
-
     // set item icon
-    item.setIcon(this.iconUrl);
+    if (this.type !== "Password") {
+      this.updateIcon(true);
+      item.setIcon("");
+    } else {
+      // force update current icon
+      this.updateIcon();
 
-    // set name from url if not already set
+      // set item icon
+      item.setIcon(this.iconUrl);
+    }
+
+    // set name from item if not already set
     item.setName(this.DetailsForm.value.name);
 
     item.setItemId(this.currentItem.itemId);
 
+    this.data.mainDb.updateVersion();
     // add item to the main db
     this.data.mainDb.updateItem(item);
 
-    this.data.toast("Item Updated")
     // emit change to all listener to the db object
-    this.data.refreshDb();
-    console.log(this.data.mainDb);
+    await this.data.refreshDb();
+    this.data.uploadDbToIPFS().then(async (r) => {
+
+      await this.data.dismiss_loading();
+      this.data.toast("Item Updated");
+      console.log(this.data.mainDb);
+    }).catch((e) => {
+      this.data.dismiss_loading();
+      this.data.alert(e)
+    })
   }
 
 
   //#region Handle Icon update
   iconUrl = "";
-  updateIcon() {
+  updateIcon(dontSet = false) {
+    if (dontSet) {
+      this.iconUrl = "";
+      return;
+    }
     let url = this.DetailsForm.get("url").value;
     console.log(url);
 

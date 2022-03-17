@@ -27,6 +27,7 @@ export class MainPage implements OnInit {
     this.modalController.create({
       component: LoginRegisterComponent,
       cssClass: "loginRegisterModal",
+      backdropDismiss:false,
     }).then((m) => { m.present() })
   }
 }

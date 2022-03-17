@@ -35,7 +35,9 @@ export class LoginService {
               this.d.IPFSState = "Create Item to Sync"
             }
             if (this.d.mainDb.objectVersionId < r.data.db_version) {
+              // reset the db storage only
               await this.d.resetStorage(false);
+              // get from IPFS
               await this.d.getDbFromIPFS();
               await this.d.dismiss_loading();
             }

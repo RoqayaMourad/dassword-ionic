@@ -23,8 +23,8 @@ export class DataService {
   }
 
   user: User = new User();
-  filter$:BehaviorSubject<string> = new BehaviorSubject("")
-  setSearch$:BehaviorSubject<string> = new BehaviorSubject("")
+  filter$: BehaviorSubject<string> = new BehaviorSubject("")
+  setSearch$: BehaviorSubject<string> = new BehaviorSubject("")
   /**
    * The logged in Master password, this value is never called unless from this class only
    *
@@ -88,11 +88,16 @@ export class DataService {
   async setDbToStorage(mainDb?: MainDB, delay = 100) {
     mainDb = mainDb || this.mainDb;
     new Promise((resolve, reject) => {
+      // stringfy the database
+      let stringfiyedDb = JSON.stringify(mainDb);
+      // encrypt the database to store in the local storage
+      let encryptedDbString = Security.encryptString(stringfiyedDb, this.MASTER_PASSWORD)
+      // store the encrypted db to the local storage
+      this.storage.set("maindb", encryptedDbString).then((db) => {
+        console.log("Db saved in storage 📄 -> 📦");
+        resolve(mainDb)
+      }).catch(reject)
       setTimeout(() => {
-        this.storage.set("maindb", mainDb).then((db) => {
-          console.log("Db saved in storage 📄 -> 📦");
-          resolve(db)
-        }).catch(reject)
       }, delay);
     })
   }
@@ -107,11 +112,23 @@ export class DataService {
    */
   async getDbFromStorage(delay = 100) {
     return new Promise<IMainDB>((resolve, reject) => {
+      this.storage.get("maindb").then((encryptedDb) => {
+        console.log("Db loaded from storage 📦 -> 📄  ");
+        // decrypt the database from the local storage
+        let decryptedDbString: any = Security.decryptString(encryptedDb, this.MASTER_PASSWORD);
+        let db_object;
+        try {
+          // parse the database
+          db_object = JSON.parse(decryptedDbString)
+        } catch (error) {
+          // if parse failed reset storage
+          this.resetStorage(false)
+          reject(error)
+          return;
+        }
+        resolve(db_object)
+      }).catch(reject)
       setTimeout(() => {
-        this.storage.get("maindb").then((db_json) => {
-          console.log("Db loaded from storage 📦 -> 📄  ");
-          resolve(db_json)
-        }).catch(reject)
       }, delay);
     })
   }
@@ -193,12 +210,11 @@ export class DataService {
    * @memberof DataService
    */
   async uploadDbToIPFS() {
-    this.show_loading();
     // TODO:Encrypt the current db with MASTER_PASSWORD
     let str = JSON.stringify(this.mainDb);
     let lastState = this.IPFSState;
     this.IPFSState = "Uploading";
-    let encryptedDbString = Security.decryptString(str, this.MASTER_PASSWORD);
+    let encryptedDbString: any = Security.encryptString(str, this.MASTER_PASSWORD);
     let enctyptedDBObject: IEnctyptedDBObject = { data: encryptedDbString }
 
     // the following conversion supports arabic characters, emojis and Chinese and asian character
@@ -233,18 +249,17 @@ export class DataService {
             if (body.success) {
               await this.setUser(body.data);
               this.IPFSState = "Synced";
-              await this.dismiss_loading();
               await this.toast("DB is synced")
+              resolve(body.data)
             } else {
-              throw new Error("Faild to update DB");
               this.IPFSState = lastState;
+              reject("Faild to update DB");
             }
           }
         },
         e => {
           this.IPFSState = lastState;
-          reject(e)
-          throw new Error("Faild to update DB");
+          reject("Faild to update DB");
         }
       )
     })
@@ -267,7 +282,7 @@ export class DataService {
         if (r.success && r.data) {
           let enctyptedDBObject: IEnctyptedDBObject = r.data
           // TODO:Decrypt the current db with MASTER_PASSWORD
-          let decryptedDbString = Security.decryptString(enctyptedDBObject.data, this.MASTER_PASSWORD);
+          let decryptedDbString: any = Security.decryptString(enctyptedDBObject.data, this.MASTER_PASSWORD);
           let mainDb = JSON.parse(decryptedDbString);
           this.setDb(mainDb);
           resolve(true);
@@ -283,8 +298,6 @@ export class DataService {
         }
       )
     })
-
-
   }
 
   /**
@@ -306,11 +319,13 @@ export class DataService {
   //#endregion
 
   async resetStorage(resetUser = true) {
-    await this.setDb(new MainDB());
-    if (resetUser) await this.setUser(new User());
-    if (resetUser) this.MASTER_PASSWORD = "";
-    await this.storage.remove("maindb");
-    if (resetUser) await this.storage.remove("user");
+    this.setDb(new MainDB());
+    if (resetUser) {
+      this.MASTER_PASSWORD = "";
+      await this.setUser(new User());
+      await this.storage.set("user", "")
+      await this.storage.remove("user")
+    };
     console.log("Storage Rest 🔁")
   }
 

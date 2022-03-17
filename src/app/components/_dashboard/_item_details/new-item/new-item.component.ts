@@ -47,27 +47,39 @@ export class NewItemComponent implements OnInit {
     let item = new Item();
     item.update(this.DetailsForm.value);
 
-    // force update current icon
-
     // set item icon
     if (this.type !== "Password") {
       this.updateIcon(true);
       item.setIcon("");
+    } else {
+      // force update current icon
+      this.updateIcon();
+
+      // set item icon
+      item.setIcon(this.iconUrl);
     }
 
     item.setType(this.type);
 
     // set name from url if not already set
     item.setName(this.DetailsForm.value.name);
-
     // add item to the main db
     this.data.mainDb.addItem(item);
 
     // emit change to all listener to the db object
-    this.data.refreshDb();
-    console.log(this.data.mainDb);
+    await this.data.refreshDb();
+    this.data.show_loading();
+    this.data.uploadDbToIPFS().then(async (r) => {
+      await this.data.dismiss_loading();
+      this.data.toast("Item Updated");
+      await this.dismiss();
+      console.log(this.data.mainDb);
+    }).catch((e) => {
+      this.data.dismiss_loading();
+      this.data.alert(e)
+      console.log(this.data.mainDb);
 
-    await this.dismiss();
+    })
   }
 
   async dismiss() {
@@ -76,10 +88,10 @@ export class NewItemComponent implements OnInit {
 
   //#region Handle Icon update
   iconUrl = "";
-  updateIcon(dontSet=false) {
+  updateIcon(dontSet = false) {
     if (dontSet) {
       this.iconUrl = "";
-      return ;
+      return;
     }
     let url = this.DetailsForm.get("url").value;
     console.log(url);
