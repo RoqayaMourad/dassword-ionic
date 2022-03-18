@@ -40,20 +40,34 @@ export class LoginService {
               // get from IPFS
               await this.d.getDbFromIPFS();
             }
-            this.d.dismiss_loading();
+            setTimeout(() => {
+              this.d.dismiss_loading();
+            }, 1000);
             this.d.filter$.next("")
             resolve(true)
           } else {
             this.d.dismiss_loading();
+            setTimeout(() => {
+              this.d.dismiss_loading();
+            }, 1000);
+
             this.d.alert("Wrong Email or Password")
             reject("Wrong Email or Password")
           }
         }, (e) => {
           this.d.dismiss_loading();
+          setTimeout(() => {
+            this.d.dismiss_loading();
+          }, 1000);
+
           this.d.alert("Server Connection error");
           reject("Wrong Email or Password")
         }, () => {
           this.d.dismiss_loading();
+          setTimeout(() => {
+            this.d.dismiss_loading();
+          }, 1000);
+
         }
       );
     })
