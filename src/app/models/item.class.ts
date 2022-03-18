@@ -12,6 +12,10 @@ export class Item implements IItem {
       this.setIcon(item.icon);
       this.setUrl(item.url);
 
+      this.setCardNumber(item.cardnumber);
+      this.setCardExpiration(item.cardexpiration);
+      this.setCardCvv(item.cardcvv);
+
       this.setFileName(item.fileName);
       this.setFileCid(item.fileCid);
 
@@ -31,6 +35,11 @@ export class Item implements IItem {
   note?: string = "";
   icon?: string = "";
   url?: string = "";
+
+  // Card
+  cardnumber:string = "";
+  cardexpiration:string = "";
+  cardcvv:string = "";
 
   fileName?: string = "";
   fileCid?: string = "";
@@ -79,6 +88,17 @@ export class Item implements IItem {
       url = HelperService.withHttps(url);
     }
     this.url = url || ""
+  }
+
+  // Card
+  setCardNumber(cardnumber: string = null) {
+    this.cardnumber = cardnumber || "";
+  }
+  setCardExpiration(cardexpiration: string = null) {
+    this.cardexpiration = cardexpiration || "";
+  }
+  setCardCvv(cardcvv: string = null) {
+    this.cardcvv = cardcvv || "";
   }
 
   // file
@@ -153,6 +173,9 @@ export class Item implements IItem {
 
     let url = !result?this.url?.toLowerCase().indexOf(word):""
     if(url !==undefined && url !== -1) result = true;
+
+    let cardnumber = !result?this.cardnumber?.toLowerCase().indexOf(word):""
+    if(cardnumber !==undefined && cardnumber !== -1) result = true;
 
     let note = !result?this.note?.toLowerCase().indexOf(word):""
     if(note !==undefined && note !== -1) result = true;

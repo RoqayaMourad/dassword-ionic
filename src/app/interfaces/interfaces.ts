@@ -25,6 +25,11 @@ export interface IItem {
   note?: string;
   icon?: string;
 
+  // Card
+  cardnumber:string;
+  cardexpiration:string;
+  cardcvv:string;
+
   fileName?: string;
   fileCid?: string;
 

@@ -23,6 +23,9 @@ export class ItemDetailsComponent implements OnInit {
       password: [''],
       description: [''],
       note: [''],
+      cardnumber: [''],
+      cardexpiration: [''],
+      cardcvv: [''],
       file: [''],
       type: [''],
     });
@@ -63,6 +66,9 @@ export class ItemDetailsComponent implements OnInit {
     this.DetailsForm.get("url").setValue(this.currentItem.url);
     this.DetailsForm.get("password").setValue(this.currentItem.password);
     this.DetailsForm.get("description").setValue(this.currentItem.description);
+    this.DetailsForm.get("cardnumber").setValue(this.currentItem.cardnumber);
+    this.DetailsForm.get("cardexpiration").setValue(this.currentItem.cardexpiration);
+    this.DetailsForm.get("cardcvv").setValue(this.currentItem.cardcvv);
     this.DetailsForm.get("note").setValue(this.currentItem.note);
     this.DetailsForm.get("type").setValue(this.currentItem.type);
   }
@@ -78,6 +84,9 @@ export class ItemDetailsComponent implements OnInit {
     item.setEmail(this.DetailsForm.get("email").value);
     item.setPassword(this.DetailsForm.get("password").value);
     item.setDescription(this.DetailsForm.get("description").value);
+    item.setCardNumber(this.DetailsForm.get("cardnumber").value);
+    item.setCardExpiration(this.DetailsForm.get("cardexpiration").value);
+    item.setCardCvv(this.DetailsForm.get("cardcvv").value);
     item.setNote(this.DetailsForm.get("note").value);
     item.setUrl(this.DetailsForm.get("url").value);
     item.setType(this.DetailsForm.get("type").value);
@@ -166,6 +175,9 @@ export class ItemDetailsComponent implements OnInit {
   }
   get showDescription() {
     return this.currentItem?.type == 'Password' || this.currentItem?.type == 'Bank Account' || this.currentItem?.type == 'Card' || this.currentItem?.type == 'Document'
+  }
+  get showCard() {
+    return this.currentItem?.type == 'Card'
   }
   get showNote() {
     return this.currentItem?.type == 'Note'

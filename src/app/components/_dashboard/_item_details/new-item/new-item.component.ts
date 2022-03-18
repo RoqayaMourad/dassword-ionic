@@ -21,6 +21,9 @@ export class NewItemComponent implements OnInit {
       email: [''],
       url: [''],
       password: [''],
+      cardnumber: [''],
+      cardexpiration: [''],
+      cardcvv: [''],
       description: [''],
       note: [''],
       file: [''],
@@ -49,6 +52,9 @@ export class NewItemComponent implements OnInit {
     item.setEmail(this.DetailsForm.get("email").value);
     item.setPassword(this.DetailsForm.get("password").value);
     item.setDescription(this.DetailsForm.get("description").value);
+    item.setCardNumber(this.DetailsForm.get("cardnumber").value);
+    item.setCardExpiration(this.DetailsForm.get("cardexpiration").value);
+    item.setCardCvv(this.DetailsForm.get("cardcvv").value);
     item.setNote(this.DetailsForm.get("note").value);
     item.setUrl(this.DetailsForm.get("url").value);
 
@@ -138,6 +144,9 @@ export class NewItemComponent implements OnInit {
   }
   get showDescription() {
     return this.type == 'Password' || this.type == 'Bank Account' || this.type == 'Card' || this.type == 'Document'
+  }
+  get showCard() {
+    return this.type == 'Card'
   }
   get showNote() {
     return this.type == 'Note'

@@ -91,7 +91,7 @@ export class MainDB implements IMainDB {
   setFolders(folders: Folder[] | IFolder[] = []) {
 
     for (let i = 0; i < folders.length; i++) {
-      folders[i] = new Item(folders[i]);
+      folders[i] = new Folder(folders[i]);
 
       this.folders = (folders || []) as any
     }

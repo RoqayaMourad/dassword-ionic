@@ -8,7 +8,7 @@
         </div>
       </div>
 
-     <!-- ================= Select Type -->
+      <!-- ================= Select Type -->
       <div class="mx-auto mb-6 mt-4">
         <label class="block mb-2 text-lg font-medium text-cyan-2">Select Type</label>
         <!-- component -->
@@ -45,14 +45,15 @@
           </ul>
         </div>
       </div>
-      <!-- Select Type ================= -->  <!-- Name Field -->
+      <!-- Select Type ================= -->
+      <!-- Name Field -->
 
 
-<!-- spliter -->
- <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
+      <!-- spliter -->
+      <div class="my-4 spliter border-b-2 border-grey-300 m-auto"></div>
 
 
-<!-- App header
+      <!-- App header
 <app-item-header [iconUrl]="iconUrl" title="Website Name"></app-item-header>
 -->
 
@@ -74,6 +75,20 @@
       <!-- Password Field-->
       <div class="mb-6">
         <app-input-field *ngIf="showPassword" label="Password" placeholder="" type="password" formControlName="password" ngDefaultControl [showReveal]="true" [showCopy]="true" [showGen]="true"></app-input-field>
+      </div>
+
+      <!-- Card -->
+      <div class="mb-6">
+        <app-input-field *ngIf="showCard" label="Card Number" type="text" formControlName="cardnumber"  placeholder="14 Digit number"
+          ngDefaultControl></app-input-field>
+      </div>
+      <div class="mb-6">
+        <app-input-field *ngIf="showCard" label="Card Expiration" type="text" formControlName="cardexpiration"  placeholder="MM/YY"
+          ngDefaultControl></app-input-field>
+      </div>
+      <div class="mb-6">
+        <app-input-field *ngIf="showCard" label="CVV" type="text" formControlName="cardcvv"  placeholder="xxx"
+          ngDefaultControl></app-input-field>
       </div>
 
       <!-- Description Field-->

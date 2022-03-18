@@ -24,6 +24,21 @@
             ngDefaultControl [showReveal]="true" [showCopy]="true" [showGen]="formMode === 'edit'"></app-input-field>
         </div>
 
+        <!-- Card -->
+        <div class="mb-6">
+          <app-input-field *ngIf="showCard" label="Card Number" type="text" formControlName="cardnumber"
+            ngDefaultControl></app-input-field>
+        </div>
+        <div class="mb-6">
+          <app-input-field *ngIf="showCard" label="Card Expiration" type="text" formControlName="cardexpiration"
+            ngDefaultControl></app-input-field>
+        </div>
+        <div class="mb-6">
+          <app-input-field *ngIf="showCard" label="CVV" type="text" formControlName="cardcvv"
+            ngDefaultControl></app-input-field>
+        </div>
+
+
         <div class="mb-6">
           <app-input-field *ngIf="showDescription" label="Description" placeholder="write any note here" type="textarea" formControlName="description" ngDefaultControl></app-input-field>
         </div>
@@ -59,8 +74,8 @@
             </button>
           </div>
 
-         
-        
+
+
           <div class="flex">
             <div>
               <button type="button" (click)="submitEditItem()"
@@ -71,7 +86,7 @@
                 </div>
               </button>
             </div>
-        
+
             <div>
               <button type="cancel" (click)="updateFields()"
                 class="rounded-lg inline-flex items-center py-2 px-4 text-sm font-medium text-light-grey-50 bg-transparent border border-light-grey-100 hover:bg-light-grey-600 hover:text-gray-200 transition ease-in duration-200">

@@ -177,3 +177,7 @@
     }
   }
 }
+
+input::placeholder, textarea::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  opacity: 0.3 !important; /* Firefox */
+}
